@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 
+
 project.group = 'de.tomgrill.gdxfirebase.android'
 
 android {
@@ -34,3 +35,6 @@ ext {
 }
 
 apply from : '../androidpublish.gradle'
+
+//	Must be placed at the end libGDX app android/build.gradle
+//apply plugin: 'com.google.gms.google-services'

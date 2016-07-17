@@ -13,9 +13,11 @@ buildscript {
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:1.5.0'
+//        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0-SNAPSHOT'
         classpath 'com.intel.gradle:moeGradlePlugin:1.1.0.final-1'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
@@ -27,11 +29,13 @@ allprojects {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.3'
         roboVMVersion = '2.2.0-SNAPSHOT'
+        firebaseVersion = '9.2.0'
     }
 
     repositories {
         mavenCentral()
         mavenLocal()
+        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
@@ -55,6 +59,12 @@ project(":android") {
     dependencies {
         compile project(':core')
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+
+        compile "com.google.firebase:firebase-database:$firebaseVersion"
+        compile "com.google.firebase:firebase-auth:$firebaseVersion"
+        compile "com.google.firebase:firebase-core:$firebaseVersion"
+        compile "com.google.firebase:firebase-messaging:$firebaseVersion"
+        compile "com.google.android.gms:play-services-auth:$firebaseVersion"
 
     }
 }
@@ -102,6 +112,8 @@ project(":desktop") {
 
     dependencies {
         compile project(':core')
+
+        compile 'com.google.firebase:firebase-server-sdk:[3.0.0,)'
     }
 }
 
