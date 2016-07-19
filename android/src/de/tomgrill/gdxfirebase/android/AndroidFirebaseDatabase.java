@@ -15,12 +15,12 @@ public class AndroidFirebaseDatabase implements FirebaseDatabase {
     @Override
     public DatabaseReference getReference() {
         com.google.firebase.database.DatabaseReference databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
-        return new AndroidDatabaseReference(databaseReference);
+        return new AndroidDatabaseReference(databaseReference, this);
     }
 
     @Override
     public DatabaseReference getReference(String s) {
         com.google.firebase.database.DatabaseReference databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(s);
-        return new AndroidDatabaseReference(databaseReference);
+        return new AndroidDatabaseReference(databaseReference, this);
     }
 }
