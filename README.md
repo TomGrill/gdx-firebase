@@ -4,7 +4,7 @@ Firebase extension for libGDX.
 
 # Expert usage only
 
-**!!Only use this extension if you are a Firebase expert.!!**
+**!!Only use this extension if you are a Firebase expert.!!** More at https://firebase.google.com/
 
 # Version
 
@@ -19,10 +19,6 @@ Android 5%, Desktop (only for testing purposes) 5%
 # Supported Firebase Tools
 
 Realtime Database 5%
-
-# Read first
-
-If you never worked with Firebase before, then get used to Firebase first: https://firebase.google.com/
 
 # Installation
 
@@ -52,7 +48,7 @@ For desktop testing you need to follow the steps from this page https://firebase
 
 Since FirebaseAuth is not yet supported by this extension you have to set your database rules for write/read access for everybody
 
-```
+```json
 {
   "rules": {
     ".read": "auth != null || true",
@@ -65,7 +61,7 @@ Again, this is only for testing purposes.
 
 ## Get it running
 
-```
+```java
 // only required when using desktop
 FirebaseConfiguration config = new FirebaseConfiguration();
 config.databaseUrl = "https://firebase-databse-url.firebaseio.com/"; // get this from Firebase console
@@ -81,7 +77,7 @@ FirebaseLoader.load(null);
 
 # Usage
 
-```
+```java
 // this snippet will create an entry and the node `storetest` with key/value.
 // Looks like this: -KN2zmtqCTGpPfbxRqcf:"some value"
 DatabaseReference reference = firebaseDatabase.getReference("storetest");
