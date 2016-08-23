@@ -2,7 +2,7 @@ package de.tomgrill.gdxfirebase.core;
 
 import java.util.Map;
 
-public interface DatabaseReference {
+public interface DatabaseReference extends Query {
     DatabaseReference child(String s);
 
     DatabaseReference push();
@@ -60,4 +60,5 @@ public interface DatabaseReference {
     public static interface CompletionListener {
         void onComplete(DatabaseError databaseError, DatabaseReference databaseReference);
     }
+
 }

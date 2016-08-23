@@ -7,12 +7,13 @@ import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
 
 import java.util.Map;
 
-public class AndroidDatabaseReference implements DatabaseReference {
+public class AndroidDatabaseReference extends AndroidQuery implements DatabaseReference {
 
     private com.google.firebase.database.DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
 
     public AndroidDatabaseReference(com.google.firebase.database.DatabaseReference databaseReference, FirebaseDatabase firebaseDatabase) {
+        super(databaseReference);
         this.databaseReference = databaseReference;
         this.firebaseDatabase = firebaseDatabase;
     }

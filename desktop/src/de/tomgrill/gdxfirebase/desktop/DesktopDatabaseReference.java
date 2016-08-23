@@ -5,11 +5,13 @@ import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
 
 import java.util.Map;
 
-public class DesktopDatabaseReference implements DatabaseReference {
+public class DesktopDatabaseReference extends DesktopQuery implements DatabaseReference {
     private com.google.firebase.database.DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
 
+
     DesktopDatabaseReference(com.google.firebase.database.DatabaseReference databaseReference, FirebaseDatabase firebaseDatabase) {
+        super(databaseReference);
         this.databaseReference = databaseReference;
         this.firebaseDatabase = firebaseDatabase;
     }
