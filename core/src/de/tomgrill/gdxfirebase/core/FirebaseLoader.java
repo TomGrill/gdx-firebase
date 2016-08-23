@@ -26,7 +26,7 @@ public class FirebaseLoader {
 
                 loaderObj = ClassReflection.getConstructor(loaderCls, FirebaseConfiguration.class).newInstance(firebaseConfiguration);
                 Gdx.app.debug("gdx-firebase", "gdx-firebase for " + Gdx.app.getType() + " installed successfully.");
-                Firebase.setFirebaseDatabase((FirebaseDatabase) loaderObj);
+                GDXFirebase.setFirebaseDatabase((FirebaseDatabase) loaderObj);
 
             } else {
                 Gdx.app.debug("gdx-firebase", "gdx-firebase NOT LOADED for " + Gdx.app.getType());
