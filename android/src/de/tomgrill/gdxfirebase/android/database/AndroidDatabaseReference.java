@@ -1,9 +1,9 @@
-package de.tomgrill.gdxfirebase.android;
+package de.tomgrill.gdxfirebase.android.database;
 
 
 import com.google.firebase.database.DatabaseError;
-import de.tomgrill.gdxfirebase.core.DatabaseReference;
-import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
+import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
 import java.util.Map;
 

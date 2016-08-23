@@ -1,4 +1,4 @@
-package de.tomgrill.gdxfirebase.core;
+package de.tomgrill.gdxfirebase.core.database;
 
 public interface DatabaseError {
 //    public static com.google.firebase.database.DatabaseError fromStatus(java.lang.String status) { /* compiled code */ }

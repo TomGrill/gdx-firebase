@@ -1,6 +1,6 @@
-package de.tomgrill.gdxfirebase.desktop;
+package de.tomgrill.gdxfirebase.desktop.database;
 
-import de.tomgrill.gdxfirebase.core.DatabaseError;
+import de.tomgrill.gdxfirebase.core.database.DatabaseError;
 
 public class DesktopDatabaseError implements DatabaseError {
 

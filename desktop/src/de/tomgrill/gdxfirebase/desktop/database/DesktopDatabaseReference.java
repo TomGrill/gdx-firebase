@@ -1,7 +1,7 @@
-package de.tomgrill.gdxfirebase.desktop;
+package de.tomgrill.gdxfirebase.desktop.database;
 
-import de.tomgrill.gdxfirebase.core.DatabaseReference;
-import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
+import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
 import java.util.Map;
 

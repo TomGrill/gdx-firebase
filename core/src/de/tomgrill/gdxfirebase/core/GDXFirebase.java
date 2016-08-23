@@ -2,13 +2,13 @@ package de.tomgrill.gdxfirebase.core;
 
 public class GDXFirebase {
 
-    private static FirebaseDatabase firebaseDatabase;
+    private static de.tomgrill.gdxfirebase.core.database.FirebaseDatabase firebaseDatabase;
 
-    static void setFirebaseDatabase(FirebaseDatabase firebaseDatabase){
+    static void setFirebaseDatabase(de.tomgrill.gdxfirebase.core.database.FirebaseDatabase firebaseDatabase){
         GDXFirebase.firebaseDatabase = firebaseDatabase;
     }
 
-    public static FirebaseDatabase FirebaseDatabase() {
+    public static de.tomgrill.gdxfirebase.core.database.FirebaseDatabase FirebaseDatabase() {
         return firebaseDatabase;
     }
 }

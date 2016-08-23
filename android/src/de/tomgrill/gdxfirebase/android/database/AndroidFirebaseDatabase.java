@@ -1,8 +1,8 @@
-package de.tomgrill.gdxfirebase.android;
+package de.tomgrill.gdxfirebase.android.database;
 
 
-import de.tomgrill.gdxfirebase.core.DatabaseReference;
-import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
+import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 
 public class AndroidFirebaseDatabase implements FirebaseDatabase {

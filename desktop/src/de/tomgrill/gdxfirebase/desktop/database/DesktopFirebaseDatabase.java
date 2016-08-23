@@ -1,9 +1,9 @@
-package de.tomgrill.gdxfirebase.desktop;
+package de.tomgrill.gdxfirebase.desktop.database;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import de.tomgrill.gdxfirebase.core.DatabaseReference;
-import de.tomgrill.gdxfirebase.core.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
+import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 
 public class DesktopFirebaseDatabase implements FirebaseDatabase {

@@ -1,4 +1,4 @@
-package de.tomgrill.gdxfirebase.core;
+package de.tomgrill.gdxfirebase.core.database;
 
 public interface FirebaseDatabase {
 

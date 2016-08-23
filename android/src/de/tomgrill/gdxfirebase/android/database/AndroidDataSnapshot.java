@@ -1,7 +1,7 @@
-package de.tomgrill.gdxfirebase.android;
+package de.tomgrill.gdxfirebase.android.database;
 
 import com.badlogic.gdx.utils.Array;
-import de.tomgrill.gdxfirebase.core.DataSnapshot;
+import de.tomgrill.gdxfirebase.core.database.DataSnapshot;
 
 public class AndroidDataSnapshot implements DataSnapshot {
     private com.google.firebase.database.DataSnapshot dataSnapshot;
