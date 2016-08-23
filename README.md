@@ -80,7 +80,7 @@ FirebaseLoader.load(null);
 ```java
 // this snippet will create an entry and the node `storetest` with key/value.
 // Looks like this: -KN2zmtqCTGpPfbxRqcf:"some value"
-DatabaseReference reference = firebaseDatabase.getReference("storetest");
+DatabaseReference reference = Firebase.getDatabaseInstance().getReference("storetest");
 String key = reference.push().getKey();
 reference.child(key).setValue("some value");
 ```
