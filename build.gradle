@@ -15,7 +15,7 @@ buildscript {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
 //        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'com.android.tools.build:gradle:2.1.2'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0-SNAPSHOT'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
         classpath 'com.intel.gradle:moeGradlePlugin:1.1.0.final-1'
         classpath 'com.google.gms:google-services:3.0.0'
     }
@@ -28,7 +28,7 @@ allprojects {
     ext {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.3'
-        roboVMVersion = '2.2.0-SNAPSHOT'
+        roboVMVersion = '2.2.0'
         firebaseVersion = '9.2.0'
     }
 
