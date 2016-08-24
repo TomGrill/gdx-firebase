@@ -120,9 +120,9 @@ FirebaseLoader.load(null,
                   );
 ```
 
-## Usage
+# Usage
 
-# Authentication
+## Authentication
 
 Register an `AuthStateListener` which will listen on user state changes. This can happen any time while the app is running. So better be prepared to handle `onAuthStateChanged` on a global place.
 
@@ -142,7 +142,7 @@ GDXFirebase.FirebaseAuth().signInAnonymously();
 
 All class and method names are aligned to the Android Firebase syntax. So best thing would be to read at least the Android section: https://firebase.google.com/docs/auth/android/manage-users
 
-# Realtime Database
+## Realtime Database
 
 ```java
 // this snippet will create an entry and the node `storetest` with key/value.
