@@ -1,10 +1,8 @@
-package de.tomgrill.gdxfirebase.desktop;
+package de.tomgrill.gdxfirebase.desktop.database;
 
 
 import com.badlogic.gdx.utils.Array;
-import de.tomgrill.gdxfirebase.core.DataSnapshot;
-
-import java.util.ArrayList;
+import de.tomgrill.gdxfirebase.core.database.DataSnapshot;
 
 public class DesktopDataSnapshot implements DataSnapshot {
 

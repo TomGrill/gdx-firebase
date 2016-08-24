@@ -1,7 +1,7 @@
-package de.tomgrill.gdxfirebase.android;
+package de.tomgrill.gdxfirebase.android.database;
 
 
-import de.tomgrill.gdxfirebase.core.DatabaseError;
+import de.tomgrill.gdxfirebase.core.database.DatabaseError;
 
 public class AndroidDatabaseError implements DatabaseError {
 

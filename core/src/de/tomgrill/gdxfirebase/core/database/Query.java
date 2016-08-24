@@ -1,16 +1,16 @@
-package de.tomgrill.gdxfirebase.core;
+package de.tomgrill.gdxfirebase.core.database;
 
 public interface Query {
 
     ValueEventListener addValueEventListener(ValueEventListener listener);
 
-    ChildEventListener addChildEventListener(ChildEventListener listener);
+    de.tomgrill.gdxfirebase.core.database.ChildEventListener addChildEventListener(de.tomgrill.gdxfirebase.core.database.ChildEventListener listener);
 
     void addListenerForSingleValueEvent(final ValueEventListener listener);
 
     void removeEventListener(ValueEventListener listener);
 
-    void removeEventListener(ChildEventListener listener);
+    void removeEventListener(de.tomgrill.gdxfirebase.core.database.ChildEventListener listener);
 
     void keepSynced(final boolean keepSynced);
 

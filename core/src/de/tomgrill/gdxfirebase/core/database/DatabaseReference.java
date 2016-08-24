@@ -1,4 +1,4 @@
-package de.tomgrill.gdxfirebase.core;
+package de.tomgrill.gdxfirebase.core.database;
 
 import java.util.Map;
 
@@ -58,7 +58,7 @@ public interface DatabaseReference extends Query {
 //    void setHijackHash(boolean hijackHash);
 
     public static interface CompletionListener {
-        void onComplete(DatabaseError databaseError, DatabaseReference databaseReference);
+        void onComplete(de.tomgrill.gdxfirebase.core.database.DatabaseError databaseError, DatabaseReference databaseReference);
     }
 
 }
