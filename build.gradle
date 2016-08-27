@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.1-SNAPSHOT'
+    VERSION = '0.0.2-SNAPSHOT'
 
 }
 
@@ -113,7 +113,7 @@ project(":desktop") {
     dependencies {
         compile project(':core')
 
-        compile 'com.google.firebase:firebase-server-sdk:[3.0.1,)'
+        compile 'com.google.firebase:firebase-server-sdk:3.0.1'
     }
 }
 
