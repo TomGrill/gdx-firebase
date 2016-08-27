@@ -10,20 +10,26 @@ import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 public class FirebaseLoader {
 
     public static void load(FirebaseConfiguration firebaseConfiguration, FirebaseFeatures... enabledFeatures) {
+        load(GDXFirebase.DEFAULT_APP_NAME, firebaseConfiguration, enabledFeatures);
+    }
+
+    public static void load(String name, FirebaseConfiguration firebaseConfiguration, FirebaseFeatures... enabledFeatures) {
+
+        // TODO implement duplicate feature check
 
         for (FirebaseFeatures feature : enabledFeatures) {
             if (feature == FirebaseFeatures.REALTIME_DATABASE) {
-                loadRealtimeDatabase(firebaseConfiguration);
+                loadRealtimeDatabase(name, firebaseConfiguration);
             }
             if (feature == FirebaseFeatures.AUTHENTICATION) {
-                loadAuthentication(firebaseConfiguration);
+                loadAuthentication(name, firebaseConfiguration);
             }
         }
 
 
     }
 
-    private static void loadAuthentication(FirebaseConfiguration firebaseConfiguration) {
+    private static void loadAuthentication(String name, FirebaseConfiguration firebaseConfiguration) {
         Class<?> loaderCls = null;
 
         try {
@@ -38,28 +44,25 @@ public class FirebaseLoader {
             }
 
 
-            if (loaderCls != null) {
-                Object loaderObj = ClassReflection.getConstructor(loaderCls, FirebaseConfiguration.class).newInstance(firebaseConfiguration);
-                Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with default implementation.");
-                GDXFirebase.setFirebaseAuth((FirebaseAuth) loaderObj);
-
-
-
-
-            } else if (firebaseConfiguration.desktopFirebaseAuth != null) {
+            if(firebaseConfiguration.desktopFirebaseAuth != null) {
+                GDXFirebase.setFirebaseAuth(name, firebaseConfiguration.desktopFirebaseAuth);
                 Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with custom user implementation.");
-                GDXFirebase.setFirebaseAuth(firebaseConfiguration.desktopFirebaseAuth);
             } else {
-                Gdx.app.debug("gdx-firebase", "Authentication NOT LOADED for " + Gdx.app.getType());
+                if (loaderCls != null) {
+                    Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                    GDXFirebase.setFirebaseAuth(name, (FirebaseAuth) loaderObj);
+                    Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                } else {
+                    Gdx.app.debug("gdx-firebase", "Authentication NOT LOADED for " + Gdx.app.getType());
+                }
             }
-
 
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
     }
 
-    private static void loadRealtimeDatabase(FirebaseConfiguration firebaseConfiguration) {
+    private static void loadRealtimeDatabase(String name, FirebaseConfiguration firebaseConfiguration) {
         Class<?> loaderCls = null;
 
         try {
@@ -69,15 +72,14 @@ public class FirebaseLoader {
 
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
                 loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.database.DesktopFirebaseDatabase");
-
             }
 
 
             if (loaderCls != null) {
 
-                Object loaderObj = ClassReflection.getConstructor(loaderCls, FirebaseConfiguration.class).newInstance(firebaseConfiguration);
+                Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                GDXFirebase.setFirebaseDatabase(name, (FirebaseDatabase) loaderObj);
                 Gdx.app.debug("gdx-firebase", "Realtime Database for " + Gdx.app.getType() + " installed successfully.");
-                GDXFirebase.setFirebaseDatabase((FirebaseDatabase) loaderObj);
 
             } else {
                 Gdx.app.debug("gdx-firebase", "Realtime Database NOT LOADED for " + Gdx.app.getType());

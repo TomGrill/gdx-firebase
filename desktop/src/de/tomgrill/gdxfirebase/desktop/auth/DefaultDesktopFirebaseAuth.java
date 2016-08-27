@@ -17,7 +17,7 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
 
     private boolean isSignedIn;
 
-    public DefaultDesktopFirebaseAuth(FirebaseConfiguration firebaseConfiguration) {
+    public DefaultDesktopFirebaseAuth(String name, FirebaseConfiguration firebaseConfiguration) {
         authStateListeners = new Array<>();
         firebaseUser = firebaseConfiguration.desktopFirebaseUser;
     }

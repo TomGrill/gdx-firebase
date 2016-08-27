@@ -1,6 +1,7 @@
 package de.tomgrill.gdxfirebase.android.database;
 
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.Logger;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.LogLevel;
@@ -9,7 +10,7 @@ import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
 public class AndroidFirebaseDatabase implements FirebaseDatabase {
 
-    public AndroidFirebaseDatabase(FirebaseConfiguration firebaseConfiguration) {
+    public AndroidFirebaseDatabase(String name, FirebaseConfiguration firebaseConfiguration) {
         // Android configuration is made with json file
     }
 

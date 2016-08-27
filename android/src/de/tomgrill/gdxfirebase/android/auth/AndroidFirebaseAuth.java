@@ -18,7 +18,7 @@ public class AndroidFirebaseAuth implements FirebaseAuth {
     private Array<AuthStateListener> authStateListeners;
 
 
-    public AndroidFirebaseAuth(FirebaseConfiguration firebaseConfiguration) {
+    public AndroidFirebaseAuth(String name, FirebaseConfiguration firebaseConfiguration) {
         this.firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
         fbAuthStateListeners = new Array<>();
         authStateListeners = new Array<>();
