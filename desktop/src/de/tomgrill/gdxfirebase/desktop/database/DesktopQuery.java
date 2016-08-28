@@ -92,7 +92,7 @@ public class DesktopQuery implements Query {
     @Override
     public void addListenerForSingleValueEvent(final ValueEventListener listener) {
 
-        com.google.firebase.database.ValueEventListener fbListener = new com.google.firebase.database.ValueEventListener() {
+        query.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listener.onDataChange(new DesktopDataSnapshot(dataSnapshot));
@@ -102,11 +102,8 @@ public class DesktopQuery implements Query {
             public void onCancelled(DatabaseError databaseError) {
                 listener.onCancelled(new DesktopDatabaseError(databaseError));
             }
-        };
-        query.addValueEventListener(fbListener);
+        });
 
-        fbValueEventListenerList.add(fbListener);
-        valueEventListenerList.add(listener);
     }
 
     @Override

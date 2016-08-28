@@ -91,7 +91,7 @@ public class AndroidQuery implements Query {
     @Override
     public void addListenerForSingleValueEvent(final ValueEventListener listener) {
 
-        com.google.firebase.database.ValueEventListener fbListener = new com.google.firebase.database.ValueEventListener() {
+        query.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listener.onDataChange(new AndroidDataSnapshot(dataSnapshot));
@@ -101,11 +101,8 @@ public class AndroidQuery implements Query {
             public void onCancelled(DatabaseError databaseError) {
                 listener.onCancelled(new AndroidDatabaseError(databaseError));
             }
-        };
-        query.addValueEventListener(fbListener);
+        });
 
-        fbValueEventListenerList.add(fbListener);
-        valueEventListenerList.add(listener);
     }
 
     @Override
