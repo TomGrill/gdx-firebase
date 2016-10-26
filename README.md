@@ -15,7 +15,7 @@ I will also stream sometimes when developing at https://www.twitch.tv/tomgrill a
 
 # Version
 
-Current stable: none, Current snapshot: 0.0.2-SNAPSHOT
+Current stable: none, Current snapshot: 0.0.3-SNAPSHOT
 
 Names for classes and methods are probably gonna change a lot.
 
@@ -32,9 +32,12 @@ Realtime Database 5%
 Add to the corresponding dependencies section of your build.gradle:
 
 ```
-compile "de.tomgrill.gdxfirebase:gdx-firebase-core:0.0.2-SNAPSHOT"
-compile "de.tomgrill.gdxfirebase:gdx-firebase-android:0.0.2-SNAPSHOT"
-compile "de.tomgrill.gdxfirebase:gdx-firebase-desktop:0.0.2-SNAPSHOT"
+compile "de.tomgrill.gdxfirebase:gdx-firebase-core:0.0.3-SNAPSHOT"
+compile "de.tomgrill.gdxfirebase:gdx-firebase-android:0.0.3-SNAPSHOT"
+compile "de.tomgrill.gdxfirebase:gdx-firebase-desktop:0.0.3-SNAPSHOT"
+    // Getting a "Could not find" error? Make sure you have
+    // the latest Google Repository in the Android SDK manager
+
 ```
 
 ## Android
