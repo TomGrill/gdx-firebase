@@ -55,7 +55,7 @@ public class DesktopFirebaseDatabase implements FirebaseDatabase {
 
     @Override
     public synchronized void setPersistenceEnabled(boolean isEnabled) {
-        com.google.firebase.database.FirebaseDatabase.getInstance(app).setPersistenceEnabled(isEnabled);
+        // ignored on Desktop
     }
 
     @Override

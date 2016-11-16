@@ -10,6 +10,10 @@ public interface FirebaseDatabase {
 
     String getSdkVersion();
 
+    /**
+     * Enable/disable persistence storing. Ignored on Desktop.
+     * @param isEnabled
+     */
     void setPersistenceEnabled(boolean isEnabled);
 
     void setLogLevel(LogLevel logLevel);
