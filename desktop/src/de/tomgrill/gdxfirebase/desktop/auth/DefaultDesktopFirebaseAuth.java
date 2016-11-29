@@ -3,10 +3,7 @@ package de.tomgrill.gdxfirebase.desktop.auth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
-import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
-import de.tomgrill.gdxfirebase.core.auth.AuthStateListener;
-import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
-import de.tomgrill.gdxfirebase.core.auth.FirebaseUser;
+import de.tomgrill.gdxfirebase.core.auth.*;
 
 public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
 
@@ -90,6 +87,11 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
     public void signOut() {
         isSignedIn = false;
         informListeners();
+    }
+
+    @Override
+    public AuthProvider FacebookAuthProvider(String accessToken) {
+        return new DesktopFacebookAuthProvider(accessToken);
     }
 
     private void informListeners() {

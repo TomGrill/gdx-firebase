@@ -1,14 +1,9 @@
 package de.tomgrill.gdxfirebase.android.auth;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
-import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
-import de.tomgrill.gdxfirebase.core.auth.AuthStateListener;
-import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
-import de.tomgrill.gdxfirebase.core.auth.FirebaseUser;
+import de.tomgrill.gdxfirebase.core.auth.*;
 
 public class AndroidFirebaseAuth implements FirebaseAuth {
 
@@ -16,7 +11,6 @@ public class AndroidFirebaseAuth implements FirebaseAuth {
 
     private Array<com.google.firebase.auth.FirebaseAuth.AuthStateListener> fbAuthStateListeners;
     private Array<AuthStateListener> authStateListeners;
-
 
     public AndroidFirebaseAuth(String name, FirebaseConfiguration firebaseConfiguration) {
         this.firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
@@ -26,7 +20,7 @@ public class AndroidFirebaseAuth implements FirebaseAuth {
 
     @Override
     public FirebaseUser getCurrentUser() {
-        if(firebaseAuth.getCurrentUser() == null) {
+        if (firebaseAuth.getCurrentUser() == null) {
             return null;
         }
         return new AndroidFirebaseUser(firebaseAuth.getCurrentUser());
@@ -96,6 +90,11 @@ public class AndroidFirebaseAuth implements FirebaseAuth {
     @Override
     public void signOut() {
         firebaseAuth.signOut();
+    }
+
+    @Override
+    public AuthProvider FacebookAuthProvider(String accessToken) {
+        return new AndroidFacebookAuthProvider(accessToken);
     }
 
 }

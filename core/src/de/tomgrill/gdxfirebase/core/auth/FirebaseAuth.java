@@ -23,4 +23,6 @@ public interface FirebaseAuth {
     void sendPasswordResetEmail(String email);
 
     void signOut();
+
+    AuthProvider FacebookAuthProvider(String accessToken);
 }
