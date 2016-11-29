@@ -29,7 +29,7 @@ allprojects {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.3'
         roboVMVersion = '2.2.0'
-        firebaseVersion = '9.8.0'
+        firebaseVersion = '10.0.1'
     }
 
     repositories {
@@ -113,7 +113,7 @@ project(":desktop") {
     dependencies {
         compile project(':core')
 
-        compile 'com.google.firebase:firebase-server-sdk:3.0.1'
+        compile 'com.google.firebase:firebase-server-sdk:3.0.3'
     }
 }
 
