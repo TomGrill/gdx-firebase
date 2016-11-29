@@ -27,7 +27,7 @@ public interface FirebaseUser {
     void reauthenticate(AuthCredential authCredential);
 
 
-    void linkWithCredential(AuthCredential authCredential);
+    Task<AuthResult> linkWithCredential(AuthCredential authCredential);
 
     void unlink(String s);
 

@@ -1,7 +1,9 @@
 package de.tomgrill.gdxfirebase.android.auth;
 
 import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
+import de.tomgrill.gdxfirebase.core.auth.AuthResult;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseUser;
+import de.tomgrill.gdxfirebase.core.auth.Task;
 
 import java.util.List;
 
@@ -63,8 +65,8 @@ public class AndroidFirebaseUser implements FirebaseUser {
     }
 
     @Override
-    public void linkWithCredential(AuthCredential authCredential) {
-        firebaseUser.reauthenticate(((AndroidAuthCredential) authCredential).getFirebaseAuthCredential());
+    public Task<AuthResult> linkWithCredential(AuthCredential authCredential) {
+        return new AndroidTask<AuthResult>(firebaseUser.linkWithCredential(((AndroidAuthCredential) authCredential).getFirebaseAuthCredential()));
     }
 
     @Override

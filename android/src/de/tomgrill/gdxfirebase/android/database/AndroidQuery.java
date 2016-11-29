@@ -108,23 +108,21 @@ public class AndroidQuery implements Query {
     @Override
     public void removeEventListener(ValueEventListener listener) {
         int index = valueEventListenerList.indexOf(listener, true);
-        if (index == -1) {
-            throw new RuntimeException("Unknown ValueEventListener. Already removed or not added.");
+        if (index != -1) {
+            query.removeEventListener(fbValueEventListenerList.get(index));
+            fbValueEventListenerList.removeIndex(index);
+            valueEventListenerList.removeIndex(index);
         }
-        query.removeEventListener(fbValueEventListenerList.get(index));
-        fbValueEventListenerList.removeIndex(index);
-        valueEventListenerList.removeIndex(index);
     }
 
     @Override
     public void removeEventListener(ChildEventListener listener) {
         int index = childEventListenerList.indexOf(listener, true);
-        if (index == -1) {
-            throw new RuntimeException("Unknown ChildEventListener. Already removed or not added.");
+        if (index != -1) {
+            query.removeEventListener(fbChildEventListenerList.get(index));
+            fbChildEventListenerList.removeIndex(index);
+            childEventListenerList.removeIndex(index);
         }
-        query.removeEventListener(fbChildEventListenerList.get(index));
-        fbChildEventListenerList.removeIndex(index);
-        childEventListenerList.removeIndex(index);
     }
 
     @Override

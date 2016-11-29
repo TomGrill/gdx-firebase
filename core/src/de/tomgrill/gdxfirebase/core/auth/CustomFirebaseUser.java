@@ -102,8 +102,30 @@ class CustomFirebaseUser implements FirebaseUser {
     }
 
     @Override
-    public void linkWithCredential(AuthCredential var1) {
+    public Task<AuthResult> linkWithCredential(AuthCredential var1) {
         Gdx.app.debug("gdx-firebase", "linkWithCredential() not supported here.");
+        return new Task<AuthResult>() {
+            @Override
+            public boolean isComplete() {
+                return false;
+            }
+
+            @Override
+            public boolean isSuccessful() {
+                return false;
+            }
+
+            @Override
+            public Task<AuthResult> addOnCompleteListener(OnCompleteListener<AuthResult> var1) {
+                return this;
+            }
+
+//            @Override
+//            public Task<AuthResult> addOnSuccessListener(OnSuccessListener<AuthResult> var1) {
+//                return null;
+//            }
+
+        };
     }
 
     @Override
