@@ -40,6 +40,19 @@ compile "de.tomgrill.gdxfirebase:gdx-firebase-desktop:0.0.4-SNAPSHOT"
 
 ```
 
+## All Platforms
+
+Edit build.gradle and add this to the dependencies section
+```
+buildscript {
+    // ...
+    dependencies {
+        // ...
+        classpath 'com.google.gms:google-services:3.1.0'
+    }
+}
+```
+
 ## Android
 
 Edit android/build.gradle and add this line at the END of the file:
@@ -66,7 +79,7 @@ FirebaseUser firebaseUser = new FirebaseUserBuilder()
       .setUid("SUPER_SECRET_UID")
       .setName("Mike Pike")
       ....
-      .built();
+      .build();
       
 // Generate JSON:
 FirebaseUser firebaseUser = new FirebaseUserBuilder()
@@ -76,7 +89,7 @@ FirebaseUser firebaseUser = new FirebaseUserBuilder()
       .prettyPrint(); // store the output in a file for reuse like above.
 ```
 
-You can also built your own user object by implementing FirebaseUser interface.
+You can also build your own user object by implementing FirebaseUser interface.
 
 In order to use your the FirebaserUser assign it to your config:
 

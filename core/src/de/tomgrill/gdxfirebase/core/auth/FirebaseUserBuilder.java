@@ -41,7 +41,7 @@ public class FirebaseUserBuilder {
             fileContent = sb.toString();
 
         } catch (IOException e) {
-            Gdx.app.debug("gdx-firebase", "Cannot find file " + absolutePathToFirebaseUserJsonFile + ". This may be an exception to solve when you want to use this file. You can ignore this exception when you do not need this file in your current built.");
+            Gdx.app.debug("gdx-firebase", "Cannot find file " + absolutePathToFirebaseUserJsonFile + ". This may be an exception to solve when you want to use this file. You can ignore this exception when you do not need this file in your current build.");
         }
 
         if (fileContent != null) {
