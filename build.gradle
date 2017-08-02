@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.4-SNAPSHOT'
+    VERSION = '0.0.5-SNAPSHOT'
 
 }
 
@@ -29,7 +29,7 @@ allprojects {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.6'
         roboVMVersion = '2.2.0'
-        firebaseVersion = '11.0.1'
+        firebaseVersion = '11.0.4'
     }
 
     repositories {
