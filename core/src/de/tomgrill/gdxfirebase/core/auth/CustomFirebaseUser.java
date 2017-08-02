@@ -120,7 +120,12 @@ class CustomFirebaseUser implements FirebaseUser {
                 return this;
             }
 
-//            @Override
+            @Override
+            public Exception getException() {
+                return new GdxFirebaseException("linkWithCredential() not supported");
+            }
+
+            //            @Override
 //            public Task<AuthResult> addOnSuccessListener(OnSuccessListener<AuthResult> var1) {
 //                return null;
 //            }

@@ -13,8 +13,7 @@ public interface Task<TResult> {
 
 //    Task<TResult> addOnFailureListener(OnFailureListener var1);
 
-//    @Nullable
-//    public abstract Exception getException();
+      public abstract Exception getException();
 //
 //    @NonNull
 //    public abstract Task<TResult> addOnSuccessListener(@NonNull Executor var1, @NonNull OnSuccessListener<? super TResult> var2);

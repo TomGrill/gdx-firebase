@@ -67,6 +67,14 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
     }
 
     @Override
+    public void signInAnonymously(OnCompleteListener<AuthResult> onCompleteListener) {
+        isSignedIn = true;
+        informListeners();
+        onCompleteListener.onComplete(new DesktopTask<AuthResult>(true, true));
+        Gdx.app.debug("gdx-firebase", "signInAnonymously will always sign in the user on Desktop platform.");
+    }
+
+    @Override
     public void createUserWithEmailAndPassword(String email, String password) {
         isSignedIn = true;
         informListeners();
@@ -92,6 +100,23 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
     @Override
     public AuthProvider FacebookAuthProvider(String accessToken) {
         return new DesktopFacebookAuthProvider(accessToken);
+    }
+
+    @Override
+    public AuthProvider GoogleAuthProvider(String accessToken) {
+        return null;
+    }
+
+    @Override
+    public void signInWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
+        Gdx.app.debug("gdx-firebase", "signInWithGoogle is not supported on Desktop platform");
+        onCompleteListener.onComplete(new DesktopTask<AuthResult>(true,false));
+    }
+
+    @Override
+    public void linkWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
+        Gdx.app.debug("gdx-firebase", "linkWithGoogle is not supported on Desktop platform");
+        onCompleteListener.onComplete(new DesktopTask<AuthResult>(true,false));
     }
 
     private void informListeners() {

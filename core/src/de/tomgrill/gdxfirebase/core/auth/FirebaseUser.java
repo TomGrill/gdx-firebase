@@ -26,7 +26,7 @@ public interface FirebaseUser {
 
     void reauthenticate(AuthCredential authCredential);
 
-
+    @Deprecated
     Task<AuthResult> linkWithCredential(AuthCredential authCredential);
 
     void unlink(String s);

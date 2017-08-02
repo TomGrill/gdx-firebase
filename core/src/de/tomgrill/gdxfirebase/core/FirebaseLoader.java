@@ -34,7 +34,50 @@ public class FirebaseLoader {
 
         try {
             if (Gdx.app.getType() == Application.ApplicationType.Android) {
-                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.android.auth.AndroidFirebaseAuth");
+//                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.android.auth.AndroidFirebaseAuth");
+
+                Class<?> activityClazz = ClassReflection.forName("android.app.Activity");
+
+                Class<?> firebaseAuthClazz = ClassReflection.forName("de.tomgrill.gdxfirebase.android.auth.AndroidFirebaseAuth");
+
+                Object activity = null;
+
+                Class<?> gdxClazz  = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
+
+                if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
+
+                    activity = gdxAppObject;
+                } else {
+
+                    Class<?> supportFragmentClass = findClass("android.support.v4.app.Fragment");
+                    // {
+                    if (supportFragmentClass != null && ClassReflection.isAssignableFrom(supportFragmentClass, gdxAppObject.getClass())) {
+
+                        activity = ClassReflection.getMethod(supportFragmentClass, "getActivity").invoke(gdxAppObject);
+                    } else {
+                        Class<?> fragmentClass = findClass("android.app.Fragment");
+                        if (fragmentClass != null && ClassReflection.isAssignableFrom(fragmentClass, gdxAppObject.getClass())) {
+                            activity = ClassReflection.getMethod(fragmentClass, "getActivity").invoke(gdxAppObject);
+                        }
+                    }
+
+                }
+
+                if (activity == null) {
+                    throw new RuntimeException("Can't find your gdx activity to instantiate gdx-firebase. " + "Looks like you have implemented AndroidApplication without using "
+                            + "Activity or Fragment classes or Activity is not available at the moment");
+                }
+                Object firebaseAuth = ClassReflection.getConstructor(firebaseAuthClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
+
+                GDXFirebase.setFirebaseAuth(name, (FirebaseAuth) firebaseAuth);
+
+                Gdx.app.debug("gdx-firebase", "Authentication loaded for " + Gdx.app.getType());
+
+
+
+                return;
+
             }
 
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
@@ -59,6 +102,14 @@ public class FirebaseLoader {
 
         } catch (ReflectionException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static Class<?> findClass(String name) {
+        try {
+            return ClassReflection.forName(name);
+        } catch (Exception e) {
+            return null;
         }
     }
 

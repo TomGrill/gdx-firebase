@@ -6,20 +6,32 @@ import de.tomgrill.gdxfirebase.core.auth.OnCompleteListener;
 import de.tomgrill.gdxfirebase.core.auth.Task;
 
 public class AndroidTask<TResult> implements Task<TResult> {
+    private final boolean complete;
+    private final boolean successful;
     private com.google.android.gms.tasks.Task<AuthResult> authResultTask;
+    private Exception exception;
 
     public AndroidTask(com.google.android.gms.tasks.Task<AuthResult> authResultTask) {
         this.authResultTask = authResultTask;
+        complete = authResultTask.isComplete();
+        successful = authResultTask.isSuccessful();
+        exception = authResultTask.getException();
+    }
+
+    public AndroidTask(boolean complete, boolean successful, Exception exception) {
+        this.complete = complete;
+        this.successful = successful;
+        this.exception = exception;
     }
 
     @Override
     public boolean isComplete() {
-        return authResultTask.isComplete();
+        return complete;
     }
 
     @Override
     public boolean isSuccessful() {
-        return authResultTask.isSuccessful();
+        return successful;
     }
 
     @Override
@@ -31,6 +43,11 @@ public class AndroidTask<TResult> implements Task<TResult> {
             }
         });
         return this;
+    }
+
+    @Override
+    public Exception getException() {
+        return exception;
     }
 
 //    @Override
