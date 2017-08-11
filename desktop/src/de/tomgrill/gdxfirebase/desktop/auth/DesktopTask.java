@@ -1,5 +1,6 @@
 package de.tomgrill.gdxfirebase.desktop.auth;
 
+import de.tomgrill.gdxfirebase.core.auth.GdxFirebaseException;
 import de.tomgrill.gdxfirebase.core.auth.OnCompleteListener;
 import de.tomgrill.gdxfirebase.core.auth.Task;
 
@@ -30,6 +31,6 @@ public class DesktopTask<TResult> implements Task<TResult> {
 
     @Override
     public Exception getException() {
-        return null;
+        return new GdxFirebaseException("desktop exception");
     }
 }
