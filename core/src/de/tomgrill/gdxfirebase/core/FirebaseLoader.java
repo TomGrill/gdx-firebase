@@ -30,12 +30,6 @@ public class FirebaseLoader {
                 loadAnalytics(name, firebaseConfiguration);
             }
         }
-
-        if (GDXFirebase.FirebaseAnalytics() == null) {
-            GDXFirebase.setFirebaseAnalytics(GDXFirebase.DEFAULT_APP_NAME, new NullFirebaseAnalytics());
-        }
-
-
     }
 
     private static void loadAnalytics(String name, FirebaseConfiguration firebaseConfiguration) {
