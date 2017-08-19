@@ -14,10 +14,6 @@ public class GDXFirebase {
     private static ObjectMap<String, FirebaseAuth> auths = new ObjectMap<>();
     private static ObjectMap<String, FirebaseAnalytics> analytics = new ObjectMap<>();
 
-    static {
-        analytics.put(GDXFirebase.DEFAULT_APP_NAME, new NullFirebaseAnalytics());
-    }
-
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
         if (!databases.containsKey(name)) {
             databases.put(name, firebaseDatabase);

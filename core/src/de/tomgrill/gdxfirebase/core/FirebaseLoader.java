@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
+import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
@@ -28,6 +29,10 @@ public class FirebaseLoader {
             if (feature == FirebaseFeatures.ANALYTICS) {
                 loadAnalytics(name, firebaseConfiguration);
             }
+        }
+
+        if (GDXFirebase.FirebaseAnalytics() == null) {
+            GDXFirebase.setFirebaseAnalytics(GDXFirebase.DEFAULT_APP_NAME, new NullFirebaseAnalytics());
         }
 
 
@@ -83,7 +88,7 @@ public class FirebaseLoader {
             }
 
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.analytics.DefaultDesktopFirebaseAuth");
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.analytics.DesktopFirebaseAnalytics");
                 if (loaderCls != null) {
                     Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
                     GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) loaderObj);
