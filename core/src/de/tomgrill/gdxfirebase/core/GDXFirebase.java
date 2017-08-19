@@ -2,6 +2,7 @@ package de.tomgrill.gdxfirebase.core;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
+import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
@@ -13,6 +14,9 @@ public class GDXFirebase {
     private static ObjectMap<String, FirebaseAuth> auths = new ObjectMap<>();
     private static ObjectMap<String, FirebaseAnalytics> analytics = new ObjectMap<>();
 
+    static {
+        analytics.put(GDXFirebase.DEFAULT_APP_NAME, new NullFirebaseAnalytics());
+    }
 
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
         if (!databases.containsKey(name)) {
