@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
@@ -24,9 +25,92 @@ public class FirebaseLoader {
             if (feature == FirebaseFeatures.AUTHENTICATION) {
                 loadAuthentication(name, firebaseConfiguration);
             }
+            if (feature == FirebaseFeatures.ANALYTICS) {
+                loadAnalytics(name, firebaseConfiguration);
+            }
         }
 
 
+    }
+
+    private static void loadAnalytics(String name, FirebaseConfiguration firebaseConfiguration) {
+        Class<?> loaderCls = null;
+
+        try {
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+
+                Class<?> activityClazz = ClassReflection.forName("android.app.Activity");
+
+                Class<?> firebaseAnalyticsClazz = ClassReflection.forName("de.tomgrill.gdxfirebase.android.analytics.AndroidFirebaseAnalytics");
+
+                Object activity = null;
+
+                Class<?> gdxClazz = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
+
+                if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
+
+                    activity = gdxAppObject;
+                } else {
+
+                    Class<?> supportFragmentClass = findClass("android.support.v4.app.Fragment");
+                    // {
+                    if (supportFragmentClass != null && ClassReflection.isAssignableFrom(supportFragmentClass, gdxAppObject.getClass())) {
+
+                        activity = ClassReflection.getMethod(supportFragmentClass, "getActivity").invoke(gdxAppObject);
+                    } else {
+                        Class<?> fragmentClass = findClass("android.app.Fragment");
+                        if (fragmentClass != null && ClassReflection.isAssignableFrom(fragmentClass, gdxAppObject.getClass())) {
+                            activity = ClassReflection.getMethod(fragmentClass, "getActivity").invoke(gdxAppObject);
+                        }
+                    }
+
+                }
+
+                if (activity == null) {
+                    throw new RuntimeException("Can't find your gdx activity to instantiate gdx-firebase. " + "Looks like you have implemented AndroidApplication without using "
+                            + "Activity or Fragment classes or Activity is not available at the moment");
+                }
+                Object firebaseAnalytics = ClassReflection.getConstructor(firebaseAnalyticsClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
+
+                GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) firebaseAnalytics);
+
+                Gdx.app.debug("gdx-firebase", "Analytics loaded for " + Gdx.app.getType());
+
+
+                return;
+
+            }
+
+            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.analytics.DefaultDesktopFirebaseAuth");
+                if (loaderCls != null) {
+                    Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                    GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) loaderObj);
+                    Gdx.app.debug("gdx-firebase", "Analytics for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                } else {
+                    Gdx.app.debug("gdx-firebase", "Analytics NOT LOADED for " + Gdx.app.getType());
+                }
+                return;
+            }
+
+
+//            if(firebaseConfiguration.desktopFirebaseAuth != null) {
+//                GDXFirebase.setFirebaseAuth(name, firebaseConfiguration.desktopFirebaseAuth);
+//                Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with custom user implementation.");
+//            } else {
+//                if (loaderCls != null) {
+//                    Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+//                    GDXFirebase.setFirebaseAuth(name, (FirebaseAuth) loaderObj);
+//                    Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with default implementation.");
+//                } else {
+//                    Gdx.app.debug("gdx-firebase", "Authentication NOT LOADED for " + Gdx.app.getType());
+//                }
+//            }
+
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void loadAuthentication(String name, FirebaseConfiguration firebaseConfiguration) {
@@ -42,7 +126,7 @@ public class FirebaseLoader {
 
                 Object activity = null;
 
-                Class<?> gdxClazz  = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Class<?> gdxClazz = ClassReflection.forName("com.badlogic.gdx.Gdx");
                 Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
 
                 if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
@@ -75,7 +159,6 @@ public class FirebaseLoader {
                 Gdx.app.debug("gdx-firebase", "Authentication loaded for " + Gdx.app.getType());
 
 
-
                 return;
 
             }
@@ -87,7 +170,7 @@ public class FirebaseLoader {
             }
 
 
-            if(firebaseConfiguration.desktopFirebaseAuth != null) {
+            if (firebaseConfiguration.desktopFirebaseAuth != null) {
                 GDXFirebase.setFirebaseAuth(name, firebaseConfiguration.desktopFirebaseAuth);
                 Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with custom user implementation.");
             } else {

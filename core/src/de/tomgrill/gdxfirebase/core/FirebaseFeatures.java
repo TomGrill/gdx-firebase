@@ -1,5 +1,5 @@
 package de.tomgrill.gdxfirebase.core;
 
 public enum FirebaseFeatures {
-    REALTIME_DATABASE, AUTHENTICATION
+    REALTIME_DATABASE, AUTHENTICATION, ANALYTICS
 }
