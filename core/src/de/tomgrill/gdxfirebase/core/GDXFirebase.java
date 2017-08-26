@@ -1,6 +1,7 @@
 package de.tomgrill.gdxfirebase.core;
 
 import com.badlogic.gdx.utils.ObjectMap;
+import de.tomgrill.gdxfirebase.core.admob.FirebaseAdmob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
@@ -13,6 +14,7 @@ public class GDXFirebase {
     private static ObjectMap<String, FirebaseDatabase> databases = new ObjectMap<>();
     private static ObjectMap<String, FirebaseAuth> auths = new ObjectMap<>();
     private static ObjectMap<String, FirebaseAnalytics> analytics = new ObjectMap<>();
+    private static ObjectMap<String, FirebaseAdmob> admobs = new ObjectMap<>();
 
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
         if (!databases.containsKey(name)) {
@@ -38,6 +40,13 @@ public class GDXFirebase {
         }
     }
 
+    public static void setFirebaseAdmob(String name, FirebaseAdmob firebaseAdmob) {
+        if (!admobs.containsKey(name)) {
+            admobs.put(name, firebaseAdmob);
+        } else {
+            throw new RuntimeException("Firebase App named [" + name + "] already exist.");
+        }
+    }
 
     public static synchronized FirebaseDatabase FirebaseDatabase() {
         return FirebaseDatabase(DEFAULT_APP_NAME);
@@ -68,6 +77,17 @@ public class GDXFirebase {
     public static synchronized FirebaseAnalytics FirebaseAnalytics(String name) {
         if (analytics.containsKey(name)) {
             return analytics.get(name);
+        }
+        throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
+    }
+
+    public static synchronized FirebaseAdmob FirebaseAdmob() {
+        return FirebaseAdmob(DEFAULT_APP_NAME);
+    }
+
+    public static synchronized FirebaseAdmob FirebaseAdmob(String name) {
+        if (admobs.containsKey(name)) {
+            return admobs.get(name);
         }
         throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
     }
