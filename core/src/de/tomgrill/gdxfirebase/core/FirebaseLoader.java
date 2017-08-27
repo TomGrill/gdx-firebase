@@ -217,6 +217,25 @@ public class FirebaseLoader {
             }
 
 
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+                try {
+                    loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.auth.IOSMOEFirebaseAuth");
+                    if (loaderCls != null) {
+                        //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                        Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                        GDXFirebase.setFirebaseAuth(name, (FirebaseAuth) loaderObj);
+                        Gdx.app.debug("gdx-firebase", "Auth for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                    } else {
+                        Gdx.app.debug("gdx-firebase", "Auth NOT LOADED for " + Gdx.app.getType());
+                    }
+                    return;
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             if (firebaseConfiguration.desktopFirebaseAuth != null) {
                 GDXFirebase.setFirebaseAuth(name, firebaseConfiguration.desktopFirebaseAuth);
                 Gdx.app.debug("gdx-firebase", "Authentication for " + Gdx.app.getType() + " installed successfully with custom user implementation.");

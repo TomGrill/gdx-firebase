@@ -7,11 +7,15 @@ import de.tomgrill.gdxfirebase.bindings.firebaseanalytics.FIRAnalytics;
 import de.tomgrill.gdxfirebase.bindings.firebasecore.FIRApp;
 import de.tomgrill.gdxfirebase.core.analytics.Bundle;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
+import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
 public class IOSMOEFirebaseAnalytics implements FirebaseAnalytics {
 
     public IOSMOEFirebaseAnalytics() {
-        FIRApp.configure();
+        if(!ConfigureOverwatch.isConfigured) {
+            FIRApp.configure();
+            ConfigureOverwatch.isConfigured = true;
+        }
     }
 
     @Override
