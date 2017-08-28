@@ -1,14 +1,22 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
+import apple.NSObject;
 import apple.foundation.NSError;
+import apple.uikit.UIViewController;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.utils.Array;
 import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuth;
 import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRUser;
 import de.tomgrill.gdxfirebase.bindings.firebasecore.FIRApp;
+import de.tomgrill.gdxfirebase.bindings.googlesignin.GIDGoogleUser;
+import de.tomgrill.gdxfirebase.bindings.googlesignin.GIDSignIn;
+import de.tomgrill.gdxfirebase.bindings.googlesignin.protocol.GIDSignInDelegate;
+import de.tomgrill.gdxfirebase.bindings.googlesignin.protocol.GIDSignInUIDelegate;
 import de.tomgrill.gdxfirebase.core.auth.*;
 import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
-public class IOSMOEFirebaseAuth implements FirebaseAuth {
+public class IOSMOEFirebaseAuth implements FirebaseAuth, GIDSignInDelegate, GIDSignInUIDelegate {
 
     private Array<FIRAuth.Block_addAuthStateDidChangeListener> fbAuthStateListeners;
     private Array<AuthStateListener> authStateListeners;
@@ -18,6 +26,15 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
+
+        //GIDSignIn.sharedInstance().setClientID(FIRApp.defaultApp().name());
+        //GIDSignIn.sharedInstance().setDelegate((GIDSignInDelegate) Gdx.app);
+
+        //GIDSignIn.sharedInstance().setUiDelegate(this);
+
+
+        GIDSignIn.sharedInstance().setUiDelegate(this);
+        //GIDSignIn.sharedInstance().delegate();
 
         fbAuthStateListeners = new Array<>();
         authStateListeners = new Array<>();
@@ -51,7 +68,7 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
         if (index == -1) {
             throw new RuntimeException("Unknown AuthStateListener. Already removed or not added.");
         }
-        FIRAuth.auth().removeAuthStateDidChangeListener(fbAuthStateListeners.get(index));
+        FIRAuth.auth().removeAuthStateDidChangeListener((FIRAuth.Block_addAuthStateDidChangeListener) fbAuthStateListeners.get(index));
         fbAuthStateListeners.removeIndex(index);
         authStateListeners.removeIndex(index);
     }
@@ -156,11 +173,58 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
 
     @Override
     public void signInWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
-        // TODO
+        GIDSignIn.sharedInstance().signIn();
     }
 
     @Override
     public void linkWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
         // TODO
+    }
+
+    @Override
+    public void signInDidDisconnectWithUserWithError(GIDSignIn signIn, GIDGoogleUser user, NSError error) {
+        if(error != null) {
+            System.out.println(signIn.clientID());
+            System.out.println(signIn.currentUser().userID());
+        } else {
+            System.out.println(error.localizedDescription());
+            System.out.println(error.localizedFailureReason());
+        }
+    }
+
+    @Override
+    public void signInDidSignInForUserWithError(GIDSignIn signIn, GIDGoogleUser user, NSError error) {
+        if(error != null) {
+            System.out.println(signIn.clientID());
+            System.out.println(signIn.currentUser().userID());
+        } else {
+            System.out.println(error.localizedDescription());
+            System.out.println(error.localizedFailureReason());
+        }
+
+    }
+
+    @Override
+    public void signInPresentViewController(GIDSignIn signIn, UIViewController viewController) {
+        if(signIn != null) {
+            System.out.println(signIn.clientID());
+            System.out.println(signIn.currentUser().userID());
+        }
+    }
+
+    @Override
+    public void signInDismissViewController(GIDSignIn signIn, UIViewController viewController) {
+        if(signIn != null) {
+            System.out.println(signIn.clientID());
+            System.out.println(signIn.currentUser().userID());
+        }
+    }
+
+    @Override
+    public void signInWillDispatchError(GIDSignIn signIn, NSError error) {
+        if(signIn != null) {
+            System.out.println(signIn.clientID());
+            System.out.println(signIn.currentUser().userID());
+        }
     }
 }
