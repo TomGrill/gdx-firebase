@@ -13,4 +13,6 @@ public class FirebaseConfiguration {
 
     public FirebaseUser desktopFirebaseUser;
     public FirebaseAuth desktopFirebaseAuth;
+    public String admobAppId;
+    public boolean admobUseTestDevice = true;
 }

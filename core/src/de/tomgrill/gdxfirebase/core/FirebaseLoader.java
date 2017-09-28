@@ -4,8 +4,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
-import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
@@ -28,6 +28,9 @@ public class FirebaseLoader {
             }
             if (feature == FirebaseFeatures.ANALYTICS) {
                 loadAnalytics(name, firebaseConfiguration);
+            }
+            if (feature == FirebaseFeatures.ADMOB) {
+                loadAdmob(name, firebaseConfiguration);
             }
         }
     }
@@ -106,6 +109,74 @@ public class FirebaseLoader {
 //                    Gdx.app.debug("gdx-firebase", "Authentication NOT LOADED for " + Gdx.app.getType());
 //                }
 //            }
+
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadAdmob(String name, FirebaseConfiguration firebaseConfiguration) {
+        Class<?> loaderCls = null;
+
+        try {
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+//                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.android.auth.AndroidFirebaseAuth");
+
+                Class<?> activityClazz = ClassReflection.forName("android.app.Activity");
+
+                Class<?> firebaseAuthClazz = ClassReflection.forName("de.tomgrill.gdxfirebase.android.admob.AndroidAdmob");
+
+                Object activity = null;
+
+                Class<?> gdxClazz = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
+
+                if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
+
+                    activity = gdxAppObject;
+                } else {
+
+                    Class<?> supportFragmentClass = findClass("android.support.v4.app.Fragment");
+                    // {
+                    if (supportFragmentClass != null && ClassReflection.isAssignableFrom(supportFragmentClass, gdxAppObject.getClass())) {
+
+                        activity = ClassReflection.getMethod(supportFragmentClass, "getActivity").invoke(gdxAppObject);
+                    } else {
+                        Class<?> fragmentClass = findClass("android.app.Fragment");
+                        if (fragmentClass != null && ClassReflection.isAssignableFrom(fragmentClass, gdxAppObject.getClass())) {
+                            activity = ClassReflection.getMethod(fragmentClass, "getActivity").invoke(gdxAppObject);
+                        }
+                    }
+
+                }
+
+                if (activity == null) {
+                    throw new RuntimeException("Can't find your gdx activity to instantiate gdx-firebase. " + "Looks like you have implemented AndroidApplication without using "
+                            + "Activity or Fragment classes or Activity is not available at the moment");
+                }
+                Object firebaseAuth = ClassReflection.getConstructor(firebaseAuthClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
+
+                GDXFirebase.setAdmob(name, (Admob) firebaseAuth);
+
+                Gdx.app.debug("gdx-firebase", "Admob loaded for " + Gdx.app.getType());
+
+
+                return;
+
+            }
+
+            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.admob.DesktopAdmob");
+            }
+
+            if (loaderCls != null) {
+                Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                GDXFirebase.setAdmob(name, (Admob) loaderObj);
+                Gdx.app.debug("gdx-firebase", "Admob for " + Gdx.app.getType() + " installed successfully with default implementation.");
+            } else {
+                Gdx.app.debug("gdx-firebase", "Admob NOT LOADED for " + Gdx.app.getType());
+            }
+
 
         } catch (ReflectionException e) {
             e.printStackTrace();

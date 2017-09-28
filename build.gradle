@@ -64,6 +64,7 @@ project(":android") {
         compile "com.google.firebase:firebase-auth:$firebaseVersion"
         compile "com.google.firebase:firebase-core:$firebaseVersion"
         compile "com.google.firebase:firebase-messaging:$firebaseVersion"
+        compile "com.google.firebase:firebase-ads:$firebaseVersion"
         compile "com.google.android.gms:play-services-auth:$firebaseVersion"
 
     }
