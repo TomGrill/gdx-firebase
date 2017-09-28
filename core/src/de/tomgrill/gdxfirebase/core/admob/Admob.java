@@ -2,7 +2,7 @@ package de.tomgrill.gdxfirebase.core.admob;
 
 public interface Admob {
 
-    VideoRewardAd loadVideoRewardAd(String adUnit);
+    VideoRewardAd getVideoRewardAd();
 
     boolean isTestDevice();
 }

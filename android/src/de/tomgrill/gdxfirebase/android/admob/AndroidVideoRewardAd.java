@@ -10,28 +10,15 @@ import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
 public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.gms.ads.reward.RewardedVideoAdListener {
     private RewardedVideoAd mAd;
     private final AdRequest adRequest;
-    private final String adUnit;
     private RewardedVideoAdListener listener;
     private Activity activity;
     private boolean isLoaded;
 
-    public AndroidVideoRewardAd(final Activity activity, final AdRequest adRequest, final String adUnit) {
+    public AndroidVideoRewardAd(final Activity activity, final AdRequest adRequest) {
         this.activity = activity;
+        this.adRequest = adRequest;
 
         mAd = MobileAds.getRewardedVideoAdInstance(activity);
-        this.adRequest = adRequest;
-        this.adUnit = adUnit;
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                mAd.setRewardedVideoAdListener(AndroidVideoRewardAd.this);
-                mAd.loadAd(adUnit, adRequest);
-            }
-        });
-
-
     }
 
     @Override
@@ -55,18 +42,21 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
 
     @Override
     public void onRewardedVideoAdClosed() {
+        isLoaded = false;
         if (listener != null)
             listener.onRewardedVideoAdClosed();
     }
 
     @Override
     public void onRewarded(com.google.android.gms.ads.reward.RewardItem rewardItem) {
+        isLoaded = false;
         if (listener != null)
             listener.onRewarded(new AndroidRewardItem(rewardItem));
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
+        isLoaded = false;
         if (listener != null)
             listener.onRewardedVideoAdLeftApplication();
     }
@@ -80,6 +70,17 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
     @Override
     public boolean isLoaded() {
         return isLoaded;
+    }
+
+    @Override
+    public void load(final String adUnit) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAd.loadAd(adUnit, adRequest);
+            }
+        });
+
     }
 
     @Override
@@ -97,5 +98,13 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
     @Override
     public void setRewardVideoAdListener(final RewardedVideoAdListener rewardVideoAdListener) {
         listener = rewardVideoAdListener;
+
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAd.setRewardedVideoAdListener(AndroidVideoRewardAd.this);
+            }
+        });
     }
 }

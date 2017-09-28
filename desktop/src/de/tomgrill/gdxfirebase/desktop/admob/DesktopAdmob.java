@@ -10,7 +10,7 @@ public class DesktopAdmob implements Admob {
     }
 
     @Override
-    public VideoRewardAd loadVideoRewardAd(String adUnit) {
+    public VideoRewardAd getVideoRewardAd() {
         return new NullVideoRewardAd();
     }
 

@@ -7,6 +7,11 @@ public class NullVideoRewardAd implements VideoRewardAd {
     }
 
     @Override
+    public void load(String adUnit) {
+
+    }
+
+    @Override
     public void show() {
 
     }
