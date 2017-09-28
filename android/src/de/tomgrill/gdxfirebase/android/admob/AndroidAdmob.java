@@ -2,6 +2,7 @@ package de.tomgrill.gdxfirebase.android.admob;
 
 import android.app.Activity;
 import android.provider.Settings;
+import com.badlogic.gdx.Gdx;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
@@ -25,16 +26,19 @@ public class AndroidAdmob implements Admob {
         MobileAds.initialize(activity, firebaseConfiguration.admobAppId);
 
         if (firebaseConfiguration.admobUseTestDevice) {
-            adRequest = new AdRequest.Builder().addTestDevice(getDeviceId()).build();
+            String deviceId = getDeviceId();
+            adRequest = new AdRequest.Builder().addTestDevice(deviceId).build();
+            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest with test device id: " + deviceId);
         } else {
             adRequest = new AdRequest.Builder().build();
+            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest (release; no test device)");
         }
     }
 
 
     @Override
-    public VideoRewardAd loadVideoRewardAd(String adUnit) {
-        AndroidVideoRewardAd androidVideoRewardAd = new AndroidVideoRewardAd(activity, adRequest, adUnit);
+    public VideoRewardAd getVideoRewardAd() {
+        AndroidVideoRewardAd androidVideoRewardAd = new AndroidVideoRewardAd(activity, adRequest);
         return androidVideoRewardAd;
     }
 
