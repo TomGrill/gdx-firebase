@@ -7,11 +7,11 @@ import de.tomgrill.gdxfirebase.core.auth.AuthProvider;
 
 class AndroidGoogleAuthProvider implements AuthProvider {
 
-    private AndroidFacebookAuthCredential credential;
+    private AndroidGoogleAuthCredential credential;
 
     AndroidGoogleAuthProvider(String accessToken) {
         com.google.firebase.auth.AuthCredential credential = GoogleAuthProvider.getCredential(accessToken, null);
-        this.credential = new AndroidFacebookAuthCredential(credential);
+        this.credential = new AndroidGoogleAuthCredential(credential);
     }
 
     @Override

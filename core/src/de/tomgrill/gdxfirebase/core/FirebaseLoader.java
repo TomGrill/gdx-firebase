@@ -3,6 +3,7 @@ package de.tomgrill.gdxfirebase.core;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
@@ -31,6 +32,28 @@ public class FirebaseLoader {
             }
             if (feature == FirebaseFeatures.ADMOB) {
                 loadAdmob(name, firebaseConfiguration);
+            }
+        }
+    }
+
+    private static void loadAdmob(String name, FirebaseConfiguration firebaseConfiguration) {
+        Class<?> loaderCls = null;
+
+        if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+            try {
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.admob.IOSMOEFirebaseAdmob");
+                if (loaderCls != null) {
+                    //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                    Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                    GDXFirebase.setFirebaseAdmob(name, (FirebaseAdmob) loaderObj);
+                    Gdx.app.debug("gdx-firebase", "Admob for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                } else {
+                    Gdx.app.debug("gdx-firebase", "Admob NOT LOADED for " + Gdx.app.getType());
+                }
+                return;
+            } catch (ReflectionException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -96,6 +119,27 @@ public class FirebaseLoader {
                 return;
             }
 
+
+
+
+
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+                try {
+                    loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.analytics.IOSMOEFirebaseAnalytics");
+                    if (loaderCls != null) {
+                        //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                        Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                        GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) loaderObj);
+                        Gdx.app.debug("gdx-firebase", "Analytics for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                    } else {
+                        Gdx.app.debug("gdx-firebase", "Analytics NOT LOADED for " + Gdx.app.getType());
+                    }
+                    return;
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
+                }
+            }
 
 //            if(firebaseConfiguration.desktopFirebaseAuth != null) {
 //                GDXFirebase.setFirebaseAuth(name, firebaseConfiguration.desktopFirebaseAuth);
@@ -236,6 +280,25 @@ public class FirebaseLoader {
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
                 if (firebaseConfiguration.desktopFirebaseAuth == null) {
                     loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.auth.DefaultDesktopFirebaseAuth");
+                }
+            }
+
+
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+                try {
+                    loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.auth.IOSMOEFirebaseAuth");
+                    if (loaderCls != null) {
+                        //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                        Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                        GDXFirebase.setFirebaseAuth(name, (FirebaseAuth) loaderObj);
+                        Gdx.app.debug("gdx-firebase", "Auth for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                    } else {
+                        Gdx.app.debug("gdx-firebase", "Auth NOT LOADED for " + Gdx.app.getType());
+                    }
+                    return;
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
                 }
             }
 
