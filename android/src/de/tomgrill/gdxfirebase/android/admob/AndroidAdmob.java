@@ -17,34 +17,35 @@ public class AndroidAdmob implements Admob {
 
     private final FirebaseConfiguration firebaseConfiguration;
     private final Activity activity;
-    private final AdRequest adRequest;
+    private final boolean isTestDevice;
 
     public AndroidAdmob(Activity activity, FirebaseConfiguration firebaseConfiguration) {
         this.firebaseConfiguration = firebaseConfiguration;
         this.activity = activity;
 
+        isTestDevice = firebaseConfiguration.admobUseTestDevice;
+
         MobileAds.initialize(activity, firebaseConfiguration.admobAppId);
 
-        if (firebaseConfiguration.admobUseTestDevice) {
-            String deviceId = getDeviceId();
-            adRequest = new AdRequest.Builder().addTestDevice(deviceId).build();
-            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest with test device id: " + deviceId);
-        } else {
-            adRequest = new AdRequest.Builder().build();
-            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest (release; no test device)");
-        }
+
     }
 
 
     @Override
     public VideoRewardAd getVideoRewardAd() {
-        AndroidVideoRewardAd androidVideoRewardAd = new AndroidVideoRewardAd(activity, adRequest);
-        return androidVideoRewardAd;
+        if (isTestDevice) {
+            String deviceId = getDeviceId();
+            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest with test device id: " + deviceId);
+            return new AndroidVideoRewardAd(activity, new AdRequest.Builder().addTestDevice(deviceId).build());
+        } else {
+            Gdx.app.debug("gdx-firebase", "Load Admob AdRequest for production)");
+            return new AndroidVideoRewardAd(activity, new AdRequest.Builder().build());
+        }
     }
 
     @Override
     public boolean isTestDevice() {
-        return adRequest.isTestDevice(activity);
+        return isTestDevice;
     }
 
     private String getDeviceId() {
