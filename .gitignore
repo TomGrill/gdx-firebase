@@ -78,5 +78,7 @@ local.properties
 /build/
 
 
+**.natjgen
+
 .DS_Store
 publishLocal.sh
