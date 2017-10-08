@@ -36,28 +36,6 @@ public class FirebaseLoader {
         }
     }
 
-    private static void loadAdmob(String name, FirebaseConfiguration firebaseConfiguration) {
-        Class<?> loaderCls = null;
-
-        if (Gdx.app.getType() == Application.ApplicationType.iOS) {
-            try {
-                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.admob.IOSMOEFirebaseAdmob");
-                if (loaderCls != null) {
-                    //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
-                    Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
-
-                    GDXFirebase.setFirebaseAdmob(name, (FirebaseAdmob) loaderObj);
-                    Gdx.app.debug("gdx-firebase", "Admob for " + Gdx.app.getType() + " installed successfully with default implementation.");
-                } else {
-                    Gdx.app.debug("gdx-firebase", "Admob NOT LOADED for " + Gdx.app.getType());
-                }
-                return;
-            } catch (ReflectionException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private static void loadAnalytics(String name, FirebaseConfiguration firebaseConfiguration) {
         Class<?> loaderCls = null;
 
@@ -212,6 +190,28 @@ public class FirebaseLoader {
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
                 loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.admob.DesktopAdmob");
             }
+
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+                try {
+                    loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.admob.IOSMOEAdmob");
+                    if (loaderCls != null) {
+                        //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                        Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                        if(loaderObj instanceof FirebaseConfigurationHolder) {
+                            ((FirebaseConfigurationHolder) loaderObj).setFirebaseConfiguration(firebaseConfiguration);
+                        }
+                        GDXFirebase.setAdmob(name, (Admob) loaderObj);
+                        Gdx.app.debug("gdx-firebase", "Admob for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                    } else {
+                        Gdx.app.debug("gdx-firebase", "Admob NOT LOADED for " + Gdx.app.getType());
+                    }
+                    return;
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             if (loaderCls != null) {
                 Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
