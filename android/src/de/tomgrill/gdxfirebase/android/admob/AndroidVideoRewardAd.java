@@ -56,7 +56,6 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-        isLoaded = false;
         if (listener != null)
             listener.onRewardedVideoAdLeftApplication();
     }
