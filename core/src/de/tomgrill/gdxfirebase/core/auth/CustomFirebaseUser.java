@@ -103,7 +103,7 @@ class CustomFirebaseUser implements FirebaseUser {
 
     @Override
     public Task<AuthResult> linkWithCredential(AuthCredential var1) {
-        Gdx.app.debug("gdx-firebase", "linkWithCredential() not supported here.");
+        Gdx.app.debug("gdx-firebase", "linkWithGoogle() not supported here.");
         return new Task<AuthResult>() {
             @Override
             public boolean isComplete() {
@@ -122,7 +122,7 @@ class CustomFirebaseUser implements FirebaseUser {
 
             @Override
             public Exception getException() {
-                return new GdxFirebaseException("linkWithCredential() not supported");
+                return new GdxFirebaseException("linkWithGoogle() not supported");
             }
 
             //            @Override

@@ -22,21 +22,20 @@ public interface FirebaseUser {
 
     String getToken(boolean forceRefresh);
 
-    void reload();
+//    void reload();
 
-    void reauthenticate(AuthCredential authCredential);
+//    void reauthenticate(AuthCredential authCredential);
 
-    @Deprecated
-    Task<AuthResult> linkWithCredential(AuthCredential authCredential);
+    void linkWithGoogle(String tokenId, OnCompleteListener<AuthResult> onCompleteListener);
 
-    void unlink(String s);
+//    void unlink(String s);
 
 //    void updateProfile( UserProfileChangeRequest var1); TODO
 
-    void updateEmail(String email);
+//    void updateEmail(String email);
 
-    void updatePassword(String password);
+//    void updatePassword(String password);
 
-    void delete();
+//    void delete();
 
 }

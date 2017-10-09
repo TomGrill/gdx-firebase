@@ -143,113 +143,36 @@ public class AndroidFirebaseAuth implements FirebaseAuth, AndroidEventListener {
         return new AndroidGoogleAuthProvider(accessToken);
     }
 
-    @Override
-    public void signInWithGoogle(de.tomgrill.gdxfirebase.core.auth.OnCompleteListener<AuthResult> onCompleteListener) {
-        if (!signInProcessRunning && onCompleteListener != null) { // do not sign when there is already a sign process running
-            this.onCompleteListener = onCompleteListener;
-            signInProcessRunning = true;
-
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(firebaseConfiguration.androidDefaultWebClientId) // required with Firebase
-                    .requestEmail() // required with Firebase
-                    .build();
-
-            mGoogleApiClient = new GoogleApiClient.Builder(activity)
-//                .enableAutoManage(activity /* FragmentActivity */, activity /* OnConnectionFailedListener */)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                    .build();
-
-            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-            activity.startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN_WITH_GOOGLE);
-        }
-    }
-
-    @Override
-    public void linkWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
-        if (!signInProcessRunning && onCompleteListener != null) { // do not sign when there is already a sign process running
-            this.onCompleteListener = onCompleteListener;
-            signInProcessRunning = true;
-
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(firebaseConfiguration.androidDefaultWebClientId) // required with Firebase
-                    .requestEmail() // required with Firebase
-                    .build();
-
-            mGoogleApiClient = new GoogleApiClient.Builder(activity)
-//                .enableAutoManage(activity /* FragmentActivity */, activity /* OnConnectionFailedListener */)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                    .build();
-
-            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-            activity.startActivityForResult(signInIntent, REQUEST_CODE_LINK_WITH_GOOGLE);
-        }
-    }
+//    @Override
+//    public void linkWithGoogle(final String tokenId, final OnCompleteListener<AuthResult> onCompleteListener) {
+//        if(onCompleteListener == null) return;
+//
+//        com.google.firebase.auth.AuthCredential credential = GoogleAuthProvider.getCredential(tokenId, null);
+//        com.google.firebase.auth.FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//        if (firebaseUser != null) {
+//            firebaseUser.linkWithCredential(credential).addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<com.google.firebase.auth.AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull com.google.android.gms.tasks.Task<com.google.firebase.auth.AuthResult> task) {
+//
+//                    signInProcessRunning = false;
+//                    if (task.isSuccessful()) {
+//                        Gdx.app.debug("gdx-firebase", "Linked in with Google successfully");
+//                        onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
+//                    } else {
+//                        Gdx.app.debug("gdx-firebase", "Link in with Google FAILED: " + task.getException().toString());
+//                        onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
+//                    }
+//                }
+//            });
+//        } else {
+//            Gdx.app.debug("gdx-firebase", "Link with Google failed: Current user is NULL, cannot link.");
+//            signInProcessRunning = false;
+//            onCompleteListener.onComplete(new AndroidTask<AuthResult>(true, false, new GdxFirebaseException("Current user is NULL, cannot link.")));
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        // google sign in
-        if (requestCode == REQUEST_CODE_SIGN_IN_WITH_GOOGLE) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-
-                GoogleSignInAccount account = result.getSignInAccount();
-                com.google.firebase.auth.AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<com.google.firebase.auth.AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<com.google.firebase.auth.AuthResult> task) {
-                        signInProcessRunning = false;
-                        if (task.isSuccessful()) {
-                            Gdx.app.debug("gdx-firebase", "Signed in with Google successfully");
-                            onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
-                        } else {
-                            Gdx.app.debug("gdx-firebase", "Signed in with Google FAILED: " + task.getException().toString());
-                            onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
-                        }
-                    }
-                });
-
-            } else {
-                Gdx.app.debug("gdx-firebase", "Signed with Google failed. " + result.getStatus().getStatusMessage());
-                signInProcessRunning = false;
-                onCompleteListener.onComplete(new AndroidTask<AuthResult>(true, false, new GdxFirebaseException(result.getStatus().getStatusMessage())));
-            }
-        }
-
-        if (requestCode == REQUEST_CODE_LINK_WITH_GOOGLE) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-
-                GoogleSignInAccount account = result.getSignInAccount();
-                com.google.firebase.auth.AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                com.google.firebase.auth.FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    firebaseUser.linkWithCredential(credential).addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<com.google.firebase.auth.AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<com.google.firebase.auth.AuthResult> task) {
-
-                            signInProcessRunning = false;
-                            if (task.isSuccessful()) {
-                                Gdx.app.debug("gdx-firebase", "Linked in with Google successfully");
-                                onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
-                            } else {
-                                Gdx.app.debug("gdx-firebase", "Link in with Google FAILED: " + task.getException().toString());
-                                onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
-                            }
-                        }
-                    });
-                } else {
-                    Gdx.app.debug("gdx-firebase", "Link with Google failed: Current user is NULL, cannot link.");
-                    signInProcessRunning = false;
-                    onCompleteListener.onComplete(new AndroidTask<AuthResult>(true, false, new GdxFirebaseException("Current user is NULL, cannot link.")));
-                }
-
-            } else {
-                Gdx.app.debug("gdx-firebase", "Link with Google failed: " + result.getStatus().getStatusMessage());
-                signInProcessRunning = false;
-                onCompleteListener.onComplete(new AndroidTask<AuthResult>(true, false, new GdxFirebaseException(result.getStatus().getStatusMessage())));
-            }
-        }
 
     }
 }

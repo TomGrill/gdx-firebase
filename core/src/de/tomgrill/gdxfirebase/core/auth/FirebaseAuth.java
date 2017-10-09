@@ -34,15 +34,8 @@ public interface FirebaseAuth {
     maybe we want to have the login dialogs in another class/extension?
      */
 
-    /**
-     * Signs the user in with Google, only on Android. Use linkWithGoogle when you want to link the current user
-     * with Google
-     * @param onCompleteListener
-     */
-    void signInWithGoogle(OnCompleteListener<AuthResult> onCompleteListener);
-
-    /**
-     * Tries to login with google and links the current user
-     */
-    void linkWithGoogle(OnCompleteListener<AuthResult> onCompleteListener);
+//    /**
+//     * Tries to login with google and links the current user
+//     */
+//    void linkWithGoogle(String tokenId, OnCompleteListener<AuthResult> onCompleteListener);
 }

@@ -1,11 +1,11 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
 import apple.foundation.NSError;
+import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuth;
+import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuthCredential;
+import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRGoogleAuthProvider;
 import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRUser;
-import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
-import de.tomgrill.gdxfirebase.core.auth.AuthResult;
-import de.tomgrill.gdxfirebase.core.auth.FirebaseUser;
-import de.tomgrill.gdxfirebase.core.auth.Task;
+import de.tomgrill.gdxfirebase.core.auth.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,43 +64,50 @@ public class IOSMOEFirebaseUser implements FirebaseUser {
     }
 
     @Override
-    public void reload() {
-        // TODO
-    }
+    public void linkWithGoogle(final String tokenId, final OnCompleteListener<AuthResult> onCompleteListener) {
+        FIRAuthCredential firAuthCredential = FIRGoogleAuthProvider.credentialWithIDTokenAccessToken(tokenId, null); // TODO
 
-    @Override
-    public void reauthenticate(AuthCredential authCredential) {
-        // TODO
-    }
-
-    @Override
-    public Task<AuthResult> linkWithCredential(AuthCredential authCredential) {
-        firUser.linkWithCredentialCompletion(null, new FIRUser.Block_linkWithCredentialCompletion() {
+        FIRAuth.auth().currentUser().linkWithCredentialCompletion(firAuthCredential, new FIRUser.Block_linkWithCredentialCompletion() {
             @Override
-            public void call_linkWithCredentialCompletion(FIRUser firUser, NSError error) {
-
+            public void call_linkWithCredentialCompletion(FIRUser user, NSError error) {
+                if (error == null) {
+                    onCompleteListener.onComplete(new IOSMOETask<AuthResult>(true, true, null));
+                } else {
+                    onCompleteListener.onComplete(new IOSMOETask<AuthResult>(true, false, new Exception(error.localizedFailureReason())));
+                }
             }
         });
-        return null;
     }
 
-    @Override
-    public void unlink(String s) {
+//    @Override
+//    public void reload() {
+//        // TODO
+//    }
+//
+//    @Override
+//    public void reauthenticate(AuthCredential authCredential) {
+//        // TODO
+//    }
 
-    }
 
-    @Override
-    public void updateEmail(String email) {
 
-    }
-
-    @Override
-    public void updatePassword(String password) {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
+//    @Override
+//    public void unlink(String s) {
+//
+//    }
+//
+//    @Override
+//    public void updateEmail(String email) {
+//
+//    }
+//
+//    @Override
+//    public void updatePassword(String password) {
+//
+//    }
+//
+//    @Override
+//    public void delete() {
+//
+//    }
 }

@@ -1,9 +1,10 @@
 package de.tomgrill.gdxfirebase.android.auth;
 
-import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
+import android.support.annotation.NonNull;
+import com.google.firebase.auth.GoogleAuthProvider;
 import de.tomgrill.gdxfirebase.core.auth.AuthResult;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseUser;
-import de.tomgrill.gdxfirebase.core.auth.Task;
+import de.tomgrill.gdxfirebase.core.auth.OnCompleteListener;
 
 import java.util.List;
 
@@ -54,38 +55,45 @@ public class AndroidFirebaseUser implements FirebaseUser {
         return firebaseUser.getToken(forceRefresh).getResult().getToken();
     }
 
-    @Override
-    public void reload() {
-        firebaseUser.reload();
-    }
+//    @Override
+//    public void reload() {
+//        firebaseUser.reload();
+//    }
+
+//    @Override
+//    public void reauthenticate(AuthCredential authCredential) {
+//        firebaseUser.reauthenticate(((AndroidAuthCredential) authCredential).getFirebaseAuthCredential());
+//    }
 
     @Override
-    public void reauthenticate(AuthCredential authCredential) {
-        firebaseUser.reauthenticate(((AndroidAuthCredential) authCredential).getFirebaseAuthCredential());
+    public void linkWithGoogle(final String tokenId, final OnCompleteListener<AuthResult> onCompleteListener) {
+        com.google.firebase.auth.AuthCredential credential = GoogleAuthProvider.getCredential(tokenId, null);
+
+        firebaseUser.linkWithCredential(credential).addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<com.google.firebase.auth.AuthResult>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<com.google.firebase.auth.AuthResult> task) {
+                onCompleteListener.onComplete(new AndroidTask<AuthResult>(task));
+            }
+        });
     }
 
-    @Override
-    public Task<AuthResult> linkWithCredential(AuthCredential authCredential) {
-        return new AndroidTask<AuthResult>(firebaseUser.linkWithCredential(((AndroidAuthCredential) authCredential).getFirebaseAuthCredential()));
-    }
-
-    @Override
-    public void unlink(String s) {
-        firebaseUser.unlink(s);
-    }
-
-    @Override
-    public void updateEmail(String email) {
-        firebaseUser.updateEmail(email);
-    }
-
-    @Override
-    public void updatePassword(String password) {
-        firebaseUser.updatePassword(password);
-    }
-
-    @Override
-    public void delete() {
-        firebaseUser.delete();
-    }
+//    @Override
+//    public void unlink(String s) {
+//        firebaseUser.unlink(s);
+//    }
+//
+//    @Override
+//    public void updateEmail(String email) {
+//        firebaseUser.updateEmail(email);
+//    }
+//
+//    @Override
+//    public void updatePassword(String password) {
+//        firebaseUser.updatePassword(password);
+//    }
+//
+//    @Override
+//    public void delete() {
+//        firebaseUser.delete();
+//    }
 }

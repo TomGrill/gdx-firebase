@@ -215,7 +215,7 @@ public class FIRUser extends NSObject implements FIRUserInfo {
 	}
 
 	@Generated
-	@Selector("linkWithCredential:completion:")
+	@Selector("linkWithGoogle:completion:")
 	public native void linkWithCredentialCompletion(
 			FIRAuthCredential credential,
 			@ObjCBlock(name = "call_linkWithCredentialCompletion") Block_linkWithCredentialCompletion completion);
