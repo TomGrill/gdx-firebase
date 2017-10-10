@@ -1,9 +1,7 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
 import com.badlogic.gdx.Gdx;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADMobileAds;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADRequest;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADRewardBasedVideoAd;
+import com.google.googlemobileads.GADMobileAds;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.FirebaseConfigurationHolder;
 import de.tomgrill.gdxfirebase.core.admob.Admob;

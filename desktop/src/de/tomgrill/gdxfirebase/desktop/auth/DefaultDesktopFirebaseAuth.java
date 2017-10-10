@@ -106,7 +106,7 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
     public AuthProvider GoogleAuthProvider(String accessToken) {
         return null;
     }
-
+/*
     @Override
     public void signInWithGoogle(OnCompleteListener<AuthResult> onCompleteListener) {
         Gdx.app.debug("gdx-firebase", "signInWithGoogle is not supported on Desktop platform");
@@ -118,7 +118,7 @@ public class DefaultDesktopFirebaseAuth implements FirebaseAuth {
         Gdx.app.debug("gdx-firebase", "linkWithGoogle is not supported on Desktop platform");
         onCompleteListener.onComplete(new DesktopTask<AuthResult>(true,false));
     }
-
+*/
     private void informListeners() {
         for(AuthStateListener listener : authStateListeners) {
             listener.onAuthStateChanged(this);

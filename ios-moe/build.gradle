@@ -3,6 +3,19 @@ sourceCompatibility = 1.7
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    exclude 'com/google/**'
+    classifier "sources"
+}
+
+jar {
+    from sourceSets.main.output
+    exclude 'com/google/**'
+
+    from sourceSets.main.allJava
+    exclude 'com/google/**'
+}
 
 ext {
 	ARTIFACTID = 'gdx-firebase-ios-moe'

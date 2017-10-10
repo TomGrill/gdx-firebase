@@ -1,6 +1,6 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADAdReward;
+import com.google.googlemobileads.GADAdReward;
 import de.tomgrill.gdxfirebase.core.admob.RewardItem;
 
 public class IOSMOERewardItem implements RewardItem {

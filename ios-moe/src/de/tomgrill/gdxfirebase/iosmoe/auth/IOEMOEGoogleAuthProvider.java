@@ -1,8 +1,8 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuth;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuthCredential;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRGoogleAuthProvider;
+import com.google.firebaseauth.FIRAuth;
+import com.google.firebaseauth.FIRAuthCredential;
+import com.google.firebaseauth.FIRGoogleAuthProvider;
 import de.tomgrill.gdxfirebase.core.auth.AuthCredential;
 import de.tomgrill.gdxfirebase.core.auth.AuthProvider;
 

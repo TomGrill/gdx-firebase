@@ -4,10 +4,10 @@ import apple.foundation.NSMutableArray;
 import apple.uikit.UIScreen;
 import apple.uikit.UIViewController;
 import apple.uikit.UIWindow;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADInterstitial;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADRequest;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.GADRequestError;
-import de.tomgrill.gdxfirebase.bindings.googlemobileads.protocol.GADInterstitialDelegate;
+import com.google.googlemobileads.GADInterstitial;
+import com.google.googlemobileads.GADRequest;
+import com.google.googlemobileads.GADRequestError;
+import com.google.googlemobileads.protocol.GADInterstitialDelegate;
 import de.tomgrill.gdxfirebase.core.admob.Interstitial;
 
 public class IOSMOEInterstitial implements Interstitial {

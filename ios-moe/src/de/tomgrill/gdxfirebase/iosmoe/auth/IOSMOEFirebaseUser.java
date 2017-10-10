@@ -1,10 +1,10 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
 import apple.foundation.NSError;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuth;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuthCredential;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRGoogleAuthProvider;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRUser;
+import com.google.firebaseauth.FIRAuth;
+import com.google.firebaseauth.FIRAuthCredential;
+import com.google.firebaseauth.FIRGoogleAuthProvider;
+import com.google.firebaseauth.FIRUser;
 import de.tomgrill.gdxfirebase.core.auth.*;
 
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuthCredential;
+
+import com.google.firebaseauth.FIRAuthCredential;
 
 public class IOSMOEGoogleAuthCredential implements IOSMOEAuthCredential {
 

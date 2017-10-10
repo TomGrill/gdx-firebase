@@ -1,21 +1,16 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
 
+import apple.foundation.NSError;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.utils.Array;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuth;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRAuthCredential;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRGoogleAuthProvider;
-import de.tomgrill.gdxfirebase.bindings.firebaseauth.FIRUser;
-import de.tomgrill.gdxfirebase.bindings.firebasecore.FIRApp;
-import de.tomgrill.gdxfirebase.bindings.googlesignin.GIDGoogleUser;
-import de.tomgrill.gdxfirebase.bindings.googlesignin.GIDSignIn;
-import de.tomgrill.gdxfirebase.bindings.googlesignin.protocol.GIDSignInDelegate;
-import de.tomgrill.gdxfirebase.bindings.googlesignin.protocol.GIDSignInUIDelegate;
+import com.google.firebaseauth.FIRAuth;
+import com.google.firebaseauth.FIRUser;
+import com.google.firebasecore.FIRApp;
 import de.tomgrill.gdxfirebase.core.auth.*;
 import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
-import ios.foundation.NSError;
+
 
 public class IOSMOEFirebaseAuth implements FirebaseAuth {
 
