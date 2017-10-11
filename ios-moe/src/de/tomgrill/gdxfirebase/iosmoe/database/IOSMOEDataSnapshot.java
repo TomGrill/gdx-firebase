@@ -1,5 +1,6 @@
 package de.tomgrill.gdxfirebase.iosmoe.database;
 
+import apple.foundation.NSDictionary;
 import apple.foundation.NSNull;
 import apple.foundation.NSNumber;
 import apple.foundation.NSString;
@@ -10,6 +11,9 @@ import com.google.firebasedatabase.FIRDataSnapshot;
 import de.tomgrill.gdxfirebase.core.database.DataSnapshot;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IOSMOEDataSnapshot implements DataSnapshot {
 
@@ -80,6 +84,17 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
                     return nsNumber.integerValue();
             }
         }
+
+        if (firDataSnapshot.value() instanceof NSDictionary) {
+            NSDictionary<String, Object> dictionary = (NSDictionary) firDataSnapshot.value();
+            Map<String, Object> map = new HashMap<String, Object>();
+            for (Object key : dictionary.keySet()) {
+                Object value = dictionary.get(key);
+                map.put((String) key, castToProperValue(value));
+            }
+            return map;
+        }
+
         throw new UnsupportedOperationException("cannot cast to proper value: " + object);
     }
 
