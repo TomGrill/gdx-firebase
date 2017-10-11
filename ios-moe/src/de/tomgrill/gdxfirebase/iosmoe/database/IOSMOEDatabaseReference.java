@@ -89,13 +89,35 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public void updateChildren(Map<String, Object> update) {
-        NSMutableDictionary<String, Object> dictionary = NSMutableDictionary.dictionaryWithSharedKeySet(update);
+        for (Map.Entry<String, Object> entry : update.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        NSMutableDictionary<String, Object> dictionary = (NSMutableDictionary<String, Object>) NSMutableDictionary.dictionary();
+        //dictionary.putAll(update);
+        dictionary.put("jop", 45);
+
+        System.out.println("IN DIC");
+        for (Map.Entry<String, Object> entry : dictionary.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
         firDatabaseReference.updateChildValues(dictionary);
     }
 
     @Override
     public void updateChildren(Map<String, Object> update, CompletionListener listener) {
-        NSMutableDictionary<String, Object> dictionary = NSMutableDictionary.dictionaryWithSharedKeySet(update);
+        for (Map.Entry<String, Object> entry : update.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        NSMutableDictionary<String, Object> dictionary = (NSMutableDictionary<String, Object>) NSMutableDictionary.dictionary();
+        //dictionary.putAll(update);
+        dictionary.put("jop", 45);
+
+        System.out.println("IN DIC");
+        for (Map.Entry<String, Object> entry : dictionary.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+
+
         firDatabaseReference.updateChildValuesWithCompletionBlock(dictionary, new FIRDatabaseReference.Block_updateChildValuesWithCompletionBlock() {
             @Override
             public void call_updateChildValuesWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {
