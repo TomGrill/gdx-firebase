@@ -341,6 +341,10 @@ public class FirebaseLoader {
                 loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.desktop.database.DesktopFirebaseDatabase");
             }
 
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.database.IOSMOEFirebaseDatabase");
+            }
+
 
             if (loaderCls != null) {
 
