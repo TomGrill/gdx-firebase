@@ -141,6 +141,14 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
                 if (entry.getValue() instanceof String) {
                     dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
                 }
+
+                if (entry.getValue() instanceof Boolean) {
+                    if((Boolean) entry.getValue()) {
+                        dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(1));
+                    } else {
+                        dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(0));
+                    }
+                }
             }
         }
 
