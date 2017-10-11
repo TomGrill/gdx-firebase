@@ -114,4 +114,9 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
     public Object getPriority() {
         return firDataSnapshot.priority();
     }
+
+    @Override
+    public String toString() {
+        return firDataSnapshot.value().toString();
+    }
 }
