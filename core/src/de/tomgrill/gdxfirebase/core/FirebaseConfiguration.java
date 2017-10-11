@@ -9,7 +9,8 @@ public class FirebaseConfiguration {
     public FileHandle serviceAccount;
     public String databaseUrl;
 
-    public String androidDefaultWebClientId = "";
+    //public String androidDefaultWebClientId = "";
+    //public String iosDefaultWebClientId = "";
 
     public FirebaseUser desktopFirebaseUser;
     public FirebaseAuth desktopFirebaseAuth;

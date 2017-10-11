@@ -11,12 +11,14 @@ public class IOSMOEFirebaseDatabase implements FirebaseDatabase {
 
     private FIRDatabase firDatabase;
 
-    public IOSMOEFirebaseDatabase(FIRDatabase firDatabase) {
+    public IOSMOEFirebaseDatabase() {
         if (!ConfigureOverwatch.isConfigured) {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
+    }
 
+    public void setFirDatabase(FIRDatabase firDatabase) {
         this.firDatabase = firDatabase;
     }
 
