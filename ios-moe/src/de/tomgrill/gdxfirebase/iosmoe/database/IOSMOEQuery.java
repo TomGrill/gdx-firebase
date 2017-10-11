@@ -19,17 +19,17 @@ public class IOSMOEQuery implements Query {
     private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> block2Listeners = new Array<>();
 
     private Array<ChildEventListener> childEventListeners = new Array<>();
-    private Array<NSObject> addedBlocks = new Array<>();
-    private Array<NSObject> addedCancels = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> addedBlocks = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> addedCancels = new Array<>();
 
-    private Array<NSObject> changedBlocks = new Array<>();
-    private Array<NSObject> changedCancels = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> changedBlocks = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> changedCancels = new Array<>();
 
-    private Array<NSObject> movedBlocks = new Array<>();
-    private Array<NSObject> movedCancels = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> movedBlocks = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> movedCancels = new Array<>();
 
-    private Array<NSObject> removedBlocks = new Array<>();
-    private Array<NSObject> removedCancels = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> removedBlocks = new Array<>();
+    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> removedCancels = new Array<>();
 
     public IOSMOEQuery(FIRDatabaseQuery firDatabaseQuery) {
         this.firDatabaseQuery = firDatabaseQuery;
@@ -85,8 +85,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildAdded, block, cancel);
-            addedBlocks.add((NSObject) block);
-            addedCancels.add((NSObject) cancel);
+            addedBlocks.add(block);
+            addedCancels.add(cancel);
         }
 
         /*
@@ -108,8 +108,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildChanged, block, cancel);
-            changedBlocks.add((NSObject) block);
-            changedCancels.add((NSObject) cancel);
+            changedBlocks.add( block);
+            changedCancels.add( cancel);
         }
 
         /*
@@ -131,8 +131,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildMoved, block, cancel);
-            movedBlocks.add((NSObject) block);
-            movedCancels.add((NSObject) cancel);
+            movedBlocks.add( block);
+            movedCancels.add( cancel);
         }
 
         /*
@@ -154,8 +154,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildRemoved, block, cancel);
-            removedBlocks.add((NSObject) block);
-            removedCancels.add((NSObject) cancel);
+            removedBlocks.add( block);
+            removedCancels.add( cancel);
         }
 
 
