@@ -137,6 +137,8 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
             }
 
+            return valueType.cast(instance);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
