@@ -1,7 +1,6 @@
 package de.tomgrill.gdxfirebase.iosmoe.database;
 
-import apple.foundation.NSError;
-import apple.foundation.NSMutableDictionary;
+import apple.foundation.*;
 import com.google.firebasedatabase.FIRDatabase;
 import com.google.firebasedatabase.FIRDatabaseReference;
 import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
@@ -89,31 +88,23 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public void updateChildren(Map<String, Object> update) {
-        for (Map.Entry<String, Object> entry : update.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        NSMutableDictionary<String, Object> dictionary = (NSMutableDictionary<String, Object>) NSMutableDictionary.dictionary();
-        //dictionary.putAll(update);
-        dictionary.put("jop", 45);
+        NSDictionary<NSString, Object> dictionary = toDictionary(update);
 
         System.out.println("IN DIC");
-        for (Map.Entry<String, Object> entry : dictionary.entrySet()) {
+        for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
         firDatabaseReference.updateChildValues(dictionary);
     }
 
+
+
     @Override
     public void updateChildren(Map<String, Object> update, CompletionListener listener) {
-        for (Map.Entry<String, Object> entry : update.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        NSMutableDictionary<String, Object> dictionary = (NSMutableDictionary<String, Object>) NSMutableDictionary.dictionary();
-        //dictionary.putAll(update);
-        dictionary.put("jop", 45);
+        NSDictionary<NSString, Object> dictionary = toDictionary(update);
 
         System.out.println("IN DIC");
-        for (Map.Entry<String, Object> entry : dictionary.entrySet()) {
+        for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
 
@@ -128,6 +119,33 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
                 }
             }
         });
+    }
+
+    private NSDictionary<NSString, Object> toDictionary(Map<String, Object> map) {
+        NSMutableDictionary<NSString, Object> dictionary = (NSMutableDictionary<NSString, Object>) NSMutableDictionary.dictionary();
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+            if (entry.getValue() instanceof Map) {
+                // ignore for now
+            } else {
+                if (entry.getValue() instanceof Integer) {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt((Integer) entry.getValue()));
+                }
+                if (entry.getValue() instanceof Long) {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
+                }
+                if (entry.getValue() instanceof Long) {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
+                }
+                if (entry.getValue() instanceof String) {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
+                }
+            }
+        }
+
+
+        return dictionary;
     }
 
     @Override
