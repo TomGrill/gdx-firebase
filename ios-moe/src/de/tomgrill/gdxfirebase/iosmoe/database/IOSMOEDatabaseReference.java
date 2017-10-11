@@ -129,7 +129,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public FirebaseDatabase getDatabase() {
-        return new IOSMOEFirebaseDatabase(firDatabase);
+        return new IOSMOEFirebaseDatabase();
     }
 
     @Override

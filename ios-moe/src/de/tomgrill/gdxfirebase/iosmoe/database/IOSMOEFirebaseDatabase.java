@@ -2,24 +2,25 @@ package de.tomgrill.gdxfirebase.iosmoe.database;
 
 import com.google.firebasecore.FIRApp;
 import com.google.firebasedatabase.FIRDatabase;
+import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
+import de.tomgrill.gdxfirebase.core.FirebaseConfigurationHolder;
 import de.tomgrill.gdxfirebase.core.LogLevel;
 import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
-public class IOSMOEFirebaseDatabase implements FirebaseDatabase {
+public class IOSMOEFirebaseDatabase implements FirebaseDatabase, FirebaseConfigurationHolder {
 
     private FIRDatabase firDatabase;
+    private FirebaseConfiguration firebaseConfiguration;
 
-    public IOSMOEFirebaseDatabase() {
+    public IOSMOEFirebaseDatabase() { // IOS MOE cannot reflection constructors with parameters
         if (!ConfigureOverwatch.isConfigured) {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
-    }
 
-    public void setFirDatabase(FIRDatabase firDatabase) {
-        this.firDatabase = firDatabase;
+        firDatabase = FIRDatabase.database();
     }
 
     @Override
@@ -65,5 +66,10 @@ public class IOSMOEFirebaseDatabase implements FirebaseDatabase {
     @Override
     public DatabaseReference getReferenceFromUrl(String url) {
         return new IOSMOEDatabaseReference(firDatabase.referenceFromURL(url), firDatabase);
+    }
+
+    @Override
+    public void setFirebaseConfiguration(FirebaseConfiguration firebaseConfiguration) {
+        this.firebaseConfiguration = firebaseConfiguration;
     }
 }

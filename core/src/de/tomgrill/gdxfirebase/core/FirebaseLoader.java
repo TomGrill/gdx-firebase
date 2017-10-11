@@ -344,7 +344,7 @@ public class FirebaseLoader {
             if (Gdx.app.getType() == Application.ApplicationType.iOS) {
                 loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.database.IOSMOEFirebaseDatabase");
 
-                Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
                 GDXFirebase.setFirebaseDatabase(name, (FirebaseDatabase) loaderObj);
                 Gdx.app.debug("gdx-firebase", "Realtime Database for " + Gdx.app.getType() + " installed successfully.");
 
