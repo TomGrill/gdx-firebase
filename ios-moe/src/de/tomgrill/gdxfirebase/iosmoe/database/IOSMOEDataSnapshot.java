@@ -41,21 +41,46 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
     @Override
     public Object getValue() {
-        if (firDataSnapshot.value() instanceof NSNull) {
-            return null;
-        }
-        return firDataSnapshot.value();
+        return castToProperValue(firDataSnapshot.value());
     }
 
     @Override
     public Object getValue(boolean useExportFormat) {
+        if (useExportFormat) {
+            throw new UnsupportedOperationException("useExportFormat is not supported");
+        }
+        return castToProperValue(firDataSnapshot.value());
+    }
+
+    private Object castToProperValue(Object object) {
         if (firDataSnapshot.value() instanceof NSNull) {
             return null;
         }
-        if (useExportFormat) {
-            return firDataSnapshot.valueInExportFormat();
+
+        if (firDataSnapshot.value() instanceof NSString) {
+            return firDataSnapshot.value().toString();
         }
-        return getValue();
+
+        if (firDataSnapshot.value() instanceof NSNumber) {
+            NSNumber nsNumber = (NSNumber) firDataSnapshot.value();
+
+            String cType = nsNumber.objCType();
+            switch (cType) {
+                case "c":
+                    return nsNumber.boolValue();
+                case "i":
+                    return nsNumber.integerValue();
+                case "q":
+                    return nsNumber.longValue();
+                case "f":
+                    return nsNumber.floatValue();
+                case "d":
+                    return nsNumber.doubleValue();
+                default:
+                    return nsNumber.integerValue();
+            }
+        }
+        throw new UnsupportedOperationException("cannot cast to proper value: " + object);
     }
 
     @Override
@@ -67,31 +92,12 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
         Object value = firDataSnapshot.value();
 
-        if (value instanceof NSNumber && valueType == Long.class) {
-            return valueType.cast(((NSNumber) value).longValue());
-        }
-
-        if (value instanceof NSNumber && valueType == Integer.class) {
-            return valueType.cast(((NSNumber) value).intValue());
-        }
-
-        if (value instanceof NSNumber && valueType == Float.class) {
-            return valueType.cast(((NSNumber) value).floatValue());
-        }
-
-        if (value instanceof NSNumber && valueType == Double.class) {
-            return valueType.cast(((NSNumber) value).doubleValue());
+        if (value instanceof NSNumber) {
+            return valueType.cast(castToProperValue(value));
         }
 
         if (value instanceof NSString && valueType == String.class) {
             return valueType.cast(value);
-        }
-
-        if (value instanceof NSNumber && valueType == Boolean.class) {
-            if (((NSNumber) value).longValue() == 0) {
-                return valueType.cast(false);
-            }
-            return valueType.cast(true);
         }
 
         // special classes
