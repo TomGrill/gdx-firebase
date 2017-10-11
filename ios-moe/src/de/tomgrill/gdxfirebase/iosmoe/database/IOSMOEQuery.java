@@ -108,8 +108,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildChanged, block, cancel);
-            changedBlocks.add( block);
-            changedCancels.add( cancel);
+            changedBlocks.add(block);
+            changedCancels.add(cancel);
         }
 
         /*
@@ -131,8 +131,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildMoved, block, cancel);
-            movedBlocks.add( block);
-            movedCancels.add( cancel);
+            movedBlocks.add(block);
+            movedCancels.add(cancel);
         }
 
         /*
@@ -154,8 +154,8 @@ public class IOSMOEQuery implements Query {
 
 
             firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildRemoved, block, cancel);
-            removedBlocks.add( block);
-            removedCancels.add( cancel);
+            removedBlocks.add(block);
+            removedCancels.add(cancel);
         }
 
 

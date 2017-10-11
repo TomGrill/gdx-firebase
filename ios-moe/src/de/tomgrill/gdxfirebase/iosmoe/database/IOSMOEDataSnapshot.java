@@ -2,7 +2,9 @@ package de.tomgrill.gdxfirebase.iosmoe.database;
 
 import apple.foundation.NSNull;
 import apple.foundation.NSNumber;
+import apple.foundation.NSString;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.google.firebasedatabase.FIRDataSnapshot;
 import de.tomgrill.gdxfirebase.core.database.DataSnapshot;
@@ -39,7 +41,7 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
     @Override
     public Object getValue() {
-        if(firDataSnapshot.value() instanceof  NSNull) {
+        if (firDataSnapshot.value() instanceof NSNull) {
             return null;
         }
         return firDataSnapshot.value();
@@ -47,7 +49,7 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
     @Override
     public Object getValue(boolean useExportFormat) {
-        if(firDataSnapshot.value() instanceof  NSNull) {
+        if (firDataSnapshot.value() instanceof NSNull) {
             return null;
         }
         if (useExportFormat) {
@@ -59,31 +61,87 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
     @Override
     public <T> T getValue(Class<T> valueType) {
 
-        if(firDataSnapshot.value() instanceof  NSNull) {
+        if (firDataSnapshot.value() instanceof NSNull) {
             return null;
         }
 
         Object value = firDataSnapshot.value();
-        if(value instanceof NSNumber && valueType == Long.class) {
-            System.out.println("C LONG");
+
+        if (value instanceof NSNumber && valueType == Long.class) {
             return valueType.cast(((NSNumber) value).longValue());
         }
 
-        if(value instanceof NSNumber && valueType == Boolean.class) {
-            System.out.println("C BOOLEAN " + ((NSNumber) value).longValue());
-            if(((NSNumber) value).longValue() == 0) {
+        if (value instanceof NSNumber && valueType == Integer.class) {
+            return valueType.cast(((NSNumber) value).intValue());
+        }
+
+        if (value instanceof NSNumber && valueType == Float.class) {
+            return valueType.cast(((NSNumber) value).floatValue());
+        }
+
+        if (value instanceof NSNumber && valueType == Double.class) {
+            return valueType.cast(((NSNumber) value).doubleValue());
+        }
+
+        if (value instanceof NSString && valueType == String.class) {
+            return valueType.cast(value);
+        }
+
+        if (value instanceof NSNumber && valueType == Boolean.class) {
+            if (((NSNumber) value).longValue() == 0) {
                 return valueType.cast(false);
             }
             return valueType.cast(true);
         }
 
-
-        System.out.println(firDataSnapshot.value());
-        System.out.println(firDataSnapshot.value().getClass());
+        // special classes
 
 
-        //throw new UnsupportedOperationException("NYI");
-        return (T) firDataSnapshot.value();
+        try {
+            Object instance = ClassReflection.getConstructor(valueType).newInstance();
+
+            Field[] fields = ClassReflection.getFields(valueType);
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+
+                if (field.isPublic()) {
+
+                    if (field.isPublic() && field.getName().equals(firDataSnapshot.key())) {
+                        if (field.getType() == Integer.class) {
+                            field.set(instance, ((NSNumber)firDataSnapshot.value()).intValue());
+                        }
+
+                        if (field.getType() == Long.class) {
+                            field.set(instance, ((NSNumber)firDataSnapshot.value()).longValue());
+                        }
+
+                        if (field.getType() == Float.class) {
+                            field.set(instance, ((NSNumber)firDataSnapshot.value()).floatValue());
+                        }
+
+                        if (field.getType() == Double.class) {
+                            field.set(instance, ((NSNumber)firDataSnapshot.value()).doubleValue());
+                        }
+
+                        if (field.getType() == Boolean.class) {
+                            field.set(instance, ((NSNumber)firDataSnapshot.value()).boolValue());
+                        }
+
+                        if (field.getType() == String.class) {
+                            field.set(instance, firDataSnapshot.value().toString());
+                        }
+
+                    }
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        throw new UnsupportedOperationException("This class cannot be reflected: " + valueType);
     }
 
     @Override
