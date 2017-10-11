@@ -70,7 +70,7 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
         }
 
         if(value instanceof NSNumber && valueType == Boolean.class) {
-            System.out.println("C BOOLEAN");
+            System.out.println("C BOOLEAN " + ((NSNumber) value).longValue());
             if(((NSNumber) value).longValue() == 0) {
                 return valueType.cast(false);
             }

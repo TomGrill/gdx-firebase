@@ -3,8 +3,10 @@ package de.tomgrill.gdxfirebase.iosmoe.database;
 import apple.foundation.*;
 import com.google.firebasedatabase.FIRDatabase;
 import com.google.firebasedatabase.FIRDatabaseReference;
+import com.google.firebasedatabase.FIRServerValue;
 import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.database.ServerValue;
 
 import java.util.List;
 import java.util.Map;
@@ -125,21 +127,34 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
         NSMutableDictionary<NSString, Object> dictionary = (NSMutableDictionary<NSString, Object>) NSMutableDictionary.dictionary();
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+            if(entry.getValue() == ServerValue.TIMESTAMP) {
+                dictionary.put(NSString.stringWithString(entry.getKey()), FIRServerValue.timestamp());
+                continue;
+            }
+
             if (entry.getValue() instanceof Map) {
                 NSDictionary<NSString, Object> dictionaryValue = toDictionary((Map) entry.getValue());
                 dictionary.put(NSString.stringWithString(entry.getKey()), dictionaryValue);
+                continue;
             }
+
             if (entry.getValue() instanceof List) {
                 throw new UnsupportedOperationException("List is not yet supported");
             }
             if (entry.getValue() instanceof Integer) {
                 dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt((Integer) entry.getValue()));
+                continue;
             }
+
             if (entry.getValue() instanceof Long) {
                 dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
+                continue;
             }
+
             if (entry.getValue() instanceof String) {
                 dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
+                continue;
             }
 
             if (entry.getValue() instanceof Boolean) {
@@ -148,6 +163,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
                 } else {
                     dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(0));
                 }
+                continue;
             }
 
         }
