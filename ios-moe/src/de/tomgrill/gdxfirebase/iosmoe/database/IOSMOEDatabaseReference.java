@@ -128,6 +128,10 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
             return FIRServerValue.timestamp();
         }
 
+        if (object == null) {
+            return NSNull.alloc().init();
+        }
+
         if (object instanceof Map) {
             return toDictionary((Map) object);
         }
@@ -144,14 +148,22 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
             return NSNumber.numberWithLong((Long) object);
         }
 
+        if (object instanceof Float) {
+            return NSNumber.numberWithFloat((Float) object);
+        }
+
+        if (object instanceof Double) {
+            return NSNumber.numberWithDouble((Double) object);
+        }
+
         if (object instanceof String) {
             return NSString.stringWithString((String) object);
         }
 
         if (object instanceof Boolean) {
-            return NSNumber.numberWithBool((Boolean) object);
+            return NSNumber.numberWithBool((Boolean) object).boolValue();
         }
-        throw new UnsupportedOperationException("Unsupported object");
+        throw new UnsupportedOperationException("Unsupported object type: " + object.getClass());
     }
 
     private NSDictionary<NSString, Object> toDictionary(Map<String, Object> map) {
