@@ -6,6 +6,7 @@ import com.google.firebasedatabase.FIRDatabaseReference;
 import de.tomgrill.gdxfirebase.core.database.DatabaseReference;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 
+import java.util.List;
 import java.util.Map;
 
 public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseReference {
@@ -90,7 +91,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
     public void updateChildren(Map<String, Object> update) {
         NSDictionary<NSString, Object> dictionary = toDictionary(update);
 
-        System.out.println("IN DIC");
+        System.out.println("IN DIC 1 ");
         for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
@@ -98,12 +99,11 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
     }
 
 
-
     @Override
     public void updateChildren(Map<String, Object> update, CompletionListener listener) {
         NSDictionary<NSString, Object> dictionary = toDictionary(update);
 
-        System.out.println("IN DIC");
+        System.out.println("IN DIC 2");
         for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
@@ -125,31 +125,31 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
         NSMutableDictionary<NSString, Object> dictionary = (NSMutableDictionary<NSString, Object>) NSMutableDictionary.dictionary();
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
             if (entry.getValue() instanceof Map) {
-                // ignore for now
-            } else {
-                if (entry.getValue() instanceof Integer) {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt((Integer) entry.getValue()));
-                }
-                if (entry.getValue() instanceof Long) {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
-                }
-                if (entry.getValue() instanceof Long) {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
-                }
-                if (entry.getValue() instanceof String) {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
-                }
+                NSDictionary<NSString, Object> dictionaryValue = toDictionary((Map) entry.getValue());
+                dictionary.put(NSString.stringWithString(entry.getKey()), dictionaryValue);
+            }
+            if (entry.getValue() instanceof List) {
+                throw new UnsupportedOperationException("List is not yet supported");
+            }
+            if (entry.getValue() instanceof Integer) {
+                dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt((Integer) entry.getValue()));
+            }
+            if (entry.getValue() instanceof Long) {
+                dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
+            }
+            if (entry.getValue() instanceof String) {
+                dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
+            }
 
-                if (entry.getValue() instanceof Boolean) {
-                    if((Boolean) entry.getValue()) {
-                        dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(1));
-                    } else {
-                        dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(0));
-                    }
+            if (entry.getValue() instanceof Boolean) {
+                if ((Boolean) entry.getValue()) {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(1));
+                } else {
+                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(0));
                 }
             }
+
         }
 
 
