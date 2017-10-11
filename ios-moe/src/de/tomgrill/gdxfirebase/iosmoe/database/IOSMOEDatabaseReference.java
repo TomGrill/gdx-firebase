@@ -34,17 +34,17 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public void setValue(Object value) {
-        firDatabaseReference.setValue(value);
+        firDatabaseReference.setValue(makeFirebaseCompatibleObject(value));
     }
 
     @Override
     public void setValue(Object value, Object priority) {
-        firDatabaseReference.setValueAndPriority(value, priority);
+        firDatabaseReference.setValueAndPriority(makeFirebaseCompatibleObject(value), priority);
     }
 
     @Override
     public void setValue(Object value, final CompletionListener listener) {
-        firDatabaseReference.setValueWithCompletionBlock(value, new FIRDatabaseReference.Block_setValueWithCompletionBlock() {
+        firDatabaseReference.setValueWithCompletionBlock(makeFirebaseCompatibleObject(value), new FIRDatabaseReference.Block_setValueWithCompletionBlock() {
             @Override
             public void call_setValueWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {
                 if (error == null) {
@@ -58,7 +58,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public void setValue(Object value, Object priority, final CompletionListener listener) {
-        firDatabaseReference.setValueAndPriorityWithCompletionBlock(value, priority, new FIRDatabaseReference.Block_setValueAndPriorityWithCompletionBlock() {
+        firDatabaseReference.setValueAndPriorityWithCompletionBlock(makeFirebaseCompatibleObject(value), priority, new FIRDatabaseReference.Block_setValueAndPriorityWithCompletionBlock() {
             @Override
             public void call_setValueAndPriorityWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {
                 if (error == null) {
@@ -123,49 +123,46 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
         });
     }
 
+    private Object makeFirebaseCompatibleObject(Object object) {
+        if (object == ServerValue.TIMESTAMP) {
+            return FIRServerValue.timestamp();
+        }
+
+        if (object instanceof Map) {
+            return toDictionary((Map) object);
+        }
+
+        if (object instanceof List) {
+            throw new UnsupportedOperationException("List is not yet supported");
+        }
+
+        if (object instanceof Integer) {
+            return NSNumber.numberWithInt((Integer) object);
+        }
+
+        if (object instanceof Long) {
+            return NSNumber.numberWithLong((Long) object);
+        }
+
+        if (object instanceof String) {
+            return NSString.stringWithString((String) object);
+        }
+
+        if (object instanceof Boolean) {
+            if ((Boolean) object) {
+                return NSNumber.numberWithInt(1);
+            } else {
+                return NSNumber.numberWithInt(0);
+            }
+        }
+        throw new UnsupportedOperationException("Unsupported object");
+    }
+
     private NSDictionary<NSString, Object> toDictionary(Map<String, Object> map) {
         NSMutableDictionary<NSString, Object> dictionary = (NSMutableDictionary<NSString, Object>) NSMutableDictionary.dictionary();
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-
-            if(entry.getValue() == ServerValue.TIMESTAMP) {
-                dictionary.put(NSString.stringWithString(entry.getKey()), FIRServerValue.timestamp());
-                continue;
-            }
-
-            if (entry.getValue() instanceof Map) {
-                NSDictionary<NSString, Object> dictionaryValue = toDictionary((Map) entry.getValue());
-                dictionary.put(NSString.stringWithString(entry.getKey()), dictionaryValue);
-                continue;
-            }
-
-            if (entry.getValue() instanceof List) {
-                throw new UnsupportedOperationException("List is not yet supported");
-            }
-            if (entry.getValue() instanceof Integer) {
-                dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt((Integer) entry.getValue()));
-                continue;
-            }
-
-            if (entry.getValue() instanceof Long) {
-                dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithLong((Long) entry.getValue()));
-                continue;
-            }
-
-            if (entry.getValue() instanceof String) {
-                dictionary.put(NSString.stringWithString(entry.getKey()), NSString.stringWithString((String) entry.getValue()));
-                continue;
-            }
-
-            if (entry.getValue() instanceof Boolean) {
-                if ((Boolean) entry.getValue()) {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(1));
-                } else {
-                    dictionary.put(NSString.stringWithString(entry.getKey()), NSNumber.numberWithInt(0));
-                }
-                continue;
-            }
-
+            dictionary.put(NSString.stringWithString(entry.getKey()), makeFirebaseCompatibleObject(entry.getValue()));
         }
 
 
