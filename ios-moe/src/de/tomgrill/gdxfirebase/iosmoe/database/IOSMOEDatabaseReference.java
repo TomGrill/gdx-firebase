@@ -161,7 +161,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
         }
 
         if (object instanceof Boolean) {
-            return NSNumber.numberWithBool((Boolean) object).boolValue();
+            return NSNumber.numberWithBool((Boolean) object);
         }
         throw new UnsupportedOperationException("Unsupported object type: " + object.getClass());
     }
