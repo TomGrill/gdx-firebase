@@ -6,12 +6,10 @@ import apple.foundation.NSNumber;
 import apple.foundation.NSString;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.google.firebasedatabase.FIRDataSnapshot;
 import de.tomgrill.gdxfirebase.core.database.DataSnapshot;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,16 +55,16 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
     }
 
     private Object castToProperValue(Object object) {
-        if (firDataSnapshot.value() instanceof NSNull) {
+        if (object instanceof NSNull) {
             return null;
         }
 
-        if (firDataSnapshot.value() instanceof NSString) {
-            return firDataSnapshot.value().toString();
+        if (object instanceof NSString) {
+            return object.toString();
         }
 
-        if (firDataSnapshot.value() instanceof NSNumber) {
-            NSNumber nsNumber = (NSNumber) firDataSnapshot.value();
+        if (object instanceof NSNumber) {
+            NSNumber nsNumber = (NSNumber) object;
 
             String cType = nsNumber.objCType();
             switch (cType) {
@@ -85,8 +83,8 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
             }
         }
 
-        if (firDataSnapshot.value() instanceof NSDictionary) {
-            NSDictionary<String, Object> dictionary = (NSDictionary) firDataSnapshot.value();
+        if (object instanceof NSDictionary) {
+            NSDictionary<String, Object> dictionary = (NSDictionary) object;
             Map<String, Object> map = new HashMap<String, Object>();
             for (Object key : dictionary.keySet()) {
                 Object value = dictionary.get(key);
@@ -129,23 +127,23 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
                     if (field.isPublic() && field.getName().equals(firDataSnapshot.key())) {
                         if (field.getType() == Integer.class) {
-                            field.set(instance, ((NSNumber)firDataSnapshot.value()).intValue());
+                            field.set(instance, ((NSNumber) firDataSnapshot.value()).intValue());
                         }
 
                         if (field.getType() == Long.class) {
-                            field.set(instance, ((NSNumber)firDataSnapshot.value()).longValue());
+                            field.set(instance, ((NSNumber) firDataSnapshot.value()).longValue());
                         }
 
                         if (field.getType() == Float.class) {
-                            field.set(instance, ((NSNumber)firDataSnapshot.value()).floatValue());
+                            field.set(instance, ((NSNumber) firDataSnapshot.value()).floatValue());
                         }
 
                         if (field.getType() == Double.class) {
-                            field.set(instance, ((NSNumber)firDataSnapshot.value()).doubleValue());
+                            field.set(instance, ((NSNumber) firDataSnapshot.value()).doubleValue());
                         }
 
                         if (field.getType() == Boolean.class) {
-                            field.set(instance, ((NSNumber)firDataSnapshot.value()).boolValue());
+                            field.set(instance, ((NSNumber) firDataSnapshot.value()).boolValue());
                         }
 
                         if (field.getType() == String.class) {
