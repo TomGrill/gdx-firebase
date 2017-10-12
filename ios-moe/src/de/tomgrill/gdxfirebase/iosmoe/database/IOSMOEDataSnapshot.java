@@ -63,6 +63,10 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
             return object.toString();
         }
 
+        if (object instanceof String) {
+            return object;
+        }
+
         if (object instanceof NSNumber) {
             NSNumber nsNumber = (NSNumber) object;
 
@@ -93,7 +97,7 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
             return map;
         }
 
-        throw new UnsupportedOperationException("cannot cast to proper value: " + object);
+        throw new UnsupportedOperationException("cannot cast to proper value: " + object + " " + object.getClass());
     }
 
     @Override
@@ -125,33 +129,43 @@ public class IOSMOEDataSnapshot implements DataSnapshot {
 
                 if (field.isPublic()) {
 
-                    if (field.isPublic() && field.getName().equals(firDataSnapshot.key())) {
-                        if (field.getType() == Integer.class) {
-                            field.set(instance, ((NSNumber) firDataSnapshot.value()).intValue());
-                        }
+                    NSDictionary<String, Object> dictionary = (NSDictionary) firDataSnapshot.value();
+                    for (Object key : dictionary.keySet()) {
+                        Object dictValue = dictionary.get(key);
 
-                        if (field.getType() == Long.class) {
-                            field.set(instance, ((NSNumber) firDataSnapshot.value()).longValue());
-                        }
+                        if (field.getName().equals(key)) {
 
-                        if (field.getType() == Float.class) {
-                            field.set(instance, ((NSNumber) firDataSnapshot.value()).floatValue());
-                        }
+                            if (field.getType() == Integer.class || field.getType() == Integer.TYPE) {
+                                field.set(instance, ((NSNumber) dictValue).intValue());
+                                break;
+                            }
 
-                        if (field.getType() == Double.class) {
-                            field.set(instance, ((NSNumber) firDataSnapshot.value()).doubleValue());
-                        }
+                            if (field.getType() == Long.class || field.getType() == Long.TYPE) {
+                                field.set(instance, ((NSNumber) dictValue).longValue());
+                                break;
+                            }
 
-                        if (field.getType() == Boolean.class) {
-                            field.set(instance, ((NSNumber) firDataSnapshot.value()).boolValue());
-                        }
+                            if (field.getType() == Float.class || field.getType() == Float.TYPE) {
+                                field.set(instance, ((NSNumber) dictValue).floatValue());
+                                break;
+                            }
 
-                        if (field.getType() == String.class) {
-                            field.set(instance, firDataSnapshot.value().toString());
-                        }
+                            if (field.getType() == Double.class || field.getType() == Double.TYPE) {
+                                field.set(instance, ((NSNumber) dictValue).doubleValue());
+                                break;
+                            }
 
+                            if (field.getType() == Boolean.class || field.getType() == Boolean.TYPE) {
+                                field.set(instance, ((NSNumber) dictValue).boolValue());
+                                break;
+                            }
+
+                            if (field.getType() == String.class) {
+                                field.set(instance, dictValue.toString());
+                                break;
+                            }
+                        }
                     }
-
                 }
 
             }
