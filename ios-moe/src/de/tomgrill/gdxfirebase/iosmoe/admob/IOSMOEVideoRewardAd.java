@@ -39,6 +39,7 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     }
 
     private String getDeviceUUID() {
+        System.out.println("WARN HARDCODED DEVICE ID, need AUTO RETRIEVE");
         return "4f5c9375d645c9da801af226faede6ea";
     }
 
@@ -61,7 +62,7 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
             NSMutableArray nsMutableArray = NSMutableArray.array();
             //nsMutableArray.add(UIDevice.currentDevice().identifierForVendor().UUIDString());
             nsMutableArray.add(getDeviceUUID());
-            System.out.println(UIDevice.currentDevice().identifierForVendor().UUIDString());
+            System.out.println("ADMOB DEVICE UUIDString" + UIDevice.currentDevice().identifierForVendor().UUIDString());
 
 
             request.setTestDevices(nsMutableArray);
@@ -87,7 +88,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     @Override
     public void setRewardVideoAdListener(RewardedVideoAdListener rewardVideoAdListener) {
-        System.out.println("F ADD1");
         this.listener = rewardVideoAdListener;
     }
 
@@ -100,7 +100,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     @Override
     @Selector("rewardBasedVideoAdDidRewardUserWithReward:")
     public void rewardBasedVideoAdDidRewardUserWithReward(GADRewardBasedVideoAd rewardBasedVideoAd, GADAdReward reward) {
-        System.out.println("F REWARD");
         if (listener != null)
             listener.onRewarded(new IOSMOERewardItem(reward));
     }
@@ -108,7 +107,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     @Override
     @Selector("rewardBasedVideoAdDidClose:")
     public void rewardBasedVideoAdDidClose(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        System.out.println("F CLOSE");
         windows.setHidden(true);
         if (listener != null)
             listener.onRewardedVideoAdClosed();
@@ -118,7 +116,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     @Override
     @Selector("rewardBasedVideoAdDidOpen:")
     public void rewardBasedVideoAdDidOpen(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        System.out.println("F OPEN");
         if (listener != null)
             listener.onRewardedVideoAdOpened();
     }
@@ -131,8 +128,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     @Override
     public void rewardBasedVideoAdDidStartPlaying(GADRewardBasedVideoAd rewardBasedVideoAd) {
-
-        System.out.println("F START");
         if (listener != null)
             listener.onRewardedVideoStarted();
     }
