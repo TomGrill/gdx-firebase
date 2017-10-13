@@ -15,21 +15,28 @@ public class IOSMOEQuery implements Query {
     private FIRDatabaseQuery firDatabaseQuery;
 
     private Array<ValueEventListener> valueEventListeners = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> block1Listeners = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> block2Listeners = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> block1Listeners = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> block2Listeners = new Array<>();
 
     private Array<ChildEventListener> childEventListeners = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> addedBlocks = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> addedCancels = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> addedBlocks = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> addedCancels = new Array<>();
+//
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> changedBlocks = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> changedCancels = new Array<>();
+//
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> movedBlocks = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> movedCancels = new Array<>();
+//
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> removedBlocks = new Array<>();
+//    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> removedCancels = new Array<>();
 
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> changedBlocks = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> changedCancels = new Array<>();
+    private Array<Long> valueHandles = new Array<>();
 
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> movedBlocks = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> movedCancels = new Array<>();
-
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1> removedBlocks = new Array<>();
-    private Array<FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_2> removedCancels = new Array<>();
+    private Array<Long> addChildHandles = new Array<>();
+    private Array<Long> changedChildHandles = new Array<>();
+    private Array<Long> movedChildHandles = new Array<>();
+    private Array<Long> removedChildHandles = new Array<>();
 
     public IOSMOEQuery(FIRDatabaseQuery firDatabaseQuery) {
         this.firDatabaseQuery = firDatabaseQuery;
@@ -54,11 +61,13 @@ public class IOSMOEQuery implements Query {
         };
 
 
-        firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.Value, block1Listener, block2Listener);
+        long handle = firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.Value, block1Listener, block2Listener);
 
         valueEventListeners.add(listener);
-        block1Listeners.add(block1Listener);
-        block2Listeners.add(block2Listener);
+        valueHandles.add(handle);
+//        block1Listeners.add(block1Listener);
+//        block2Listeners.add(block2Listener);
+
 
         return listener;
     }
@@ -84,9 +93,10 @@ public class IOSMOEQuery implements Query {
             };
 
 
-            firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildAdded, block, cancel);
-            addedBlocks.add(block);
-            addedCancels.add(cancel);
+            long handle = firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildAdded, block, cancel);
+            addChildHandles.add(handle);
+//            addedBlocks.add(block);
+//            addedCancels.add(cancel);
         }
 
         /*
@@ -107,9 +117,10 @@ public class IOSMOEQuery implements Query {
             };
 
 
-            firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildChanged, block, cancel);
-            changedBlocks.add(block);
-            changedCancels.add(cancel);
+            long handle = firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildChanged, block, cancel);
+            changedChildHandles.add(handle);
+//            changedBlocks.add(block);
+//            changedCancels.add(cancel);
         }
 
         /*
@@ -130,9 +141,10 @@ public class IOSMOEQuery implements Query {
             };
 
 
-            firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildMoved, block, cancel);
-            movedBlocks.add(block);
-            movedCancels.add(cancel);
+            long handle = firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildMoved, block, cancel);
+            movedChildHandles.add(handle);
+//            movedBlocks.add(block);
+//            movedCancels.add(cancel);
         }
 
         /*
@@ -153,9 +165,10 @@ public class IOSMOEQuery implements Query {
             };
 
 
-            firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildRemoved, block, cancel);
-            removedBlocks.add(block);
-            removedCancels.add(cancel);
+            long handle = firDatabaseQuery.observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock(FIRDataEventType.ChildRemoved, block, cancel);
+            removedChildHandles.add(handle);
+//            removedBlocks.add(block);
+//            removedCancels.add(cancel);
         }
 
 
@@ -184,10 +197,12 @@ public class IOSMOEQuery implements Query {
     public void removeEventListener(ValueEventListener listener) {
         int index = valueEventListeners.indexOf(listener, true);
         if (index != -1) {
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) block1Listeners.get(index), firDatabaseQuery.ref().key());
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) block2Listeners.get(index), firDatabaseQuery.ref().key());
-            block1Listeners.removeIndex(index);
-            block2Listeners.removeIndex(index);
+            firDatabaseQuery.removeObserverWithHandle(valueHandles.get(index));
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) block1Listeners.get(index), firDatabaseQuery.ref().key());
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) block2Listeners.get(index), firDatabaseQuery.ref().key());
+//            block1Listeners.removeIndex(index);
+//            block2Listeners.removeIndex(index);
+            valueHandles.removeIndex(index);
             valueEventListeners.removeIndex(index);
         }
     }
@@ -196,29 +211,42 @@ public class IOSMOEQuery implements Query {
     public void removeEventListener(ChildEventListener listener) {
         int index = childEventListeners.indexOf(listener, true);
         if (index != -1) {
-            String keyPath = firDatabaseQuery.ref().key();
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) addedBlocks.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) addedCancels.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) changedBlocks.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) changedCancels.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) removedBlocks.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) removedCancels.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) movedBlocks.get(index), keyPath);
-            firDatabaseQuery.removeObserverForKeyPath((NSObject) movedCancels.get(index), keyPath);
 
-            addedBlocks.removeIndex(index);
-            addedCancels.removeIndex(index);
+            //            String keyPath = firDatabaseQuery.ref().key();
 
-            changedBlocks.removeIndex(index);
-            changedCancels.removeIndex(index);
+            firDatabaseQuery.removeObserverWithHandle(addChildHandles.get(index));
+            firDatabaseQuery.removeObserverWithHandle(changedChildHandles.get(index));
+            firDatabaseQuery.removeObserverWithHandle(movedChildHandles.get(index));
+            firDatabaseQuery.removeObserverWithHandle(removedChildHandles.get(index));
 
-            removedBlocks.removeIndex(index);
-            removedCancels.removeIndex(index);
 
-            movedBlocks.removeIndex(index);
-            movedCancels.removeIndex(index);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) addedBlocks.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) addedCancels.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) changedBlocks.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) changedCancels.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) removedBlocks.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) removedCancels.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) movedBlocks.get(index), keyPath);
+//            firDatabaseQuery.removeObserverForKeyPath((NSObject) movedCancels.get(index), keyPath);
 
-            valueEventListeners.removeIndex(index);
+//            addedBlocks.removeIndex(index);
+//            addedCancels.removeIndex(index);
+//
+//            changedBlocks.removeIndex(index);
+//            changedCancels.removeIndex(index);
+//
+//            removedBlocks.removeIndex(index);
+//            removedCancels.removeIndex(index);
+//
+//            movedBlocks.removeIndex(index);
+//            movedCancels.removeIndex(index);
+
+            addChildHandles.removeIndex(index);
+            changedChildHandles.removeIndex(index);
+            movedChildHandles.removeIndex(index);
+            removedChildHandles.removeIndex(index);
+
+            childEventListeners.removeIndex(index);
         }
     }
 
