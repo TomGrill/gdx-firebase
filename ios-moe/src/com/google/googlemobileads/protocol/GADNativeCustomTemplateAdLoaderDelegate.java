@@ -16,11 +16,11 @@ import org.moe.natj.objc.ann.Selector;
 @Runtime(ObjCRuntime.class)
 @ObjCProtocolName("GADNativeCustomTemplateAdLoaderDelegate")
 public interface GADNativeCustomTemplateAdLoaderDelegate extends
-        GADAdLoaderDelegate {
+		GADAdLoaderDelegate {
 	@Generated
 	@Selector("adLoader:didReceiveNativeCustomTemplateAd:")
 	void adLoaderDidReceiveNativeCustomTemplateAd(GADAdLoader adLoader,
-                                                  GADNativeCustomTemplateAd nativeCustomTemplateAd);
+			GADNativeCustomTemplateAd nativeCustomTemplateAd);
 
 	@Generated
 	@Selector("nativeCustomTemplateIDsForAdLoader:")

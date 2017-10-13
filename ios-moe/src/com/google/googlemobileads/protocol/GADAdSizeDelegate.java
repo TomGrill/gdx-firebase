@@ -19,5 +19,5 @@ public interface GADAdSizeDelegate {
 	@Generated
 	@Selector("adView:willChangeAdSizeTo:")
 	void adViewWillChangeAdSizeTo(GADBannerView bannerView,
-                                  @ByValue GADAdSize size);
+			@ByValue GADAdSize size);
 }

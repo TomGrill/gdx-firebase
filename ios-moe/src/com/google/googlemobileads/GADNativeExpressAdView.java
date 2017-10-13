@@ -1,9 +1,14 @@
 package com.google.googlemobileads;
 
 
+import apple.NSObject;
 import apple.coregraphics.struct.CGPoint;
 import apple.coregraphics.struct.CGRect;
-import apple.foundation.*;
+import apple.foundation.NSArray;
+import apple.foundation.NSCoder;
+import apple.foundation.NSDate;
+import apple.foundation.NSMethodSignature;
+import apple.foundation.NSSet;
 import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import apple.uikit.UIViewController;
@@ -13,7 +18,15 @@ import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.ByValue;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NFloat;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
@@ -61,7 +74,7 @@ public class GADNativeExpressAdView extends UIView {
 	public static native void addKeyframeWithRelativeStartTimeRelativeDurationAnimations(
 			double frameStartTime,
 			double frameDuration,
-			@ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
+			@ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
 
 	@Generated
 	@Owned
@@ -79,21 +92,21 @@ public class GADNativeExpressAdView extends UIView {
 			double duration,
 			double delay,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("animateWithDuration:animations:")
 	public static native void animateWithDurationAnimations(
 			double duration,
-			@ObjCBlock(name = "call_animateWithDurationAnimations") Block_animateWithDurationAnimations animations);
+			@ObjCBlock(name = "call_animateWithDurationAnimations") UIView.Block_animateWithDurationAnimations animations);
 
 	@Generated
 	@Selector("animateWithDuration:animations:completion:")
 	public static native void animateWithDurationAnimationsCompletion(
 			double duration,
-			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") Block_animateWithDurationAnimationsCompletion_1 animations,
-			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") Block_animateWithDurationAnimationsCompletion_2 completion);
+			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
+			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
 
 	@Generated
 	@Selector("animateWithDuration:delay:options:animations:completion:")
@@ -101,8 +114,8 @@ public class GADNativeExpressAdView extends UIView {
 			double duration,
 			double delay,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:")
@@ -112,8 +125,8 @@ public class GADNativeExpressAdView extends UIView {
 			@NFloat double dampingRatio,
 			@NFloat double velocity,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
-			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
+			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
 
 	@Generated
 	@Selector("appearance")
@@ -235,6 +248,10 @@ public class GADNativeExpressAdView extends UIView {
 			@Mapped(ObjCObjectMapper.class) Object anArgument);
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -295,9 +312,13 @@ public class GADNativeExpressAdView extends UIView {
 	public native GADNativeExpressAdView initWithFrame(@ByValue CGRect frame);
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
-	public static native Function_instanceMethodForSelector_ret instanceMethodForSelector(
+	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
 			SEL aSelector);
 
 	@Generated
@@ -327,6 +348,10 @@ public class GADNativeExpressAdView extends UIView {
 	public static native Class layerClass();
 
 	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
+
+	@Generated
 	@Selector("loadRequest:")
 	public native void loadRequest(GADRequest request);
 
@@ -342,13 +367,13 @@ public class GADNativeExpressAdView extends UIView {
 			@NUInt long animation,
 			NSArray<? extends UIView> views,
 			@NUInt long options,
-			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
-			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
+			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("performWithoutAnimation:")
 	public static native void performWithoutAnimation(
-			@ObjCBlock(name = "call_performWithoutAnimation") Block_performWithoutAnimation actionsWithoutAnimation);
+			@ObjCBlock(name = "call_performWithoutAnimation") UIView.Block_performWithoutAnimation actionsWithoutAnimation);
 
 	@Generated
 	@Selector("requiresConstraintBasedLayout")
@@ -444,11 +469,11 @@ public class GADNativeExpressAdView extends UIView {
 			@Mapped(ObjCObjectMapper.class) GADNativeExpressAdViewDelegate value) {
 		Object __old = delegate();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setDelegate_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 
@@ -460,11 +485,11 @@ public class GADNativeExpressAdView extends UIView {
 	public void setRootViewController(UIViewController value) {
 		Object __old = rootViewController();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setRootViewController_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 
@@ -483,7 +508,7 @@ public class GADNativeExpressAdView extends UIView {
 			UIView toView,
 			double duration,
 			@NUInt long options,
-			@ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") Block_transitionFromViewToViewDurationOptionsCompletion completion);
+			@ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
 
 	@Generated
 	@Selector("transitionWithView:duration:options:animations:completion:")
@@ -491,8 +516,8 @@ public class GADNativeExpressAdView extends UIView {
 			UIView view,
 			double duration,
 			@NUInt long options,
-			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("userInterfaceLayoutDirectionForSemanticContentAttribute:")

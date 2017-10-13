@@ -31,46 +31,46 @@ public interface GADMAdNetworkConnector extends GADMediationAdRequest {
 	@Deprecated
 	@Selector("adapter:clickDidOccurInBanner:")
 	void adapterClickDidOccurInBanner(
-            @Mapped(ObjCObjectMapper.class) Object adapter, UIView view);
+			@Mapped(ObjCObjectMapper.class) Object adapter, UIView view);
 
 	@Generated
 	@Selector("adapter:didFailAd:")
 	void adapterDidFailAd(@Mapped(ObjCObjectMapper.class) Object adapter,
-                          NSError error);
+			NSError error);
 
 	@Generated
 	@Deprecated
 	@Selector("adapter:didFailInterstitial:")
 	void adapterDidFailInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter, NSError error);
+			@Mapped(ObjCObjectMapper.class) Object adapter, NSError error);
 
 	@Generated
 	@Selector("adapter:didReceiveAdView:")
 	void adapterDidReceiveAdView(
-            @Mapped(ObjCObjectMapper.class) Object adapter, UIView view);
+			@Mapped(ObjCObjectMapper.class) Object adapter, UIView view);
 
 	@Generated
 	@Deprecated
 	@Selector("adapter:didReceiveInterstitial:")
 	void adapterDidReceiveInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter,
-            NSObject interstitial);
+			@Mapped(ObjCObjectMapper.class) Object adapter,
+			NSObject interstitial);
 
 	@Generated
 	@Selector("adapter:didReceiveMediatedNativeAd:")
 	void adapterDidReceiveMediatedNativeAd(
-            @Mapped(ObjCObjectMapper.class) Object adapter,
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd);
+			@Mapped(ObjCObjectMapper.class) Object adapter,
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd);
 
 	@Generated
 	@Selector("adapterDidDismissFullScreenModal:")
 	void adapterDidDismissFullScreenModal(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterDidDismissInterstitial:")
 	void adapterDidDismissInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterDidGetAdClick:")
@@ -79,32 +79,32 @@ public interface GADMAdNetworkConnector extends GADMediationAdRequest {
 	@Generated
 	@Selector("adapterDidReceiveInterstitial:")
 	void adapterDidReceiveInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterWillDismissFullScreenModal:")
 	void adapterWillDismissFullScreenModal(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterWillDismissInterstitial:")
 	void adapterWillDismissInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterWillLeaveApplication:")
 	void adapterWillLeaveApplication(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterWillPresentFullScreenModal:")
 	void adapterWillPresentFullScreenModal(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("adapterWillPresentInterstitial:")
 	void adapterWillPresentInterstitial(
-            @Mapped(ObjCObjectMapper.class) Object adapter);
+			@Mapped(ObjCObjectMapper.class) Object adapter);
 
 	@Generated
 	@Selector("viewControllerForPresentingModalView")

@@ -1,11 +1,23 @@
 package com.google.googlemobileads;
 
 
-import apple.foundation.*;
+import apple.NSObject;
+import apple.foundation.NSArray;
+import apple.foundation.NSCoder;
+import apple.foundation.NSDictionary;
+import apple.foundation.NSError;
+import apple.foundation.NSMethodSignature;
+import apple.foundation.NSSet;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
@@ -61,6 +73,10 @@ public class GADRequestError extends NSError {
 			@Mapped(ObjCObjectMapper.class) Object anArgument);
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -97,12 +113,16 @@ public class GADRequestError extends NSError {
 	@Generated
 	@Selector("initWithDomain:code:userInfo:")
 	public native GADRequestError initWithDomainCodeUserInfo(String domain,
-                                                             @NInt long code, NSDictionary<?, ?> dict);
+			@NInt long code, NSDictionary<?, ?> dict);
+
+	@Generated
+	@Selector("initialize")
+	public static native void initialize();
 
 	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
-	public static native Function_instanceMethodForSelector_ret instanceMethodForSelector(
+	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
 			SEL aSelector);
 
 	@Generated
@@ -124,6 +144,10 @@ public class GADRequestError extends NSError {
 			String key);
 
 	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
+
+	@Generated
 	@Owned
 	@Selector("new")
 	@MappedReturn(ObjCObjectMapper.class)
@@ -141,7 +165,7 @@ public class GADRequestError extends NSError {
 	@Selector("setUserInfoValueProviderForDomain:provider:")
 	public static native void setUserInfoValueProviderForDomainProvider(
 			String errorDomain,
-			@ObjCBlock(name = "call_setUserInfoValueProviderForDomainProvider") Block_setUserInfoValueProviderForDomainProvider provider);
+			@ObjCBlock(name = "call_setUserInfoValueProviderForDomainProvider") NSError.Block_setUserInfoValueProviderForDomainProvider provider);
 
 	@Generated
 	@Selector("setVersion:")
@@ -164,7 +188,7 @@ public class GADRequestError extends NSError {
 	@Generated
 	@Selector("userInfoValueProviderForDomain:")
 	@ObjCBlock(name = "call_userInfoValueProviderForDomain_ret")
-	public static native Block_userInfoValueProviderForDomain_ret userInfoValueProviderForDomain(
+	public static native NSError.Block_userInfoValueProviderForDomain_ret userInfoValueProviderForDomain(
 			String errorDomain);
 
 	@Generated

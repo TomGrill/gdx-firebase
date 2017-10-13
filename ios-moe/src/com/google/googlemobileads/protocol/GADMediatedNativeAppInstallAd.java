@@ -22,7 +22,7 @@ public interface GADMediatedNativeAppInstallAd extends GADMediatedNativeAd {
 	@IsOptional
 	@Selector("adChoicesView")
 	default UIView adChoicesView() {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
@@ -39,7 +39,7 @@ public interface GADMediatedNativeAppInstallAd extends GADMediatedNativeAd {
 
 	@Generated
 	@Selector("icon")
-    GADNativeAdImage icon();
+	GADNativeAdImage icon();
 
 	@Generated
 	@Selector("images")

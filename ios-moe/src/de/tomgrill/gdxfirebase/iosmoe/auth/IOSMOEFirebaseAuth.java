@@ -1,7 +1,9 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
 
+
 import apple.foundation.NSError;
+import apple.protocol.NSObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.utils.Array;
@@ -14,7 +16,7 @@ import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
 public class IOSMOEFirebaseAuth implements FirebaseAuth {
 
-    private Array<FIRAuth.Block_addAuthStateDidChangeListener> fbAuthStateListeners;
+    private Array<NSObject> fbAuthStateListeners;
     private Array<AuthStateListener> authStateListeners;
 
     public IOSMOEFirebaseAuth() {
@@ -44,8 +46,8 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
             }
         };
 
-        FIRAuth.auth().addAuthStateDidChangeListener(fbListener);
-        fbAuthStateListeners.add(fbListener);
+        NSObject handle = FIRAuth.auth().addAuthStateDidChangeListener(fbListener);
+        fbAuthStateListeners.add(handle);
         authStateListeners.add(authStateListener);
     }
 
@@ -55,7 +57,7 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
         if (index == -1) {
             throw new RuntimeException("Unknown AuthStateListener. Already removed or not added.");
         }
-        FIRAuth.auth().removeAuthStateDidChangeListener((FIRAuth.Block_addAuthStateDidChangeListener) fbAuthStateListeners.get(index));
+        FIRAuth.auth().removeAuthStateDidChangeListener(fbAuthStateListeners.get(index));
         fbAuthStateListeners.removeIndex(index);
         authStateListeners.removeIndex(index);
     }

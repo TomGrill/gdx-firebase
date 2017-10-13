@@ -20,42 +20,42 @@ public interface GADBannerViewDelegate {
 	@IsOptional
 	@Selector("adView:didFailToReceiveAdWithError:")
 	default void adViewDidFailToReceiveAdWithError(GADBannerView bannerView,
-                                                   GADRequestError error) {
-		throw new UnsupportedOperationException();
+			GADRequestError error) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("adViewDidDismissScreen:")
 	default void adViewDidDismissScreen(GADBannerView bannerView) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("adViewDidReceiveAd:")
 	default void adViewDidReceiveAd(GADBannerView bannerView) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("adViewWillDismissScreen:")
 	default void adViewWillDismissScreen(GADBannerView bannerView) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("adViewWillLeaveApplication:")
 	default void adViewWillLeaveApplication(GADBannerView bannerView) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("adViewWillPresentScreen:")
 	default void adViewWillPresentScreen(GADBannerView bannerView) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

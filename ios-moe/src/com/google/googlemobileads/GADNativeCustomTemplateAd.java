@@ -1,13 +1,20 @@
 package com.google.googlemobileads;
 
 
+import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
@@ -66,6 +73,10 @@ public class GADNativeCustomTemplateAd extends GADNativeAd {
 			@Mapped(ObjCObjectMapper.class) Object anArgument);
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -107,9 +118,13 @@ public class GADNativeCustomTemplateAd extends GADNativeAd {
 	public native GADNativeCustomTemplateAd init();
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
-	public static native Function_instanceMethodForSelector_ret instanceMethodForSelector(
+	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
 			SEL aSelector);
 
 	@Generated
@@ -129,6 +144,10 @@ public class GADNativeCustomTemplateAd extends GADNativeAd {
 	@Selector("keyPathsForValuesAffectingValueForKey:")
 	public static native NSSet<String> keyPathsForValuesAffectingValueForKey(
 			String key);
+
+	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
 
 	@Generated
 	@Selector("mediaView")

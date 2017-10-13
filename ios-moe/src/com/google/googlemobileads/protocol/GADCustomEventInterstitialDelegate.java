@@ -20,41 +20,41 @@ public interface GADCustomEventInterstitialDelegate {
 	@Generated
 	@Selector("customEventInterstitial:didFailAd:")
 	void customEventInterstitialDidFailAd(
-            @Mapped(ObjCObjectMapper.class) Object customEvent, NSError error);
+			@Mapped(ObjCObjectMapper.class) Object customEvent, NSError error);
 
 	@Generated
 	@Deprecated
 	@Selector("customEventInterstitial:didReceiveAd:")
 	void customEventInterstitialDidReceiveAd(
-            @Mapped(ObjCObjectMapper.class) Object customEvent, NSObject ad);
+			@Mapped(ObjCObjectMapper.class) Object customEvent, NSObject ad);
 
 	@Generated
 	@Selector("customEventInterstitialDidDismiss:")
 	void customEventInterstitialDidDismiss(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 
 	@Generated
 	@Selector("customEventInterstitialDidReceiveAd:")
 	void customEventInterstitialDidReceiveAd(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 
 	@Generated
 	@Selector("customEventInterstitialWasClicked:")
 	void customEventInterstitialWasClicked(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 
 	@Generated
 	@Selector("customEventInterstitialWillDismiss:")
 	void customEventInterstitialWillDismiss(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 
 	@Generated
 	@Selector("customEventInterstitialWillLeaveApplication:")
 	void customEventInterstitialWillLeaveApplication(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 
 	@Generated
 	@Selector("customEventInterstitialWillPresent:")
 	void customEventInterstitialWillPresent(
-            @Mapped(ObjCObjectMapper.class) Object customEvent);
+			@Mapped(ObjCObjectMapper.class) Object customEvent);
 }

@@ -20,47 +20,47 @@ public interface GADNativeExpressAdViewDelegate {
 	@IsOptional
 	@Selector("nativeExpressAdView:didFailToReceiveAdWithError:")
 	default void nativeExpressAdViewDidFailToReceiveAdWithError(
-            GADNativeExpressAdView nativeExpressAdView, GADRequestError error) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView, GADRequestError error) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeExpressAdViewDidDismissScreen:")
 	default void nativeExpressAdViewDidDismissScreen(
-            GADNativeExpressAdView nativeExpressAdView) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeExpressAdViewDidReceiveAd:")
 	default void nativeExpressAdViewDidReceiveAd(
-            GADNativeExpressAdView nativeExpressAdView) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeExpressAdViewWillDismissScreen:")
 	default void nativeExpressAdViewWillDismissScreen(
-            GADNativeExpressAdView nativeExpressAdView) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeExpressAdViewWillLeaveApplication:")
 	default void nativeExpressAdViewWillLeaveApplication(
-            GADNativeExpressAdView nativeExpressAdView) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeExpressAdViewWillPresentScreen:")
 	default void nativeExpressAdViewWillPresentScreen(
-            GADNativeExpressAdView nativeExpressAdView) {
-		throw new UnsupportedOperationException();
+			GADNativeExpressAdView nativeExpressAdView) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

@@ -3,7 +3,10 @@ package com.google.googlemobileads.protocol;
 
 import apple.uikit.UIViewController;
 import com.google.googlemobileads.GADCustomEventRequest;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.ann.ObjCProtocolName;
@@ -27,7 +30,7 @@ public interface GADCustomEventInterstitial {
 	@Generated
 	@Selector("requestInterstitialAdWithParameter:label:request:")
 	void requestInterstitialAdWithParameterLabelRequest(String serverParameter,
-                                                        String serverLabel, GADCustomEventRequest request);
+			String serverLabel, GADCustomEventRequest request);
 
 	@Generated
 	@Selector("setDelegate:")

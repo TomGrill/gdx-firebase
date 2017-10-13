@@ -18,5 +18,5 @@ public interface DFPCustomRenderedInterstitialDelegate {
 	@Generated
 	@Selector("interstitial:didReceiveCustomRenderedAd:")
 	void interstitialDidReceiveCustomRenderedAd(DFPInterstitial interstitial,
-                                                DFPCustomRenderedAd customRenderedAd);
+			DFPCustomRenderedAd customRenderedAd);
 }

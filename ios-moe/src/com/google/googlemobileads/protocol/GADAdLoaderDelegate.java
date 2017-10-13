@@ -19,12 +19,12 @@ public interface GADAdLoaderDelegate {
 	@Generated
 	@Selector("adLoader:didFailToReceiveAdWithError:")
 	void adLoaderDidFailToReceiveAdWithError(GADAdLoader adLoader,
-                                             GADRequestError error);
+			GADRequestError error);
 
 	@Generated
 	@IsOptional
 	@Selector("adLoaderDidFinishLoading:")
 	default void adLoaderDidFinishLoading(GADAdLoader adLoader) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

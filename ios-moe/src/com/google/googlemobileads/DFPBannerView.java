@@ -1,9 +1,14 @@
 package com.google.googlemobileads;
 
 
+import apple.NSObject;
 import apple.coregraphics.struct.CGPoint;
 import apple.coregraphics.struct.CGRect;
-import apple.foundation.*;
+import apple.foundation.NSArray;
+import apple.foundation.NSCoder;
+import apple.foundation.NSDate;
+import apple.foundation.NSMethodSignature;
+import apple.foundation.NSSet;
 import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import com.google.googlemobileads.protocol.DFPCustomRenderedBannerViewDelegate;
@@ -14,8 +19,17 @@ import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.ByValue;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NFloat;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
+import org.moe.natj.general.ann.UncertainArgument;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
 import org.moe.natj.objc.ObjCRuntime;
@@ -58,7 +72,7 @@ public class DFPBannerView extends GADBannerView {
 	public static native void addKeyframeWithRelativeStartTimeRelativeDurationAnimations(
 			double frameStartTime,
 			double frameDuration,
-			@ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
+			@ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
 
 	@Generated
 	@Owned
@@ -76,21 +90,21 @@ public class DFPBannerView extends GADBannerView {
 			double duration,
 			double delay,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("animateWithDuration:animations:")
 	public static native void animateWithDurationAnimations(
 			double duration,
-			@ObjCBlock(name = "call_animateWithDurationAnimations") Block_animateWithDurationAnimations animations);
+			@ObjCBlock(name = "call_animateWithDurationAnimations") UIView.Block_animateWithDurationAnimations animations);
 
 	@Generated
 	@Selector("animateWithDuration:animations:completion:")
 	public static native void animateWithDurationAnimationsCompletion(
 			double duration,
-			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") Block_animateWithDurationAnimationsCompletion_1 animations,
-			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") Block_animateWithDurationAnimationsCompletion_2 completion);
+			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
+			@ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
 
 	@Generated
 	@Selector("animateWithDuration:delay:options:animations:completion:")
@@ -98,8 +112,8 @@ public class DFPBannerView extends GADBannerView {
 			double duration,
 			double delay,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:")
@@ -109,8 +123,8 @@ public class DFPBannerView extends GADBannerView {
 			@NFloat double dampingRatio,
 			@NFloat double velocity,
 			@NUInt long options,
-			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
-			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
+			@ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
 
 	@Generated
 	@Selector("appEventDelegate")
@@ -237,6 +251,10 @@ public class DFPBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) Object anArgument);
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -293,7 +311,7 @@ public class DFPBannerView extends GADBannerView {
 	@Generated
 	@Selector("initWithAdSize:origin:")
 	public native DFPBannerView initWithAdSizeOrigin(@ByValue GADAdSize adSize,
-                                                     @ByValue CGPoint origin);
+			@ByValue CGPoint origin);
 
 	@Generated
 	@Selector("initWithCoder:")
@@ -304,9 +322,13 @@ public class DFPBannerView extends GADBannerView {
 	public native DFPBannerView initWithFrame(@ByValue CGRect frame);
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
-	public static native Function_instanceMethodForSelector_ret instanceMethodForSelector(
+	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
 			SEL aSelector);
 
 	@Generated
@@ -332,6 +354,10 @@ public class DFPBannerView extends GADBannerView {
 	public static native Class layerClass();
 
 	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
+
+	@Generated
 	@Owned
 	@Selector("new")
 	@MappedReturn(ObjCObjectMapper.class)
@@ -343,13 +369,13 @@ public class DFPBannerView extends GADBannerView {
 			@NUInt long animation,
 			NSArray<? extends UIView> views,
 			@NUInt long options,
-			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
-			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
+			@ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("performWithoutAnimation:")
 	public static native void performWithoutAnimation(
-			@ObjCBlock(name = "call_performWithoutAnimation") Block_performWithoutAnimation actionsWithoutAnimation);
+			@ObjCBlock(name = "call_performWithoutAnimation") UIView.Block_performWithoutAnimation actionsWithoutAnimation);
 
 	@Generated
 	@Selector("recordImpression")
@@ -385,11 +411,11 @@ public class DFPBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) GADAdSizeDelegate value) {
 		Object __old = adSizeDelegate();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setAdSizeDelegate_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 
@@ -459,11 +485,11 @@ public class DFPBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) GADAppEventDelegate value) {
 		Object __old = appEventDelegate();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setAppEventDelegate_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 
@@ -481,11 +507,11 @@ public class DFPBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) DFPCustomRenderedBannerViewDelegate value) {
 		Object __old = customRenderedBannerViewDelegate();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setCustomRenderedBannerViewDelegate_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 
@@ -520,7 +546,7 @@ public class DFPBannerView extends GADBannerView {
 			UIView toView,
 			double duration,
 			@NUInt long options,
-			@ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") Block_transitionFromViewToViewDurationOptionsCompletion completion);
+			@ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
 
 	@Generated
 	@Selector("transitionWithView:duration:options:animations:completion:")
@@ -528,8 +554,8 @@ public class DFPBannerView extends GADBannerView {
 			UIView view,
 			double duration,
 			@NUInt long options,
-			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
-			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
+			@ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
 
 	@Generated
 	@Selector("userInterfaceLayoutDirectionForSemanticContentAttribute:")

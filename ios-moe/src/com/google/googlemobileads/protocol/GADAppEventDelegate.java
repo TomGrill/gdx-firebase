@@ -20,15 +20,15 @@ public interface GADAppEventDelegate {
 	@IsOptional
 	@Selector("adView:didReceiveAppEvent:withInfo:")
 	default void adViewDidReceiveAppEventWithInfo(GADBannerView banner,
-                                                  String name, String info) {
-		throw new UnsupportedOperationException();
+			String name, String info) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitial:didReceiveAppEvent:withInfo:")
 	default void interstitialDidReceiveAppEventWithInfo(
-            GADInterstitial interstitial, String name, String info) {
-		throw new UnsupportedOperationException();
+			GADInterstitial interstitial, String name, String info) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

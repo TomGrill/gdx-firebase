@@ -20,49 +20,49 @@ public interface GADInterstitialDelegate {
 	@IsOptional
 	@Selector("interstitial:didFailToReceiveAdWithError:")
 	default void interstitialDidFailToReceiveAdWithError(GADInterstitial ad,
-                                                         GADRequestError error) {
-		throw new UnsupportedOperationException();
+			GADRequestError error) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialDidDismissScreen:")
 	default void interstitialDidDismissScreen(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialDidFailToPresentScreen:")
 	default void interstitialDidFailToPresentScreen(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialDidReceiveAd:")
 	default void interstitialDidReceiveAd(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialWillDismissScreen:")
 	default void interstitialWillDismissScreen(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialWillLeaveApplication:")
 	default void interstitialWillLeaveApplication(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("interstitialWillPresentScreen:")
 	default void interstitialWillPresentScreen(GADInterstitial ad) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

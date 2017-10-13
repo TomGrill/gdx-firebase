@@ -19,5 +19,5 @@ public interface GADNativeAppInstallAdLoaderDelegate extends
 	@Generated
 	@Selector("adLoader:didReceiveNativeAppInstallAd:")
 	void adLoaderDidReceiveNativeAppInstallAd(GADAdLoader adLoader,
-                                              GADNativeAppInstallAd nativeAppInstallAd);
+			GADNativeAppInstallAd nativeAppInstallAd);
 }

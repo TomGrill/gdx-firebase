@@ -17,5 +17,5 @@ public interface GADDebugOptionsViewControllerDelegate {
 	@Generated
 	@Selector("debugOptionsViewControllerDidDismiss:")
 	void debugOptionsViewControllerDidDismiss(
-            GADDebugOptionsViewController controller);
+			GADDebugOptionsViewController controller);
 }

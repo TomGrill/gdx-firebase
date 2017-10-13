@@ -9,7 +9,13 @@ import apple.foundation.NSSet;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
@@ -67,6 +73,10 @@ public class DFPRequest extends GADRequest {
 	public native NSArray<?> categoryExclusions();
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -96,6 +106,10 @@ public class DFPRequest extends GADRequest {
 	public native DFPRequest init();
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
 	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
@@ -118,6 +132,10 @@ public class DFPRequest extends GADRequest {
 	@Selector("keyPathsForValuesAffectingValueForKey:")
 	public static native NSSet<String> keyPathsForValuesAffectingValueForKey(
 			String key);
+
+	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
 
 	@Generated
 	@Owned

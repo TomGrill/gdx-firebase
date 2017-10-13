@@ -4,7 +4,10 @@ package com.google.googlemobileads.protocol;
 import apple.foundation.NSArray;
 import apple.foundation.NSDictionary;
 import apple.uikit.UIViewController;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.ann.IsOptional;
@@ -29,24 +32,24 @@ public interface GADMRewardBasedVideoAdNetworkAdapter {
 	@Selector("initWithGADMAdNetworkConnector:")
 	@MappedReturn(ObjCObjectMapper.class)
 	default Object initWithGADMAdNetworkConnector(
-            @Mapped(ObjCObjectMapper.class) Object connector) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object connector) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@Selector("initWithRewardBasedVideoAdNetworkConnector:")
 	@MappedReturn(ObjCObjectMapper.class)
 	Object initWithRewardBasedVideoAdNetworkConnector(
-            @Mapped(ObjCObjectMapper.class) Object connector);
+			@Mapped(ObjCObjectMapper.class) Object connector);
 
 	@Generated
 	@IsOptional
 	@Selector("initWithRewardBasedVideoAdNetworkConnector:credentials:")
 	@MappedReturn(ObjCObjectMapper.class)
 	default Object initWithRewardBasedVideoAdNetworkConnectorCredentials(
-            @Mapped(ObjCObjectMapper.class) Object connector,
-            NSArray<? extends NSDictionary<?, ?>> credentials) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object connector,
+			NSArray<? extends NSDictionary<?, ?>> credentials) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
@@ -58,7 +61,7 @@ public interface GADMRewardBasedVideoAdNetworkAdapter {
 	@Generated
 	@Selector("presentRewardBasedVideoAdWithRootViewController:")
 	void presentRewardBasedVideoAdWithRootViewController(
-            UIViewController viewController);
+			UIViewController viewController);
 
 	@Generated
 	@Selector("requestRewardBasedVideoAd")
@@ -73,7 +76,7 @@ public interface GADMRewardBasedVideoAdNetworkAdapter {
 	@Deprecated
 	@Selector("setUpWithUserID:")
 	default void setUpWithUserID(String userID) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated

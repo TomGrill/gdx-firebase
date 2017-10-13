@@ -19,31 +19,31 @@ public interface GADAudioVideoManagerDelegate {
 	@IsOptional
 	@Selector("audioVideoManagerDidPauseAllVideo:")
 	default void audioVideoManagerDidPauseAllVideo(
-            GADAudioVideoManager audioVideoManager) {
-		throw new UnsupportedOperationException();
+			GADAudioVideoManager audioVideoManager) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("audioVideoManagerDidStopPlayingAudio:")
 	default void audioVideoManagerDidStopPlayingAudio(
-            GADAudioVideoManager audioVideoManager) {
-		throw new UnsupportedOperationException();
+			GADAudioVideoManager audioVideoManager) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("audioVideoManagerWillPlayAudio:")
 	default void audioVideoManagerWillPlayAudio(
-            GADAudioVideoManager audioVideoManager) {
-		throw new UnsupportedOperationException();
+			GADAudioVideoManager audioVideoManager) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("audioVideoManagerWillPlayVideo:")
 	default void audioVideoManagerWillPlayVideo(
-            GADAudioVideoManager audioVideoManager) {
-		throw new UnsupportedOperationException();
+			GADAudioVideoManager audioVideoManager) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

@@ -21,25 +21,25 @@ public interface GADMRewardBasedVideoAdNetworkConnector extends
 	@Generated
 	@Selector("adapter:didFailToLoadRewardBasedVideoAdwithError:")
 	void adapterDidFailToLoadRewardBasedVideoAdwithError(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter,
-            NSError error);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter,
+			NSError error);
 
 	@Generated
 	@Selector("adapter:didFailToSetUpRewardBasedVideoAdWithError:")
 	void adapterDidFailToSetUpRewardBasedVideoAdWithError(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter,
-            NSError error);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter,
+			NSError error);
 
 	@Generated
 	@Selector("adapter:didRewardUserWithReward:")
 	void adapterDidRewardUserWithReward(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAd,
-            GADAdReward reward);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAd,
+			GADAdReward reward);
 
 	@Generated
 	@Selector("adapterDidCloseRewardBasedVideoAd:")
 	void adapterDidCloseRewardBasedVideoAd(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 
 	@Generated
 	@Selector("adapterDidGetAdClick:")
@@ -48,25 +48,25 @@ public interface GADMRewardBasedVideoAdNetworkConnector extends
 	@Generated
 	@Selector("adapterDidOpenRewardBasedVideoAd:")
 	void adapterDidOpenRewardBasedVideoAd(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 
 	@Generated
 	@Selector("adapterDidReceiveRewardBasedVideoAd:")
 	void adapterDidReceiveRewardBasedVideoAd(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 
 	@Generated
 	@Selector("adapterDidSetUpRewardBasedVideoAd:")
 	void adapterDidSetUpRewardBasedVideoAd(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 
 	@Generated
 	@Selector("adapterDidStartPlayingRewardBasedVideoAd:")
 	void adapterDidStartPlayingRewardBasedVideoAd(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 
 	@Generated
 	@Selector("adapterWillLeaveApplication:")
 	void adapterWillLeaveApplication(
-            @Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
+			@Mapped(ObjCObjectMapper.class) Object rewardBasedVideoAdAdapter);
 }

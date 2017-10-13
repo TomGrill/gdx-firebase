@@ -4,7 +4,11 @@ package com.google.googlemobileads;
 import apple.NSObject;
 import apple.coregraphics.struct.CGPoint;
 import apple.coregraphics.struct.CGRect;
-import apple.foundation.*;
+import apple.foundation.NSArray;
+import apple.foundation.NSCoder;
+import apple.foundation.NSDate;
+import apple.foundation.NSMethodSignature;
+import apple.foundation.NSSet;
 import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import com.google.googlemobileads.protocol.GADAdSizeDelegate;
@@ -13,7 +17,15 @@ import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.ByValue;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NFloat;
+import org.moe.natj.general.ann.NInt;
+import org.moe.natj.general.ann.NUInt;
+import org.moe.natj.general.ann.Owned;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.general.ptr.VoidPtr;
 import org.moe.natj.objc.Class;
@@ -227,6 +239,10 @@ public class GADSearchBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) Object anArgument);
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -281,6 +297,10 @@ public class GADSearchBannerView extends GADBannerView {
 	public native GADSearchBannerView initWithFrame(@ByValue CGRect frame);
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
 	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
@@ -307,6 +327,10 @@ public class GADSearchBannerView extends GADBannerView {
 	@Generated
 	@Selector("layerClass")
 	public static native Class layerClass();
+
+	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
 
 	@Generated
 	@Owned
@@ -350,11 +374,11 @@ public class GADSearchBannerView extends GADBannerView {
 			@Mapped(ObjCObjectMapper.class) GADAdSizeDelegate value) {
 		Object __old = adSizeDelegate();
 		if (value != null) {
-			ObjCRuntime.associateObjCObject(this, value);
+			org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
 		}
 		setAdSizeDelegate_unsafe(value);
 		if (__old != null) {
-			ObjCRuntime.dissociateObjCObject(this, __old);
+			org.moe.natj.objc.ObjCRuntime.dissociateObjCObject(this, __old);
 		}
 	}
 

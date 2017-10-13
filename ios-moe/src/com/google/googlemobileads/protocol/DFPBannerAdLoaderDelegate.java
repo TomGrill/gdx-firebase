@@ -20,7 +20,7 @@ public interface DFPBannerAdLoaderDelegate extends GADAdLoaderDelegate {
 	@Generated
 	@Selector("adLoader:didReceiveDFPBannerView:")
 	void adLoaderDidReceiveDFPBannerView(GADAdLoader adLoader,
-                                         DFPBannerView bannerView);
+			DFPBannerView bannerView);
 
 	@Generated
 	@Selector("validBannerSizesForAdLoader:")

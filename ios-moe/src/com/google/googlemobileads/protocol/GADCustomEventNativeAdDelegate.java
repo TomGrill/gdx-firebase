@@ -19,12 +19,12 @@ public interface GADCustomEventNativeAdDelegate {
 	@Generated
 	@Selector("customEventNativeAd:didFailToLoadWithError:")
 	void customEventNativeAdDidFailToLoadWithError(
-            @Mapped(ObjCObjectMapper.class) Object customEventNativeAd,
-            NSError error);
+			@Mapped(ObjCObjectMapper.class) Object customEventNativeAd,
+			NSError error);
 
 	@Generated
 	@Selector("customEventNativeAd:didReceiveMediatedNativeAd:")
 	void customEventNativeAdDidReceiveMediatedNativeAd(
-            @Mapped(ObjCObjectMapper.class) Object customEventNativeAd,
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd);
+			@Mapped(ObjCObjectMapper.class) Object customEventNativeAd,
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd);
 }

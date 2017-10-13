@@ -19,36 +19,36 @@ public interface GADVideoControllerDelegate {
 	@IsOptional
 	@Selector("videoControllerDidEndVideoPlayback:")
 	default void videoControllerDidEndVideoPlayback(
-            GADVideoController videoController) {
-		throw new UnsupportedOperationException();
+			GADVideoController videoController) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("videoControllerDidMuteVideo:")
 	default void videoControllerDidMuteVideo(GADVideoController videoController) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("videoControllerDidPauseVideo:")
 	default void videoControllerDidPauseVideo(GADVideoController videoController) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("videoControllerDidPlayVideo:")
 	default void videoControllerDidPlayVideo(GADVideoController videoController) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("videoControllerDidUnmuteVideo:")
 	default void videoControllerDidUnmuteVideo(
-            GADVideoController videoController) {
-		throw new UnsupportedOperationException();
+			GADVideoController videoController) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

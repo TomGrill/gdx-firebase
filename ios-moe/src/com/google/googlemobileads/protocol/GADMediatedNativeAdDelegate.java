@@ -22,33 +22,33 @@ public interface GADMediatedNativeAdDelegate {
 	@IsOptional
 	@Selector("mediatedNativeAd:didRecordClickOnAssetWithName:view:viewController:")
 	default void mediatedNativeAdDidRecordClickOnAssetWithNameViewViewController(
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd,
-            String assetName, UIView view, UIViewController viewController) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd,
+			String assetName, UIView view, UIViewController viewController) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("mediatedNativeAd:didRenderInView:viewController:")
 	default void mediatedNativeAdDidRenderInViewViewController(
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd,
-            UIView view, UIViewController viewController) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd,
+			UIView view, UIViewController viewController) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("mediatedNativeAd:didUntrackView:")
 	default void mediatedNativeAdDidUntrackView(
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd, UIView view) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd, UIView view) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("mediatedNativeAdDidRecordImpression:")
 	default void mediatedNativeAdDidRecordImpression(
-            @Mapped(ObjCObjectMapper.class) Object mediatedNativeAd) {
-		throw new UnsupportedOperationException();
+			@Mapped(ObjCObjectMapper.class) Object mediatedNativeAd) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

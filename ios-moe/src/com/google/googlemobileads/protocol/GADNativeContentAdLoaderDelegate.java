@@ -18,5 +18,5 @@ public interface GADNativeContentAdLoaderDelegate extends GADAdLoaderDelegate {
 	@Generated
 	@Selector("adLoader:didReceiveNativeContentAd:")
 	void adLoaderDidReceiveNativeContentAd(GADAdLoader adLoader,
-                                           GADNativeContentAd nativeContentAd);
+			GADNativeContentAd nativeContentAd);
 }

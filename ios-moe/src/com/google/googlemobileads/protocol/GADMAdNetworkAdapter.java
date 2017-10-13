@@ -4,7 +4,12 @@ package com.google.googlemobileads.protocol;
 import apple.foundation.NSArray;
 import apple.uikit.UIViewController;
 import com.google.googlemobileads.struct.GADAdSize;
-import org.moe.natj.general.ann.*;
+import org.moe.natj.general.ann.ByValue;
+import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
+import org.moe.natj.general.ann.Mapped;
+import org.moe.natj.general.ann.MappedReturn;
+import org.moe.natj.general.ann.NInt;
 import org.moe.natj.general.ann.Runtime;
 import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.ann.IsOptional;
@@ -27,7 +32,7 @@ public interface GADMAdNetworkAdapter {
 	@IsOptional
 	@Selector("changeAdSizeTo:")
 	default void changeAdSizeTo(@ByValue GADAdSize adSize) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
@@ -42,29 +47,29 @@ public interface GADMAdNetworkAdapter {
 	@IsOptional
 	@Selector("getNativeAdWithAdTypes:options:")
 	default void getNativeAdWithAdTypesOptions(NSArray<?> adTypes,
-                                               NSArray<?> options) {
-		throw new UnsupportedOperationException();
+			NSArray<?> options) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("handlesUserClicks")
 	default boolean handlesUserClicks() {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("handlesUserImpressions")
 	default boolean handlesUserImpressions() {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@Selector("initWithGADMAdNetworkConnector:")
 	@MappedReturn(ObjCObjectMapper.class)
 	Object initWithGADMAdNetworkConnector(
-            @Mapped(ObjCObjectMapper.class) Object connector);
+			@Mapped(ObjCObjectMapper.class) Object connector);
 
 	@Generated
 	@Selector("isBannerAnimationOK:")
@@ -79,7 +84,7 @@ public interface GADMAdNetworkAdapter {
 	@Generated
 	@Selector("presentInterstitialFromRootViewController:")
 	void presentInterstitialFromRootViewController(
-            UIViewController rootViewController);
+			UIViewController rootViewController);
 
 	@Generated
 	@Selector("stopBeingDelegate")

@@ -19,41 +19,41 @@ public interface GADNativeAdDelegate {
 	@IsOptional
 	@Selector("nativeAdDidDismissScreen:")
 	default void nativeAdDidDismissScreen(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeAdDidRecordClick:")
 	default void nativeAdDidRecordClick(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeAdDidRecordImpression:")
 	default void nativeAdDidRecordImpression(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeAdWillDismissScreen:")
 	default void nativeAdWillDismissScreen(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeAdWillLeaveApplication:")
 	default void nativeAdWillLeaveApplication(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated
 	@IsOptional
 	@Selector("nativeAdWillPresentScreen:")
 	default void nativeAdWillPresentScreen(GADNativeAd nativeAd) {
-		throw new UnsupportedOperationException();
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

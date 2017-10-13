@@ -20,8 +20,8 @@ public interface GADDefaultInAppPurchaseDelegate {
 	@IsOptional
 	@Selector("shouldStartPurchaseForProductID:quantity:")
 	default boolean shouldStartPurchaseForProductIDQuantity(String productID,
-                                                            @NInt long quantity) {
-		throw new UnsupportedOperationException();
+			@NInt long quantity) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Generated

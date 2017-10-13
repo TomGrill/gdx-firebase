@@ -18,5 +18,5 @@ public interface DFPCustomRenderedBannerViewDelegate {
 	@Generated
 	@Selector("bannerView:didReceiveCustomRenderedAd:")
 	void bannerViewDidReceiveCustomRenderedAd(DFPBannerView bannerView,
-                                              DFPCustomRenderedAd customRenderedAd);
+			DFPCustomRenderedAd customRenderedAd);
 }

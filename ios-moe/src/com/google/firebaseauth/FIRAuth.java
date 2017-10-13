@@ -152,6 +152,10 @@ public class FIRAuth extends NSObject {
 	}
 
 	@Generated
+	@Selector("class")
+	public static native Class class_objc_static();
+
+	@Generated
 	@Selector("classFallbacksForKeyedArchiver")
 	public static native NSArray<String> classFallbacksForKeyedArchiver();
 
@@ -224,6 +228,10 @@ public class FIRAuth extends NSObject {
 	public native FIRAuth init();
 
 	@Generated
+	@Selector("initialize")
+	public static native void initialize();
+
+	@Generated
 	@Selector("instanceMethodForSelector:")
 	@FunctionPtr(name = "call_instanceMethodForSelector_ret")
 	public static native NSObject.Function_instanceMethodForSelector_ret instanceMethodForSelector(
@@ -252,6 +260,10 @@ public class FIRAuth extends NSObject {
 	public native String languageCode();
 
 	@Generated
+	@Selector("load")
+	public static native void load_objc_static();
+
+	@Generated
 	@Owned
 	@Selector("new")
 	@MappedReturn(ObjCObjectMapper.class)
@@ -260,12 +272,12 @@ public class FIRAuth extends NSObject {
 	@Generated
 	@Selector("removeAuthStateDidChangeListener:")
 	public native void removeAuthStateDidChangeListener(
-			@Mapped(ObjCObjectMapper.class) FIRAuth.Block_addAuthStateDidChangeListener listenerHandle);
+			@Mapped(ObjCObjectMapper.class) apple.protocol.NSObject listenerHandle);
 
 	@Generated
 	@Selector("removeIDTokenDidChangeListener:")
 	public native void removeIDTokenDidChangeListener(
-			@Mapped(ObjCObjectMapper.class) FIRAuth.Block_addAuthStateDidChangeListener listenerHandle);
+			@Mapped(ObjCObjectMapper.class) apple.protocol.NSObject listenerHandle);
 
 	@Generated
 	@Selector("resolveClassMethod:")
