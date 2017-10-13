@@ -91,27 +91,13 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
     @Override
     public void updateChildren(Map<String, Object> update) {
-        NSDictionary<NSString, Object> dictionary = toDictionary(update);
-
-        System.out.println("IN DIC 1 ");
-        for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        firDatabaseReference.updateChildValues(dictionary);
+        firDatabaseReference.updateChildValues(toDictionary(update));
     }
 
 
     @Override
     public void updateChildren(Map<String, Object> update, CompletionListener listener) {
-        NSDictionary<NSString, Object> dictionary = toDictionary(update);
-
-        System.out.println("IN DIC 2");
-        for (Map.Entry<NSString, Object> entry : dictionary.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-
-
-        firDatabaseReference.updateChildValuesWithCompletionBlock(dictionary, new FIRDatabaseReference.Block_updateChildValuesWithCompletionBlock() {
+        firDatabaseReference.updateChildValuesWithCompletionBlock(toDictionary(update), new FIRDatabaseReference.Block_updateChildValuesWithCompletionBlock() {
             @Override
             public void call_updateChildValuesWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {
                 if (error == null) {
