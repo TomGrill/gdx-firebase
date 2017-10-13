@@ -1,11 +1,8 @@
 package de.tomgrill.gdxfirebase.iosmoe.auth;
 
 
-
 import apple.foundation.NSError;
 import apple.protocol.NSObject;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.utils.Array;
 import com.google.firebaseauth.FIRAuth;
 import com.google.firebaseauth.FIRUser;
@@ -20,7 +17,7 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
     private Array<AuthStateListener> authStateListeners;
 
     public IOSMOEFirebaseAuth() {
-        if(!ConfigureOverwatch.isConfigured) {
+        if (!ConfigureOverwatch.isConfigured) {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
@@ -108,11 +105,11 @@ public class IOSMOEFirebaseAuth implements FirebaseAuth {
             @Override
             public void call_signInAnonymouslyWithCompletion(FIRUser firebaseUSer, NSError error) {
 
-                if(error != null) {
+                if (error != null) {
                     IOSMOETask<AuthResult> iosmoeTask = new IOSMOETask<>(true, false, new Exception(error.localizedDescription()));
                     onCompleteListener.onComplete(iosmoeTask);
                 } else {
-                    IOSMOETask<AuthResult>  iosmoeTask = new IOSMOETask<> (true, true, null);
+                    IOSMOETask<AuthResult> iosmoeTask = new IOSMOETask<>(true, true, null);
                     onCompleteListener.onComplete(iosmoeTask);
                 }
 
