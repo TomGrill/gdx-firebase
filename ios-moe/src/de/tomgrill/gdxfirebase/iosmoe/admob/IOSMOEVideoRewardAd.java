@@ -6,18 +6,17 @@ import apple.uikit.UIDevice;
 import apple.uikit.UIScreen;
 import apple.uikit.UIViewController;
 import apple.uikit.UIWindow;
+import com.badlogic.gdx.Gdx;
 import com.google.googlemobileads.GADAdReward;
 import com.google.googlemobileads.GADRequest;
 import com.google.googlemobileads.GADRewardBasedVideoAd;
+import com.google.googlemobileads.enums.GADErrorCode;
 import com.google.googlemobileads.protocol.GADRewardBasedVideoAdDelegate;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
+import de.tomgrill.gdxfirebase.core.admob.AdmobErrorCode;
 import de.tomgrill.gdxfirebase.core.admob.RewardedVideoAdListener;
 import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
 import org.moe.natj.objc.ann.Selector;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAdDelegate {
 
@@ -31,6 +30,8 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     private UIWindow windows;
 
     private GADRewardBasedVideoAd gadRewardBasedVideoAd;
+
+    private int errorCode = 0;
 
     public IOSMOEVideoRewardAd(FirebaseConfiguration firebaseConfiguration) {
         this.firebaseConfiguration = firebaseConfiguration;
@@ -54,11 +55,9 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     public void load(String adUnit) {
 
 
-
-
         request = GADRequest.request();
 
-        if(firebaseConfiguration.admobUseTestDevice) {
+        if (firebaseConfiguration.admobUseTestDevice) {
             NSMutableArray nsMutableArray = NSMutableArray.array();
             //nsMutableArray.add(UIDevice.currentDevice().identifierForVendor().UUIDString());
             nsMutableArray.add(getDeviceUUID());
@@ -80,7 +79,7 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     @Override
     public void show() {
-        if(isLoaded()) {
+        if (isLoaded()) {
             windows.makeKeyAndVisible();
             gadRewardBasedVideoAd.presentFromRootViewController(controller);
         }
@@ -92,9 +91,23 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     }
 
     @Override
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    @Override
     public void rewardBasedVideoAdDidFailToLoadWithError(GADRewardBasedVideoAd rewardBasedVideoAd, NSError error) {
+        switch ((int) error.code()) {
+            case (int) GADErrorCode.NoFill:
+                errorCode = AdmobErrorCode.NO_FILL;
+                break;
+            default:
+                errorCode = AdmobErrorCode.UNKNOWN_OR_NOT_IMPLEMENTED;
+        }
+
+        Gdx.app.debug("gdx-firebase", "ADMOB ERROR : FIREBASE SDK ERROR :: " + "(" + errorCode + ")" + error.localizedFailureReason());
         if (listener != null)
-            listener.onRewardedVideoAdFailedToLoad((int) error.code());
+            listener.onRewardedVideoAdFailedToLoad(errorCode);
     }
 
     @Override

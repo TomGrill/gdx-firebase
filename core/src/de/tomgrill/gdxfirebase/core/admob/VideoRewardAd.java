@@ -9,4 +9,6 @@ public interface VideoRewardAd {
     void show();
 
     void setRewardVideoAdListener(RewardedVideoAdListener rewardVideoAdListener);
+
+    int getErrorCode();
 }

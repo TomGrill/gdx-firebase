@@ -4,15 +4,18 @@ import android.app.Activity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import de.tomgrill.gdxfirebase.core.admob.AdmobErrorCode;
 import de.tomgrill.gdxfirebase.core.admob.RewardedVideoAdListener;
 import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
 
 public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.gms.ads.reward.RewardedVideoAdListener {
-    private RewardedVideoAd mAd;
     private final AdRequest adRequest;
+    private RewardedVideoAd mAd;
     private RewardedVideoAdListener listener;
     private Activity activity;
     private boolean isLoaded;
+
+    private int errorCode = 0;
 
     public AndroidVideoRewardAd(final Activity activity, final AdRequest adRequest) {
         this.activity = activity;
@@ -61,9 +64,13 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
     }
 
     @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
+    public void onRewardedVideoAdFailedToLoad(int error) {
+        switch (error) {
+            default:
+                errorCode = AdmobErrorCode.UNKNOWN_OR_NOT_IMPLEMENTED;
+        }
         if (listener != null)
-            listener.onRewardedVideoAdFailedToLoad(i);
+            listener.onRewardedVideoAdFailedToLoad(errorCode);
     }
 
     @Override
@@ -105,5 +112,10 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
                 mAd.setRewardedVideoAdListener(AndroidVideoRewardAd.this);
             }
         });
+    }
+
+    @Override
+    public int getErrorCode() {
+        return errorCode;
     }
 }

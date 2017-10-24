@@ -20,4 +20,9 @@ public class NullVideoRewardAd implements VideoRewardAd {
     public void setRewardVideoAdListener(RewardedVideoAdListener rewardVideoAdListener) {
 
     }
+
+    @Override
+    public int getErrorCode() {
+        return 0;
+    }
 }
