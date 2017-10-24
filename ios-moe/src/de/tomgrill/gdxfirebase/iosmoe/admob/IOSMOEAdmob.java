@@ -1,16 +1,25 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
 import com.badlogic.gdx.Gdx;
+import com.google.firebasecore.FIRApp;
 import com.google.googlemobileads.GADMobileAds;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.FirebaseConfigurationHolder;
 import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
+import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
 public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
 
     private FirebaseConfiguration firebaseConfiguration;
     private boolean isTestDevice;
+
+    public IOSMOEAdmob() {
+        if (!ConfigureOverwatch.isConfigured) {
+            FIRApp.configure();
+            ConfigureOverwatch.isConfigured = true;
+        }
+    }
 
     @Override
     public VideoRewardAd getVideoRewardAd() {
