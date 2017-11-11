@@ -31,7 +31,7 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     private GADRewardBasedVideoAd gadRewardBasedVideoAd;
 
-    private int errorCode = 0;
+    private volatile int errorCode = 0;
 
     public IOSMOEVideoRewardAd(FirebaseConfiguration firebaseConfiguration) {
         this.firebaseConfiguration = firebaseConfiguration;
@@ -97,57 +97,94 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     @Override
     public void rewardBasedVideoAdDidFailToLoadWithError(GADRewardBasedVideoAd rewardBasedVideoAd, NSError error) {
-        switch ((int) error.code()) {
-            case (int) GADErrorCode.NoFill:
-                errorCode = AdmobErrorCode.NO_FILL;
-                break;
-            default:
-                errorCode = AdmobErrorCode.UNKNOWN_OR_NOT_IMPLEMENTED;
-        }
+        final int code = (int) error.code();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                switch (code) {
+                    case (int) GADErrorCode.NoFill:
+                        errorCode = AdmobErrorCode.NO_FILL;
+                        break;
+                    default:
+                        errorCode = AdmobErrorCode.UNKNOWN_OR_NOT_IMPLEMENTED;
+                }
 
-        Gdx.app.debug("gdx-firebase", "ADMOB ERROR : FIREBASE SDK ERROR :: " + "(" + errorCode + ")" + error.localizedFailureReason());
-        if (listener != null)
-            listener.onRewardedVideoAdFailedToLoad(errorCode);
+
+                Gdx.app.debug("gdx-firebase", "ADMOB ERROR : FIREBASE SDK ERROR :: " + "(" + errorCode + ")" + error.localizedFailureReason());
+                if (listener != null)
+                    listener.onRewardedVideoAdFailedToLoad(errorCode);
+            }
+        });
     }
 
     @Override
     @Selector("rewardBasedVideoAdDidRewardUserWithReward:")
     public void rewardBasedVideoAdDidRewardUserWithReward(GADRewardBasedVideoAd rewardBasedVideoAd, GADAdReward reward) {
-        if (listener != null)
-            listener.onRewarded(new IOSMOERewardItem(reward));
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onRewarded(new IOSMOERewardItem(reward));
+            }
+        });
     }
 
     @Override
     @Selector("rewardBasedVideoAdDidClose:")
     public void rewardBasedVideoAdDidClose(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        windows.setHidden(true);
-        if (listener != null)
-            listener.onRewardedVideoAdClosed();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                windows.setHidden(true);
+                if (listener != null)
+                    listener.onRewardedVideoAdClosed();
+            }
+        });
 
     }
 
     @Override
     @Selector("rewardBasedVideoAdDidOpen:")
     public void rewardBasedVideoAdDidOpen(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        if (listener != null)
-            listener.onRewardedVideoAdOpened();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onRewardedVideoAdOpened();
+            }
+        });
     }
 
     @Override
     public void rewardBasedVideoAdDidReceiveAd(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        if (listener != null)
-            listener.onRewardedVideoAdLoaded();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onRewardedVideoAdLoaded();
+            }
+        });
     }
 
     @Override
     public void rewardBasedVideoAdDidStartPlaying(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        if (listener != null)
-            listener.onRewardedVideoStarted();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onRewardedVideoStarted();
+            }
+        });
     }
 
     @Override
     public void rewardBasedVideoAdWillLeaveApplication(GADRewardBasedVideoAd rewardBasedVideoAd) {
-        if (listener != null)
-            listener.onRewardedVideoAdLeftApplication();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onRewardedVideoAdLeftApplication();
+            }
+        });
     }
 }
