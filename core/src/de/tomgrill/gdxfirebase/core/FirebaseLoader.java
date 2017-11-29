@@ -3,12 +3,13 @@ package de.tomgrill.gdxfirebase.core;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Constructor;
+import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 
 public class FirebaseLoader {
 
@@ -33,6 +34,68 @@ public class FirebaseLoader {
             if (feature == FirebaseFeatures.ADMOB) {
                 loadAdmob(name, firebaseConfiguration);
             }
+            if (feature == FirebaseFeatures.FCM) {
+                loadFCM(name, firebaseConfiguration);
+            }
+        }
+    }
+
+    private static void loadFCM(String name, FirebaseConfiguration firebaseConfiguration) {
+        Class<?> loaderCls = null;
+
+        try {
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+
+                Class<?> activityClazz = ClassReflection.forName("android.app.Activity");
+
+                Class<?> firebaseFCMClazz = ClassReflection.forName("de.tomgrill.gdxfirebase.android.fcm.AndroidFirebaseFCM");
+
+                Object activity = null;
+
+                Class<?> gdxClazz = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
+
+                if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
+
+                    activity = gdxAppObject;
+                } else {
+
+                    Class<?> supportFragmentClass = findClass("android.support.v4.app.Fragment");
+                    // {
+                    if (supportFragmentClass != null && ClassReflection.isAssignableFrom(supportFragmentClass, gdxAppObject.getClass())) {
+
+                        activity = ClassReflection.getMethod(supportFragmentClass, "getActivity").invoke(gdxAppObject);
+                    } else {
+                        Class<?> fragmentClass = findClass("android.app.Fragment");
+                        if (fragmentClass != null && ClassReflection.isAssignableFrom(fragmentClass, gdxAppObject.getClass())) {
+                            activity = ClassReflection.getMethod(fragmentClass, "getActivity").invoke(gdxAppObject);
+                        }
+                    }
+
+                }
+
+                if (activity == null) {
+                    throw new RuntimeException("Can't find your gdx activity to instantiate gdx-firebase. " + "Looks like you have implemented AndroidApplication without using "
+                            + "Activity or Fragment classes or Activity is not available at the moment");
+                }
+
+                Object firebaseFCM = ClassReflection.getConstructor(firebaseFCMClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
+
+                Class<?> gdxLifecycleListenerClazz = ClassReflection.forName("com.badlogic.gdx.LifecycleListener");
+                Method gdxAppAddLifecycleListenerMethod = ClassReflection.getMethod(gdxAppObject.getClass(), "addLifecycleListener", gdxLifecycleListenerClazz);
+
+                gdxAppAddLifecycleListenerMethod.invoke(gdxAppObject, firebaseFCM);
+
+                GDXFirebase.setFirebaseFCM(name, (FirebaseFCM) firebaseFCM);
+
+                Gdx.app.debug("gdx-firebase", "FCM loaded for " + Gdx.app.getType());
+
+
+                return;
+
+            }
+        } catch (ReflectionException e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,9 +159,6 @@ public class FirebaseLoader {
                 }
                 return;
             }
-
-
-
 
 
             if (Gdx.app.getType() == Application.ApplicationType.iOS) {
@@ -198,7 +258,7 @@ public class FirebaseLoader {
                         //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
                         Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
 
-                        if(loaderObj instanceof FirebaseConfigurationHolder) {
+                        if (loaderObj instanceof FirebaseConfigurationHolder) {
                             ((FirebaseConfigurationHolder) loaderObj).setFirebaseConfiguration(firebaseConfiguration);
                         }
                         GDXFirebase.setAdmob(name, (Admob) loaderObj);

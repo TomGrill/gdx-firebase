@@ -6,6 +6,7 @@ import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
+import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 
 public class GDXFirebase {
 
@@ -15,6 +16,7 @@ public class GDXFirebase {
     private static ObjectMap<String, FirebaseAuth> auths = new ObjectMap<>();
     private static ObjectMap<String, FirebaseAnalytics> analytics = new ObjectMap<>();
     private static ObjectMap<String, Admob> admob = new ObjectMap<>();
+    private static ObjectMap<String, FirebaseFCM> fcm = new ObjectMap<>();
 
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
         if (!databases.containsKey(name)) {
@@ -43,6 +45,14 @@ public class GDXFirebase {
     static void setAdmob(String name, Admob admobInstance) {
         if (!admob.containsKey(name)) {
             admob.put(name, admobInstance);
+        } else {
+            throw new RuntimeException("Firebase App named [" + name + "] already exist.");
+        }
+    }
+
+    public static void setFirebaseFCM(String name, FirebaseFCM fcmInstance) {
+        if (!fcm.containsKey(name)) {
+            fcm.put(name, fcmInstance);
         } else {
             throw new RuntimeException("Firebase App named [" + name + "] already exist.");
         }
@@ -90,6 +100,18 @@ public class GDXFirebase {
     public static synchronized Admob Admob(String name) {
         if (admob.containsKey(name)) {
             return admob.get(name);
+        }
+        throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
+    }
+
+
+    public static synchronized FirebaseFCM FirebaseFCM() {
+        return FirebaseFCM(DEFAULT_APP_NAME);
+    }
+
+    public static synchronized FirebaseFCM FirebaseFCM(String name) {
+        if (fcm.containsKey(name)) {
+            return fcm.get(name);
         }
         throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
     }

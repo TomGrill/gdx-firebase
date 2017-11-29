@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.9-SNAPSHOT'
+    VERSION = '0.0.10-SNAPSHOT'
 
 }
 
@@ -12,11 +12,10 @@ buildscript {
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-//        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
         classpath 'org.multi-os-engine:moe-gradle:1.3.12'
-        classpath 'com.google.gms:google-services:3.1.0'
+        classpath 'com.google.gms:google-services:3.1.1'
     }
 }
 
@@ -28,7 +27,7 @@ allprojects {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.6'
         roboVMVersion = '2.3.0'
-        firebaseVersion = '11.0.4'
+        firebaseVersion = '11.6.0'
     }
 
     repositories {
@@ -37,6 +36,7 @@ allprojects {
         jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://maven.google.com"} // Google's Maven repository
     }
 
     group = GROUPID
