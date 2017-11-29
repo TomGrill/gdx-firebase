@@ -81,4 +81,4 @@ local.properties
 **.natjgen
 
 .DS_Store
-publishLocal.sh
+publish*.sh
