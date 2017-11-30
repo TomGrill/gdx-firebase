@@ -9,4 +9,8 @@ public interface FirebaseFCM {
     void addRemoteMessageListener(RemoteMessageListener remoteMessageListener);
 
     void removeRemoteMessageListener(RemoteMessageListener remoteMessageListener);
+
+    void subscribeToTopic(String topic);
+
+    void unsubscribeFromTopic(String topic);
 }

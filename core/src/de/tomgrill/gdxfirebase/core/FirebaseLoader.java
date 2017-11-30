@@ -10,6 +10,7 @@ import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
+import de.tomgrill.gdxfirebase.core.fcm.NullFirebaseFCM;
 
 public class FirebaseLoader {
 
@@ -41,6 +42,9 @@ public class FirebaseLoader {
     }
 
     private static void loadFCM(String name, FirebaseConfiguration firebaseConfiguration) {
+
+        GDXFirebase.setFirebaseFCM(name, new NullFirebaseFCM());
+
         Class<?> loaderCls = null;
 
         try {

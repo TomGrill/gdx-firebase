@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 import de.tomgrill.gdxfirebase.core.fcm.RemoteMessage;
@@ -80,6 +81,16 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
     @Override
     public void removeRemoteMessageListener(RemoteMessageListener remoteMessageListener) {
         remoteMessageListeners.removeValue(remoteMessageListener, true);
+    }
+
+    @Override
+    public void subscribeToTopic(String topic) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic);
+    }
+
+    @Override
+    public void unsubscribeFromTopic(String topic) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
     }
 
 
