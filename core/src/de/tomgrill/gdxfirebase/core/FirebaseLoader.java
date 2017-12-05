@@ -43,8 +43,6 @@ public class FirebaseLoader {
 
     private static void loadFCM(String name, FirebaseConfiguration firebaseConfiguration) {
 
-        GDXFirebase.setFirebaseFCM(name, new NullFirebaseFCM());
-
         Class<?> loaderCls = null;
 
         try {
@@ -101,6 +99,8 @@ public class FirebaseLoader {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
+
+        GDXFirebase.setFirebaseFCM(name, new NullFirebaseFCM());
     }
 
     private static void loadAnalytics(String name, FirebaseConfiguration firebaseConfiguration) {
