@@ -7,6 +7,7 @@ import apple.uikit.UIScreen;
 import apple.uikit.UIViewController;
 import apple.uikit.UIWindow;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.google.googlemobileads.GADAdReward;
 import com.google.googlemobileads.GADRequest;
 import com.google.googlemobileads.GADRewardBasedVideoAd;
@@ -26,62 +27,48 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
 
     private FirebaseConfiguration firebaseConfiguration;
 
-    private GADRequest request;
     private UIWindow windows;
-
-    private GADRewardBasedVideoAd gadRewardBasedVideoAd;
 
     private volatile int errorCode = 0;
 
     public IOSMOEVideoRewardAd(FirebaseConfiguration firebaseConfiguration) {
         this.firebaseConfiguration = firebaseConfiguration;
-
-        gadRewardBasedVideoAd = GADRewardBasedVideoAd.sharedInstance();
-    }
-
-    private String getDeviceUUID() {
-        System.out.println("WARN HARDCODED DEVICE ID, need AUTO RETRIEVE");
-        return "4f5c9375d645c9da801af226faede6ea";
     }
 
     @Override
     public boolean isLoaded() {
-
-        //System.out.println("H " + GADRewardBasedVideoAd.sharedInstance().isReady());
-        return gadRewardBasedVideoAd.isReady();
+        return GADRewardBasedVideoAd.sharedInstance().isReady();
     }
 
     @Override
     public void load(String adUnit) {
 
 
-        request = GADRequest.request();
+        GADRequest request = GADRequest.request();
+
+        //if (firebaseConfiguration.admobUseTestDevice) {
+        //    NSMutableArray nsMutableArray = NSMutableArray.array();
+        //    request.setTestDevices(nsMutableArray);
+        //}
+
+        GADRewardBasedVideoAd.sharedInstance().setDelegate(this);
 
         if (firebaseConfiguration.admobUseTestDevice) {
-            NSMutableArray nsMutableArray = NSMutableArray.array();
-            //nsMutableArray.add(UIDevice.currentDevice().identifierForVendor().UUIDString());
-            nsMutableArray.add(getDeviceUUID());
-            System.out.println("ADMOB DEVICE UUIDString" + UIDevice.currentDevice().identifierForVendor().UUIDString());
-
-
-            request.setTestDevices(nsMutableArray);
-
+            // adUnit ca-app-pub-3940256099942544/1712485313 for testing
+            GADRewardBasedVideoAd.sharedInstance().loadRequestWithAdUnitID(request, "ca-app-pub-3940256099942544/1712485313");
+        } else {
+            GADRewardBasedVideoAd.sharedInstance().loadRequestWithAdUnitID(request, adUnit);
         }
-        gadRewardBasedVideoAd.setDelegate(this);
-        gadRewardBasedVideoAd.loadRequestWithAdUnitID(request, adUnit);
-        //ca-app-pub-3940256099942544/1712485313
 
-        controller = UIViewController.alloc();
-        windows = UIWindow.alloc().initWithFrame(UIScreen.mainScreen().bounds());
-        windows.setRootViewController(controller);
-        windows.addSubview(controller.view());
+
+
+        controller = ((IOSApplication) Gdx.app).getUIViewController();
     }
 
     @Override
     public void show() {
         if (isLoaded()) {
-            windows.makeKeyAndVisible();
-            gadRewardBasedVideoAd.presentFromRootViewController(controller);
+            GADRewardBasedVideoAd.sharedInstance().presentFromRootViewController(controller);
         }
     }
 
@@ -118,7 +105,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     }
 
     @Override
-    @Selector("rewardBasedVideoAdDidRewardUserWithReward:")
     public void rewardBasedVideoAdDidRewardUserWithReward(GADRewardBasedVideoAd rewardBasedVideoAd, GADAdReward reward) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
@@ -130,12 +116,11 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     }
 
     @Override
-    @Selector("rewardBasedVideoAdDidClose:")
     public void rewardBasedVideoAdDidClose(GADRewardBasedVideoAd rewardBasedVideoAd) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                windows.setHidden(true);
+
                 if (listener != null)
                     listener.onRewardedVideoAdClosed();
             }
@@ -144,7 +129,6 @@ public class IOSMOEVideoRewardAd implements VideoRewardAd, GADRewardBasedVideoAd
     }
 
     @Override
-    @Selector("rewardBasedVideoAdDidOpen:")
     public void rewardBasedVideoAdDidOpen(GADRewardBasedVideoAd rewardBasedVideoAd) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
