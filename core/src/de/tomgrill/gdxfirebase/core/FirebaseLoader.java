@@ -2,6 +2,7 @@ package de.tomgrill.gdxfirebase.core;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -83,10 +84,12 @@ public class FirebaseLoader {
 
                 Object firebaseFCM = ClassReflection.getConstructor(firebaseFCMClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
 
-                Class<?> gdxLifecycleListenerClazz = ClassReflection.forName("com.badlogic.gdx.LifecycleListener");
-                Method gdxAppAddLifecycleListenerMethod = ClassReflection.getMethod(gdxAppObject.getClass(), "addLifecycleListener", gdxLifecycleListenerClazz);
+//                Class<?> gdxLifecycleListenerClazz = ClassReflection.forName("com.badlogic.gdx.LifecycleListener");
+//                Method gdxAppAddLifecycleListenerMethod = ClassReflection.getMethod(gdxAppObject.getClass(), "addLifecycleListener", gdxLifecycleListenerClazz);
 
-                gdxAppAddLifecycleListenerMethod.invoke(gdxAppObject, firebaseFCM);
+//                gdxAppAddLifecycleListenerMethod.invoke(gdxAppObject, firebaseFCM);
+
+                Gdx.app.addLifecycleListener((LifecycleListener) firebaseFCM);
 
                 GDXFirebase.setFirebaseFCM(name, (FirebaseFCM) firebaseFCM);
 
