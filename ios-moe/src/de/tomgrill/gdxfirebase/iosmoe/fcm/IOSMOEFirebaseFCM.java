@@ -13,6 +13,7 @@ import apple.usernotifications.enums.UNAuthorizationOptions;
 import apple.usernotifications.protocol.UNUserNotificationCenterDelegate;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;
+import com.google.firebasecore.FIRApp;
 import com.google.firebasemessaging.FIRMessaging;
 import com.google.firebasemessaging.FIRMessagingRemoteMessage;
 import com.google.firebasemessaging.protocol.FIRMessagingDelegate;
@@ -20,6 +21,7 @@ import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 import de.tomgrill.gdxfirebase.core.fcm.RemoteMessage;
 import de.tomgrill.gdxfirebase.core.fcm.RemoteMessageListener;
 import de.tomgrill.gdxfirebase.core.fcm.TokenRefreshListener;
+import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
 import java.util.Iterator;
 
@@ -33,8 +35,13 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     public IOSMOEFirebaseFCM() {
 
-        FIRMessaging.messaging().setDelegate(this);
+        if(!ConfigureOverwatch.isConfigured) {
+            FIRApp.configure();
+            ConfigureOverwatch.isConfigured = true;
+        }
 
+        FIRMessaging.messaging().setDelegate(this);
+        System.out.println("MAJOR VERSION " + NSProcessInfo.processInfo().operatingSystemVersion().majorVersion());
         if (NSProcessInfo.processInfo().operatingSystemVersion().majorVersion() < 10) {
             // below 10
             long userNotificationTypeBits = UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge;

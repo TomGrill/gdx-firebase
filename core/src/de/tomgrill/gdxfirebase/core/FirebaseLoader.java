@@ -106,7 +106,7 @@ public class FirebaseLoader {
                     //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
                     Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
 
-                    GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) loaderObj);
+                    GDXFirebase.setFirebaseFCM(name, (FirebaseFCM) loaderObj);
                     Gdx.app.debug("gdx-firebase", "FCM for " + Gdx.app.getType() + " installed successfully with default implementation.");
                 } else {
                     Gdx.app.debug("gdx-firebase", "FCM NOT LOADED for " + Gdx.app.getType());
