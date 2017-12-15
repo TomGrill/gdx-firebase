@@ -2,6 +2,7 @@ package de.tomgrill.gdxfirebase.iosmoe.fcm;
 
 import apple.foundation.NSError;
 import apple.foundation.NSProcessInfo;
+import apple.foundation.NSString;
 import apple.uikit.UIApplication;
 import apple.uikit.UIUserNotificationSettings;
 import apple.uikit.enums.UIUserNotificationType;
@@ -16,14 +17,19 @@ import com.google.firebasemessaging.FIRMessaging;
 import com.google.firebasemessaging.FIRMessagingRemoteMessage;
 import com.google.firebasemessaging.protocol.FIRMessagingDelegate;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
+import de.tomgrill.gdxfirebase.core.fcm.RemoteMessage;
 import de.tomgrill.gdxfirebase.core.fcm.RemoteMessageListener;
 import de.tomgrill.gdxfirebase.core.fcm.TokenRefreshListener;
+
+import java.util.Iterator;
 
 public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterDelegate, FIRMessagingDelegate {
 
 
     private Array<TokenRefreshListener> tokenRefreshListeners = new Array<>();
     private Array<RemoteMessageListener> remoteMessageListeners = new Array<>();
+
+    private String currentToken;
 
     public IOSMOEFirebaseFCM() {
 
@@ -52,11 +58,15 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     @Override
     public void addTokenRefreshListener(TokenRefreshListener tokenRefreshListener) {
+        if (currentToken != null) {
+            tokenRefreshListener.onTokenRefresh(currentToken);
+        }
+        tokenRefreshListeners.add(tokenRefreshListener);
     }
 
     @Override
     public void removeTokenRefreshListener(TokenRefreshListener tokenRefreshListener) {
-
+        tokenRefreshListeners.removeValue(tokenRefreshListener, true);
     }
 
     @Override
@@ -82,7 +92,8 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     @Override
     public void frontUpClean() {
-
+        remoteMessageListeners.clear();
+        tokenRefreshListeners.clear();
     }
 
     @Override
@@ -97,12 +108,27 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
     }
 
     @Override
-    public void messagingDidReceiveMessage(FIRMessaging messaging, FIRMessagingRemoteMessage remoteMessage) {
-        System.out.println("DIDI RECEIVE MESSAGEEE" + remoteMessage);
+    public void messagingDidReceiveMessage(FIRMessaging messaging, FIRMessagingRemoteMessage FIRremoteMessage) {
+        System.out.println("DIDI RECEIVE MESSAGEEE" + FIRremoteMessage);
+
+        RemoteMessage remoteMessage = new RemoteMessage();
+
+        for (Object key : FIRremoteMessage.appData().allKeys()) {
+            Object object = FIRremoteMessage.appData().get(key);
+            remoteMessage.getData().put(key.toString(), object);
+        }
+
+        for (int i = 0; i < remoteMessageListeners.size; i++) {
+            remoteMessageListeners.get(i).onRemoteMessage(remoteMessage);
+        }
     }
 
     @Override
     public void messagingDidReceiveRegistrationToken(FIRMessaging messaging, String fcmToken) {
-        System.out.println("TOKEN REFRESEH " + fcmToken);
+        System.out.println("DID TOKEN REFRESEH " + fcmToken);
+        currentToken = fcmToken;
+        for (int i = 0; i < tokenRefreshListeners.size; i++) {
+            tokenRefreshListeners.get(i).onTokenRefresh(currentToken);
+        }
     }
 }
