@@ -41,7 +41,6 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
         }
 
         FIRMessaging.messaging().setDelegate(this);
-        System.out.println("MAJOR VERSION " + NSProcessInfo.processInfo().operatingSystemVersion().majorVersion());
         if (NSProcessInfo.processInfo().operatingSystemVersion().majorVersion() < 10) {
             // below 10
             long userNotificationTypeBits = UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge;
@@ -61,6 +60,8 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
         }
 
         UIApplication.alloc().registerForRemoteNotifications();
+
+        currentToken = FIRMessaging.messaging().FCMToken();
     }
 
     @Override
@@ -132,7 +133,6 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     @Override
     public void messagingDidReceiveRegistrationToken(FIRMessaging messaging, String fcmToken) {
-        System.out.println("DID TOKEN REFRESEH " + fcmToken);
         currentToken = fcmToken;
         for (int i = 0; i < tokenRefreshListeners.size; i++) {
             tokenRefreshListeners.get(i).onTokenRefresh(currentToken);
