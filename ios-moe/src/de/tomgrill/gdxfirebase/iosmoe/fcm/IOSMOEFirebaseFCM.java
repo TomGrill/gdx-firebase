@@ -13,17 +13,21 @@ import apple.usernotifications.protocol.UNUserNotificationCenterDelegate;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;
 import com.google.firebasemessaging.FIRMessaging;
+import com.google.firebasemessaging.FIRMessagingRemoteMessage;
+import com.google.firebasemessaging.protocol.FIRMessagingDelegate;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 import de.tomgrill.gdxfirebase.core.fcm.RemoteMessageListener;
 import de.tomgrill.gdxfirebase.core.fcm.TokenRefreshListener;
 
-public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterDelegate {
+public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterDelegate, FIRMessagingDelegate {
 
 
     private Array<TokenRefreshListener> tokenRefreshListeners = new Array<>();
     private Array<RemoteMessageListener> remoteMessageListeners = new Array<>();
 
     public IOSMOEFirebaseFCM() {
+
+        FIRMessaging.messaging().setDelegate(this);
 
         if (NSProcessInfo.processInfo().operatingSystemVersion().majorVersion() < 10) {
             // below 10
@@ -92,4 +96,13 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     }
 
+    @Override
+    public void messagingDidReceiveMessage(FIRMessaging messaging, FIRMessagingRemoteMessage remoteMessage) {
+        System.out.println("DIDI RECEIVE MESSAGEEE" + remoteMessage);
+    }
+
+    @Override
+    public void messagingDidReceiveRegistrationToken(FIRMessaging messaging, String fcmToken) {
+        System.out.println("TOKEN REFRESEH " + fcmToken);
+    }
 }
