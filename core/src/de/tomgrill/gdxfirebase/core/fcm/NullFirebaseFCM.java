@@ -30,4 +30,9 @@ public class NullFirebaseFCM implements FirebaseFCM {
     public void unsubscribeFromTopic(String topic) {
 
     }
+
+    @Override
+    public void frontUpClean() {
+
+    }
 }

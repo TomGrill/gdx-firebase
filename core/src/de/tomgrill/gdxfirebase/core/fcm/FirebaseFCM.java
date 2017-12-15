@@ -13,4 +13,6 @@ public interface FirebaseFCM {
     void subscribeToTopic(String topic);
 
     void unsubscribeFromTopic(String topic);
+
+    void frontUpClean();
 }

@@ -46,12 +46,15 @@ public class GDXFirebaseMessagingService extends FirebaseMessagingService {
 
         Intent intent = new Intent(Action.MESSAGE_SERVICE);
         intent.putExtra("message", message);
+
         sendBroadcast(intent);
 
     }
 
     @Override
     public void onDeletedMessages() {
-        throw new RuntimeException("MUST HANDLE DELETE MESSAGES ASAP");
+        // if this is called it is suggested to do a full sync with the app server. not sure what to sync. so ignore for now
+        // https://firebase.google.com/docs/cloud-messaging/android/receive#override-ondeletedmessages
+        // https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessagingService#onDeletedMessages%28%29
     }
 }

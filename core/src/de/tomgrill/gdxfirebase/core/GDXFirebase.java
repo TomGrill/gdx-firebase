@@ -18,6 +18,14 @@ public class GDXFirebase {
     private static ObjectMap<String, Admob> admob = new ObjectMap<>();
     private static ObjectMap<String, FirebaseFCM> fcm = new ObjectMap<>();
 
+    public static void forceClear() {
+        databases.clear();
+        auths.clear();
+        analytics.clear();
+        admob.clear();
+        fcm.clear();
+    }
+
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
         if (!databases.containsKey(name)) {
             databases.put(name, firebaseDatabase);
@@ -51,6 +59,7 @@ public class GDXFirebase {
     }
 
     public static void setFirebaseFCM(String name, FirebaseFCM fcmInstance) {
+        fcmInstance.frontUpClean();
         if (!fcm.containsKey(name)) {
             fcm.put(name, fcmInstance);
         } else {

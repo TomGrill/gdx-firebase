@@ -27,6 +27,11 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
     private Array<TokenRefreshListener> tokenRefreshListeners = new Array<>();
     private Array<RemoteMessageListener> remoteMessageListeners = new Array<>();
 
+    private Array<RemoteMessage> intentRemoteMessages = new Array<>();
+
+    private boolean intentProcessed;
+    private boolean broadcastReceiverSet;
+
     public AndroidFirebaseFCM(Activity activity, FirebaseConfiguration firebaseConfiguration) {
         this.activity = activity;
         this.firebaseConfiguration = firebaseConfiguration;
@@ -44,6 +49,28 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
             tokenRefreshReceiver = new TokenRefreshReceiver();
             activity.registerReceiver(tokenRefreshReceiver, intentFilter);
         }
+
+        readIntentData();
+    }
+
+    private void readIntentData() {
+        if(activity.getIntent().getExtras() == null || intentProcessed) return;
+        intentRemoteMessages.clear();
+        if (activity.getIntent().getExtras() != null) {
+            RemoteMessage remoteMessage = new RemoteMessage();
+            for (String key : activity.getIntent().getExtras().keySet()) {
+                Object value = activity.getIntent().getExtras().get(key);
+                if (key.startsWith(firebaseConfiguration.fcmKeyPrefix)) {
+                    activity.getIntent().getExtras().remove(key); // handled, avoid handling twice
+                    remoteMessage.getData().put(key, value);
+                }
+            }
+
+            if (remoteMessage.getData().size() > 0) {
+                intentRemoteMessages.add(remoteMessage);
+            }
+        }
+        intentProcessed = true;
     }
 
     @Override
@@ -53,7 +80,6 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -75,7 +101,14 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
 
     @Override
     public void addRemoteMessageListener(RemoteMessageListener remoteMessageListener) {
+        readIntentData();
         remoteMessageListeners.add(remoteMessageListener);
+        for (int i = 0; i < intentRemoteMessages.size; i++) {
+            for (int j = 0; j < remoteMessageListeners.size; j++) {
+                remoteMessageListeners.get(j).onRemoteMessage(intentRemoteMessages.get(i));
+            }
+        }
+        intentRemoteMessages.clear();
     }
 
     @Override
@@ -93,6 +126,11 @@ public class AndroidFirebaseFCM implements FirebaseFCM, LifecycleListener {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
     }
 
+    @Override
+    public void frontUpClean() {
+        remoteMessageListeners.clear();
+        tokenRefreshListeners.clear();
+    }
 
     private class FCMDataReceiver extends BroadcastReceiver {
 
