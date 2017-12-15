@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
@@ -99,6 +98,23 @@ public class FirebaseLoader {
                 return;
 
             }
+
+            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+
+                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.fcm.IOSMOEFirebaseFCM");
+                if (loaderCls != null) {
+                    //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+                    Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+
+                    GDXFirebase.setFirebaseAnalytics(name, (FirebaseAnalytics) loaderObj);
+                    Gdx.app.debug("gdx-firebase", "FCM for " + Gdx.app.getType() + " installed successfully with default implementation.");
+                } else {
+                    Gdx.app.debug("gdx-firebase", "FCM NOT LOADED for " + Gdx.app.getType());
+                }
+                return;
+            }
+
+
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
