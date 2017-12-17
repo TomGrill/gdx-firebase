@@ -45,7 +45,7 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
             // below 10
             long userNotificationTypeBits = UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge;
             UIUserNotificationSettings uiUserNotificationSettings = UIUserNotificationSettings.settingsForTypesCategories(userNotificationTypeBits, null);
-            UIApplication.alloc().registerUserNotificationSettings(uiUserNotificationSettings);
+            UIApplication.sharedApplication().registerUserNotificationSettings(uiUserNotificationSettings);
         } else {
             // with ios 10+
             UNUserNotificationCenter.currentNotificationCenter().setDelegate(this);
@@ -59,7 +59,7 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
             });
         }
 
-        UIApplication.alloc().registerForRemoteNotifications();
+        UIApplication.sharedApplication().registerForRemoteNotifications();
 
         currentToken = FIRMessaging.messaging().FCMToken();
     }
