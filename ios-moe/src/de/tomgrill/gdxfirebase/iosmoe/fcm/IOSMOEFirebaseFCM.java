@@ -89,12 +89,12 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     @Override
     public void subscribeToTopic(String topic) {
-        FIRMessaging.alloc().subscribeToTopic(topic);
+        FIRMessaging.messaging().subscribeToTopic(topic);
     }
 
     @Override
     public void unsubscribeFromTopic(String topic) {
-        FIRMessaging.alloc().unsubscribeFromTopic(topic);
+        FIRMessaging.messaging().unsubscribeFromTopic(topic);
 
     }
 
