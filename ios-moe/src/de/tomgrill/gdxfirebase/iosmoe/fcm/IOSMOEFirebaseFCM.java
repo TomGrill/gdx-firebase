@@ -2,7 +2,6 @@ package de.tomgrill.gdxfirebase.iosmoe.fcm;
 
 import apple.foundation.NSError;
 import apple.foundation.NSProcessInfo;
-import apple.foundation.NSString;
 import apple.uikit.UIApplication;
 import apple.uikit.UIUserNotificationSettings;
 import apple.uikit.enums.UIUserNotificationType;
@@ -11,7 +10,6 @@ import apple.usernotifications.UNNotificationResponse;
 import apple.usernotifications.UNUserNotificationCenter;
 import apple.usernotifications.enums.UNAuthorizationOptions;
 import apple.usernotifications.protocol.UNUserNotificationCenterDelegate;
-import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;
 import com.google.firebasecore.FIRApp;
 import com.google.firebasemessaging.FIRMessaging;
@@ -23,8 +21,6 @@ import de.tomgrill.gdxfirebase.core.fcm.RemoteMessageListener;
 import de.tomgrill.gdxfirebase.core.fcm.TokenRefreshListener;
 import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
-import java.util.Iterator;
-
 public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterDelegate, FIRMessagingDelegate {
 
 
@@ -35,7 +31,7 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     public IOSMOEFirebaseFCM() {
 
-        if(!ConfigureOverwatch.isConfigured) {
+        if (!ConfigureOverwatch.isConfigured) {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
@@ -53,8 +49,8 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
             UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptionsCompletionHandler(optionBits, new UNUserNotificationCenter.Block_requestAuthorizationWithOptionsCompletionHandler() {
                 @Override
                 public void call_requestAuthorizationWithOptionsCompletionHandler(boolean allowed, NSError arg1) {
-                    System.out.println("AJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA COMPLETE AUTH WITH: " + allowed);
-                    System.out.println("AJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA COMPLETE AUTH ERROR: " + arg1);
+//                    System.out.println("AJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA COMPLETE AUTH WITH: " + allowed);
+//                    System.out.println("AJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA COMPLETE AUTH ERROR: " + arg1);
                 }
             });
         }
@@ -106,18 +102,18 @@ public class IOSMOEFirebaseFCM implements FirebaseFCM, UNUserNotificationCenterD
 
     @Override
     public void userNotificationCenterDidReceiveNotificationResponseWithCompletionHandler(UNUserNotificationCenter center, UNNotificationResponse response, Block_userNotificationCenterDidReceiveNotificationResponseWithCompletionHandler completionHandler) {
-        System.out.println("AAHAHAAAAAA RECEIVE MSG");
+//        System.out.println("AAHAHAAAAAA RECEIVE MSG");
     }
 
     @Override
     public void userNotificationCenterWillPresentNotificationWithCompletionHandler(UNUserNotificationCenter center, UNNotification notification, Block_userNotificationCenterWillPresentNotificationWithCompletionHandler completionHandler) {
-        System.out.println("AAHAHAAAAAA WILL PRESEN");
+//        System.out.println("AAHAHAAAAAA WILL PRESEN");
 
     }
 
     @Override
     public void messagingDidReceiveMessage(FIRMessaging messaging, FIRMessagingRemoteMessage FIRremoteMessage) {
-        System.out.println("DIDI RECEIVE MESSAGEEE" + FIRremoteMessage);
+//        System.out.println("DIDI RECEIVE MESSAGEEE" + FIRremoteMessage);
 
         RemoteMessage remoteMessage = new RemoteMessage();
 
