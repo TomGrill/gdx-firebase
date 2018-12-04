@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.11-SNAPSHOT'
+    VERSION = '0.0.12-SNAPSHOT'
 
 }
 
@@ -67,7 +67,7 @@ project(":android") {
         compile "com.google.firebase:firebase-messaging:17.3.4"
         compile "com.google.firebase:firebase-ads:17.1.2"
         compile "com.google.android.gms:play-services-auth:16.0.1"
-//        compile "com.google.android.gms:play-services-basement:16.0.1"
+        compile 'com.crashlytics.sdk.android:crashlytics:2.9.6'
 
     }
 }

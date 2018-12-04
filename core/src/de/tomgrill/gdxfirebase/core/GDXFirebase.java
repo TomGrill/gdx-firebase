@@ -5,6 +5,7 @@ import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.analytics.NullFirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
+import de.tomgrill.gdxfirebase.core.crashlytics.FirebaseCrashlytics;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 
@@ -17,6 +18,7 @@ public class GDXFirebase {
     private static ObjectMap<String, FirebaseAnalytics> analytics = new ObjectMap<>();
     private static ObjectMap<String, Admob> admob = new ObjectMap<>();
     private static ObjectMap<String, FirebaseFCM> fcm = new ObjectMap<>();
+    private static ObjectMap<String, FirebaseCrashlytics> crashlytics = new ObjectMap<>();
 
     public static void forceClear() {
         databases.clear();
@@ -24,6 +26,7 @@ public class GDXFirebase {
         analytics.clear();
         admob.clear();
         fcm.clear();
+        crashlytics.clear();
     }
 
     static void setFirebaseDatabase(String name, FirebaseDatabase firebaseDatabase) {
@@ -58,7 +61,17 @@ public class GDXFirebase {
         }
     }
 
-    public static void setFirebaseFCM(String name, FirebaseFCM fcmInstance) {
+
+
+    static void setFirebaseCrashlytics(String name, FirebaseCrashlytics firebaseCrashlytics) {
+        if (!crashlytics.containsKey(name)) {
+            crashlytics.put(name, firebaseCrashlytics);
+        } else {
+            throw new RuntimeException("Firebase App named [" + name + "] already exist.");
+        }
+    }
+
+    static void setFirebaseFCM(String name, FirebaseFCM fcmInstance) {
         fcmInstance.frontUpClean();
         if (!fcm.containsKey(name)) {
             fcm.put(name, fcmInstance);
@@ -121,6 +134,17 @@ public class GDXFirebase {
     public static synchronized FirebaseFCM FirebaseFCM(String name) {
         if (fcm.containsKey(name)) {
             return fcm.get(name);
+        }
+        throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
+    }
+
+    public static synchronized FirebaseCrashlytics FirebaseCrashlytics() {
+        return FirebaseCrashlytics(DEFAULT_APP_NAME);
+    }
+
+    public static synchronized FirebaseCrashlytics FirebaseCrashlytics(String name) {
+        if (crashlytics.containsKey(name)) {
+            return crashlytics.get(name);
         }
         throw new RuntimeException("Firebase App named [" + name + "] does not exist.");
     }

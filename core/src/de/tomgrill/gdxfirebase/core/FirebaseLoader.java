@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import de.tomgrill.gdxfirebase.core.admob.Admob;
 import de.tomgrill.gdxfirebase.core.analytics.FirebaseAnalytics;
 import de.tomgrill.gdxfirebase.core.auth.FirebaseAuth;
+import de.tomgrill.gdxfirebase.core.crashlytics.FirebaseCrashlytics;
 import de.tomgrill.gdxfirebase.core.database.FirebaseDatabase;
 import de.tomgrill.gdxfirebase.core.fcm.FirebaseFCM;
 import de.tomgrill.gdxfirebase.core.fcm.NullFirebaseFCM;
@@ -38,7 +39,86 @@ public class FirebaseLoader {
             if (feature == FirebaseFeatures.FCM) {
                 loadFCM(name, firebaseConfiguration);
             }
+            if (feature == FirebaseFeatures.CRASHLYTICS) {
+                loadCrashlytics(name, firebaseConfiguration);
+            }
         }
+    }
+
+    private static void loadCrashlytics(String name, FirebaseConfiguration firebaseConfiguration) {
+
+        Class<?> loaderCls = null;
+
+        try {
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+
+                Class<?> activityClazz = ClassReflection.forName("android.app.Activity");
+
+                Class<?> firebaseCrashlyticsClazz = ClassReflection.forName("de.tomgrill.gdxfirebase.android.crashlytics.AndroidCrashlytics");
+
+                Object activity = null;
+
+                Class<?> gdxClazz = ClassReflection.forName("com.badlogic.gdx.Gdx");
+                Object gdxAppObject = ClassReflection.getField(gdxClazz, "app").get(null);
+
+                if (ClassReflection.isAssignableFrom(activityClazz, gdxAppObject.getClass())) {
+
+                    activity = gdxAppObject;
+                } else {
+
+                    Class<?> supportFragmentClass = findClass("android.support.v4.app.Fragment");
+                    // {
+                    if (supportFragmentClass != null && ClassReflection.isAssignableFrom(supportFragmentClass, gdxAppObject.getClass())) {
+
+                        activity = ClassReflection.getMethod(supportFragmentClass, "getActivity").invoke(gdxAppObject);
+                    } else {
+                        Class<?> fragmentClass = findClass("android.app.Fragment");
+                        if (fragmentClass != null && ClassReflection.isAssignableFrom(fragmentClass, gdxAppObject.getClass())) {
+                            activity = ClassReflection.getMethod(fragmentClass, "getActivity").invoke(gdxAppObject);
+                        }
+                    }
+
+                }
+
+                if (activity == null) {
+                    throw new RuntimeException("Can't find your gdx activity to instantiate gdx-firebase. " + "Looks like you have implemented AndroidApplication without using "
+                            + "Activity or Fragment classes or Activity is not available at the moment");
+                }
+
+                Object firebaseCrashlytics = ClassReflection.getConstructor(firebaseCrashlyticsClazz, activityClazz, FirebaseConfiguration.class).newInstance(activity, firebaseConfiguration);
+
+//                Gdx.app.addLifecycleListener((LifecycleListener) firebaseFCM);
+
+                GDXFirebase.setFirebaseCrashlytics(name, (FirebaseCrashlytics) firebaseCrashlytics);
+
+                Gdx.app.debug("gdx-firebase", "Crashlytics loaded for " + Gdx.app.getType());
+
+
+                return;
+
+            }
+
+//            if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+//
+//                loaderCls = ClassReflection.forName("de.tomgrill.gdxfirebase.iosmoe.fcm.IOSMOEFirebaseFCM");
+//                if (loaderCls != null) {
+//                    //Object loaderObj = ClassReflection.getConstructor(loaderCls, String.class, FirebaseConfiguration.class).newInstance(name, firebaseConfiguration);
+//                    Object loaderObj = ClassReflection.getConstructor(loaderCls).newInstance();
+//
+//                    GDXFirebase.setFirebaseFCM(name, (FirebaseFCM) loaderObj);
+//                    Gdx.app.debug("gdx-firebase", "FCM for " + Gdx.app.getType() + " installed successfully with default implementation.");
+//                } else {
+//                    Gdx.app.debug("gdx-firebase", "FCM NOT LOADED for " + Gdx.app.getType());
+//                }
+//                return;
+//            }
+
+
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+
+        GDXFirebase.setFirebaseFCM(name, new NullFirebaseFCM());
     }
 
     private static void loadFCM(String name, FirebaseConfiguration firebaseConfiguration) {
