@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.10-SNAPSHOT'
+    VERSION = '0.0.11-SNAPSHOT'
 
 }
 
@@ -9,13 +9,14 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+        google()
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
-        classpath 'org.multi-os-engine:moe-gradle:1.3.12'
-        classpath 'com.google.gms:google-services:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
+        classpath 'org.multi-os-engine:moe-gradle:1.4.1'
+        classpath 'com.google.gms:google-services:4.2.0'
     }
 }
 
@@ -27,7 +28,7 @@ allprojects {
         appName = 'gdx-firebase'
         gdxVersion = '1.9.6'
         roboVMVersion = '2.3.0'
-        firebaseVersion = '11.6.0'
+        firebaseVersion = '16.0.4'
     }
 
     repositories {
@@ -59,12 +60,14 @@ project(":android") {
         compile project(':core')
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
 
-        compile "com.google.firebase:firebase-database:$firebaseVersion"
-        compile "com.google.firebase:firebase-auth:$firebaseVersion"
-        compile "com.google.firebase:firebase-core:$firebaseVersion"
-        compile "com.google.firebase:firebase-messaging:$firebaseVersion"
-        compile "com.google.firebase:firebase-ads:$firebaseVersion"
-        compile "com.google.android.gms:play-services-auth:$firebaseVersion"
+        compile "com.google.firebase:firebase-database:16.0.5"
+        compile "com.google.firebase:firebase-auth:16.0.5"
+        compile "com.google.firebase:firebase-core:16.0.6"
+        compile "com.google.firebase:firebase-analytics:16.0.6"
+        compile "com.google.firebase:firebase-messaging:17.3.4"
+        compile "com.google.firebase:firebase-ads:17.1.2"
+        compile "com.google.android.gms:play-services-auth:16.0.1"
+//        compile "com.google.android.gms:play-services-basement:16.0.1"
 
     }
 }

@@ -1,6 +1,7 @@
 package de.tomgrill.gdxfirebase.android.admob;
 
 import android.app.Activity;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -9,6 +10,7 @@ import de.tomgrill.gdxfirebase.core.admob.RewardedVideoAdListener;
 import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
 
 public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.gms.ads.reward.RewardedVideoAdListener {
+
     private final AdRequest adRequest;
     private RewardedVideoAd mAd;
     private RewardedVideoAdListener listener;
@@ -71,6 +73,12 @@ public class AndroidVideoRewardAd implements VideoRewardAd, com.google.android.g
         }
         if (listener != null)
             listener.onRewardedVideoAdFailedToLoad(errorCode);
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        if (listener != null)
+            listener.onRewardedVideoCompleted();
     }
 
     @Override

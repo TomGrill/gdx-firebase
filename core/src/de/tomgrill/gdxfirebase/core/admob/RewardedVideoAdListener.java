@@ -13,5 +13,7 @@ public interface RewardedVideoAdListener {
 
     void onRewardedVideoAdLeftApplication();
 
+    void onRewardedVideoCompleted();
+
     void onRewardedVideoAdFailedToLoad(int errorCode);
 }

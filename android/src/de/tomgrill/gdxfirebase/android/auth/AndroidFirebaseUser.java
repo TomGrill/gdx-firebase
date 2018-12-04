@@ -52,7 +52,7 @@ public class AndroidFirebaseUser implements FirebaseUser {
 
     @Override
     public String getToken(boolean forceRefresh) {
-        return firebaseUser.getToken(forceRefresh).getResult().getToken();
+        return firebaseUser.getIdToken(forceRefresh).getResult().getToken();
     }
 
 //    @Override

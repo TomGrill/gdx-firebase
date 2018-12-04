@@ -92,10 +92,10 @@ public class GADRequestError extends NSError {
 	@Selector("description")
 	public static native String description_static();
 
-	@Generated
-	@Selector("errorWithDomain:code:userInfo:")
-	public static native GADRequestError errorWithDomainCodeUserInfo(
-			String domain, @NInt long code, NSDictionary<?, ?> dict);
+//	@Generated
+//	@Selector("errorWithDomain:code:userInfo:")
+//	public static native GADRequestError errorWithDomainCodeUserInfo(
+//			String domain, @NInt long code, NSDictionary<?, ?> dict);
 
 	@Generated
 	@Selector("hash")
@@ -110,10 +110,10 @@ public class GADRequestError extends NSError {
 	@Selector("initWithCoder:")
 	public native GADRequestError initWithCoder(NSCoder aDecoder);
 
-	@Generated
-	@Selector("initWithDomain:code:userInfo:")
-	public native GADRequestError initWithDomainCodeUserInfo(String domain,
-			@NInt long code, NSDictionary<?, ?> dict);
+//	@Generated
+//	@Selector("initWithDomain:code:userInfo:")
+//	public native GADRequestError initWithDomainCodeUserInfo(String domain,
+//			@NInt long code, NSDictionary<?, ?> dict);
 
 	@Generated
 	@Selector("initialize")
