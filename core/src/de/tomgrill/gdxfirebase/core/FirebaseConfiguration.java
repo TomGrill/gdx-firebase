@@ -15,6 +15,8 @@ public class FirebaseConfiguration {
     public FirebaseUser desktopFirebaseUser;
     public FirebaseAuth desktopFirebaseAuth;
     public String admobAppId;
+    public String admobPrivacyURL;
+    public String[] admobPublisherIds = new String[0];
     public boolean admobUseTestDevice = true;
 
     public String fcmKeyPrefix = "your_app_name.";

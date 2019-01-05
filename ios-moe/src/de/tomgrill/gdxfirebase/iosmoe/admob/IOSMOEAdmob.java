@@ -5,8 +5,7 @@ import com.google.firebasecore.FIRApp;
 import com.google.googlemobileads.GADMobileAds;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.FirebaseConfigurationHolder;
-import de.tomgrill.gdxfirebase.core.admob.Admob;
-import de.tomgrill.gdxfirebase.core.admob.VideoRewardAd;
+import de.tomgrill.gdxfirebase.core.admob.*;
 import de.tomgrill.gdxfirebase.iosmoe.ConfigureOverwatch;
 
 public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
@@ -36,6 +35,31 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
     @Override
     public boolean isTestDevice() {
         return isTestDevice;
+    }
+
+    @Override
+    public void requestConsentInfoUpdate(ConsentInfoUpdateListener consentInfoUpdateListener) {
+        consentInfoUpdateListener.onFailedToUpdateConsentInfo("IOSMOE NOT SUPPORTED");
+    }
+
+    @Override
+    public boolean isRequestLocationInEeaOrUnknown() {
+        return false;
+    }
+
+    @Override
+    public void showGoogleConsentDialog(boolean withAdFree, ConsentFormListener consentFormListener) {
+        consentFormListener.onConsentFormError("IOSMOE NOT SUPPORTED");
+    }
+
+    @Override
+    public boolean isConsentGiven() {
+        return false;
+    }
+
+    @Override
+    public ConsentStatus getConsentStatus() {
+        return ConsentStatus.UNKNOWN;
     }
 
     @Override

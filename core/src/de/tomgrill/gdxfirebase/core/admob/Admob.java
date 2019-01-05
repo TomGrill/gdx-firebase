@@ -8,5 +8,15 @@ public interface Admob {
 
     boolean isTestDevice();
 
+    void requestConsentInfoUpdate(ConsentInfoUpdateListener consentInfoUpdateListener);
+
+    boolean isRequestLocationInEeaOrUnknown();
+
+    void showGoogleConsentDialog(boolean withAdFree, ConsentFormListener consentFormListener);
+
+    boolean isConsentGiven();
+
+    ConsentStatus getConsentStatus();
+
 
 }

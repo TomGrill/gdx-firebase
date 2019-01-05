@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'de.tomgrill.gdxfirebase'
-    VERSION = '0.0.12-SNAPSHOT'
+    VERSION = '0.2.0-SNAPSHOT'
 
 }
 
@@ -59,7 +59,7 @@ project(":android") {
     dependencies {
         compile project(':core')
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-
+        compile 'com.google.android.ads.consent:consent-library:1.0.6'
         compile "com.google.firebase:firebase-database:16.0.5"
         compile "com.google.firebase:firebase-auth:16.0.5"
         compile "com.google.firebase:firebase-core:16.0.6"
