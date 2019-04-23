@@ -96,7 +96,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
 
 
     @Override
-    public void updateChildren(Map<String, Object> update, CompletionListener listener) {
+    public void updateChildren(Map<String, Object> update,final CompletionListener listener) {
         firDatabaseReference.updateChildValuesWithCompletionBlock(toDictionary(update), new FIRDatabaseReference.Block_updateChildValuesWithCompletionBlock() {
             @Override
             public void call_updateChildValuesWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {
@@ -169,7 +169,7 @@ public class IOSMOEDatabaseReference extends IOSMOEQuery implements DatabaseRefe
     }
 
     @Override
-    public void removeValue(CompletionListener listener) {
+    public void removeValue(final CompletionListener listener) {
         firDatabaseReference.removeValueWithCompletionBlock(new FIRDatabaseReference.Block_removeValueWithCompletionBlock() {
             @Override
             public void call_removeValueWithCompletionBlock(NSError error, FIRDatabaseReference databaseReference) {

@@ -30,7 +30,7 @@ public class IOSMOEQuery implements Query {
     }
 
     @Override
-    public ValueEventListener addValueEventListener(ValueEventListener listener) {
+    public ValueEventListener addValueEventListener(final ValueEventListener listener) {
 
         FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1 block1Listener = new FIRDatabaseQuery.Block_observeEventTypeAndPreviousSiblingKeyWithBlockWithCancelBlock_1() {
             @Override
@@ -58,7 +58,7 @@ public class IOSMOEQuery implements Query {
     }
 
     @Override
-    public ChildEventListener addChildEventListener(ChildEventListener listener) {
+    public ChildEventListener addChildEventListener(final ChildEventListener listener) {
 
         /*
         ADDED
@@ -156,7 +156,7 @@ public class IOSMOEQuery implements Query {
     }
 
     @Override
-    public void addListenerForSingleValueEvent(ValueEventListener listener) {
+    public void addListenerForSingleValueEvent(final ValueEventListener listener) {
         firDatabaseQuery.observeSingleEventOfTypeWithBlockWithCancelBlock(FIRDataEventType.Value, new FIRDatabaseQuery.Block_observeSingleEventOfTypeWithBlockWithCancelBlock_1() {
             @Override
             public void call_observeSingleEventOfTypeWithBlockWithCancelBlock_1(FIRDataSnapshot dataSnapshot) {
