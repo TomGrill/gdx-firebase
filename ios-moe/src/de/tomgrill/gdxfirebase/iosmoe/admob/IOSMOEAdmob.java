@@ -35,6 +35,7 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
             ConfigureOverwatch.isConfigured = true;
         }
 
+        // TODO implement the id when using test ads
         deviceId = ASIdentifierManager.alloc().advertisingIdentifier().UUIDString();
     }
 
