@@ -1,6 +1,7 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
 import android.os.Bundle;
+import apple.adsupport.ASIdentifierManager;
 import apple.foundation.NSError;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSURL;
@@ -24,6 +25,8 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
     private boolean isTestDevice;
     private UIViewController controller;
 
+    private String deviceId;
+
     private de.tomgrill.gdxfirebase.core.admob.ConsentStatus currentConsentStatus = ConsentStatus.UNKNOWN;
 
     public IOSMOEAdmob() {
@@ -31,6 +34,8 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
         }
+
+        deviceId = ASIdentifierManager.alloc().advertisingIdentifier().UUIDString();
     }
 
     private void updateStatus(final long status) {
