@@ -1,5 +1,6 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
+import android.os.Bundle;
 import apple.foundation.NSError;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSURL;
@@ -20,7 +21,6 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
 
     private FirebaseConfiguration firebaseConfiguration;
     private boolean isTestDevice;
-    private UIViewController uiViewController;
 
     private de.tomgrill.gdxfirebase.core.admob.ConsentStatus currentConsentStatus = ConsentStatus.UNKNOWN;
 
@@ -55,10 +55,6 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
             });
 
 
-            if (uiViewController == null) {
-                uiViewController = UIViewController.alloc();
-            }
-
         }
     }
 
@@ -81,13 +77,22 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
 
     @Override
     public VideoRewardAd getVideoRewardAd() {
+
+        Bundle extras = new Bundle();
+
+        // enable non personalized ads when not allowed
+        if (currentConsentStatus != de.tomgrill.gdxfirebase.core.admob.ConsentStatus.PERSONALIZED) {
+            extras.putString("npa", "1");
+        }
+
         if (isTestDevice) {
             //String deviceId = getDeviceId();
             Gdx.app.debug("gdx-firebase", "Load Admob AdRequest with test device." );
-            return new IOSMOEVideoRewardAd(firebaseConfiguration);
+
+            return new IOSMOEVideoRewardAd(firebaseConfiguration, currentConsentStatus != de.tomgrill.gdxfirebase.core.admob.ConsentStatus.PERSONALIZED);
         } else {
             Gdx.app.debug("gdx-firebase", "Load Admob AdRequest for production)");
-            return new IOSMOEVideoRewardAd(firebaseConfiguration);
+            return new IOSMOEVideoRewardAd(firebaseConfiguration, currentConsentStatus != de.tomgrill.gdxfirebase.core.admob.ConsentStatus.PERSONALIZED);
         }
     }
 
@@ -160,7 +165,9 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
                             consentFormListener.onConsentFormLoaded();
                         }
                     });
-                    pacConsentForm.presentFromViewControllerDismissCompletion(uiViewController, new PACConsentForm.Block_presentFromViewControllerDismissCompletion() {
+
+
+                    pacConsentForm.presentFromViewControllerDismissCompletion(UIViewController.alloc(), new PACConsentForm.Block_presentFromViewControllerDismissCompletion() {
                         @Override
                         public void call_presentFromViewControllerDismissCompletion(final NSError error, final boolean userPrefersAdFree) {
                             if (error != null) {
