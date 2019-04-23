@@ -1,8 +1,16 @@
 package de.tomgrill.gdxfirebase.iosmoe.admob;
 
+import apple.foundation.NSError;
+import apple.foundation.NSMutableArray;
+import apple.foundation.NSURL;
+import apple.uikit.UIViewController;
 import com.badlogic.gdx.Gdx;
 import com.google.firebasecore.FIRApp;
 import com.google.googlemobileads.GADMobileAds;
+import de.tomgrill.gdxfirebase.bindings.pac.PACConsentForm;
+import de.tomgrill.gdxfirebase.bindings.pac.PACConsentInformation;
+import de.tomgrill.gdxfirebase.bindings.pac.enums.PACConsentStatus;
+import de.tomgrill.gdxfirebase.bindings.pac.enums.PACDebugGeography;
 import de.tomgrill.gdxfirebase.core.FirebaseConfiguration;
 import de.tomgrill.gdxfirebase.core.FirebaseConfigurationHolder;
 import de.tomgrill.gdxfirebase.core.admob.*;
@@ -12,12 +20,63 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
 
     private FirebaseConfiguration firebaseConfiguration;
     private boolean isTestDevice;
+    private UIViewController uiViewController;
+
+    private de.tomgrill.gdxfirebase.core.admob.ConsentStatus currentConsentStatus = ConsentStatus.UNKNOWN;
 
     public IOSMOEAdmob() {
         if (!ConfigureOverwatch.isConfigured) {
             FIRApp.configure();
             ConfigureOverwatch.isConfigured = true;
+
+            isTestDevice = firebaseConfiguration.admobUseTestDevice;
+
+
+            if (isTestDevice) {
+                PACConsentInformation.sharedInstance().setDebugGeography(PACDebugGeography.EEA);
+            }
+
+            NSMutableArray nsa = NSMutableArray.alloc().init();
+            for (int i = 0; i < firebaseConfiguration.admobPublisherIds.length; i++) {
+                nsa.add(firebaseConfiguration.admobPublisherIds[i]);
+            }
+
+            PACConsentInformation.sharedInstance().requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler(nsa, new PACConsentInformation.Block_requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler() {
+                @Override
+                public void call_requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler(NSError error) {
+                    if (error != null) {
+                        updateStatus(PACConsentStatus.Unknown);
+
+                    } else {
+                        updateStatus(PACConsentInformation.sharedInstance().consentStatus());
+                    }
+
+                }
+            });
+
+
+            if (uiViewController == null) {
+                uiViewController = UIViewController.alloc();
+            }
+
         }
+    }
+
+    private void updateStatus(final long status) {
+        if(status == PACConsentStatus.NonPersonalized) {
+            currentConsentStatus = ConsentStatus.NON_PERSONALIZED;
+            return;
+        }
+        if(status == PACConsentStatus.Personalized) {
+            currentConsentStatus = ConsentStatus.PERSONALIZED;
+            return;
+        }
+        if(status == PACConsentStatus.Unknown) {
+            currentConsentStatus = ConsentStatus.UNKNOWN;
+            return;
+        }
+        // fallback
+        currentConsentStatus = ConsentStatus.UNKNOWN;
     }
 
     @Override
@@ -38,28 +97,104 @@ public class IOSMOEAdmob implements Admob, FirebaseConfigurationHolder {
     }
 
     @Override
-    public void requestConsentInfoUpdate(ConsentInfoUpdateListener consentInfoUpdateListener) {
-        consentInfoUpdateListener.onFailedToUpdateConsentInfo("IOSMOE NOT SUPPORTED");
+    public void requestConsentInfoUpdate(final ConsentInfoUpdateListener consentInfoUpdateListener) {
+        NSMutableArray nsa = NSMutableArray.alloc().init();
+        for (int i = 0; i < firebaseConfiguration.admobPublisherIds.length; i++) {
+            nsa.add(firebaseConfiguration.admobPublisherIds[i]);
+        }
+
+        PACConsentInformation.sharedInstance().requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler(nsa, new PACConsentInformation.Block_requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler() {
+            @Override
+            public void call_requestConsentInfoUpdateForPublisherIdentifiersCompletionHandler(final NSError error) {
+                if (error != null) {
+                    updateStatus(PACConsentStatus.Unknown);
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            consentInfoUpdateListener.onFailedToUpdateConsentInfo(error.localizedFailureReason());
+                        }
+                    });
+
+                } else {
+                    updateStatus(PACConsentInformation.sharedInstance().consentStatus());
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            consentInfoUpdateListener.onConsentInfoUpdated(currentConsentStatus);
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
 
     @Override
     public boolean isRequestLocationInEeaOrUnknown() {
-        return false;
+        return PACConsentInformation.sharedInstance().isRequestLocationInEEAOrUnknown();
     }
 
     @Override
-    public void showGoogleConsentDialog(boolean withAdFree, ConsentFormListener consentFormListener) {
-        consentFormListener.onConsentFormError("IOSMOE NOT SUPPORTED");
+    public void showGoogleConsentDialog(boolean withAdFree, final ConsentFormListener consentFormListener) {
+
+        final PACConsentForm pacConsentForm = PACConsentForm.alloc().initWithApplicationPrivacyPolicyURL(NSURL.URLWithString(firebaseConfiguration.admobPrivacyURL));
+        pacConsentForm.setShouldOfferAdFree(withAdFree);
+        pacConsentForm.setShouldOfferNonPersonalizedAds(true);
+        pacConsentForm.setShouldOfferPersonalizedAds(true);
+
+        pacConsentForm.loadWithCompletionHandler(new PACConsentForm.Block_loadWithCompletionHandler() {
+            @Override
+            public void call_loadWithCompletionHandler(final NSError error) {
+                if (error != null) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            consentFormListener.onConsentFormError(error.localizedFailureReason());
+                        }
+                    });
+                } else {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            consentFormListener.onConsentFormLoaded();
+                        }
+                    });
+                    pacConsentForm.presentFromViewControllerDismissCompletion(uiViewController, new PACConsentForm.Block_presentFromViewControllerDismissCompletion() {
+                        @Override
+                        public void call_presentFromViewControllerDismissCompletion(final NSError error, final boolean userPrefersAdFree) {
+                            if (error != null) {
+                                Gdx.app.postRunnable(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        consentFormListener.onConsentFormError(error.localizedDescription());
+                                    }
+                                });
+                            } else {
+                                updateStatus(PACConsentInformation.sharedInstance().consentStatus());
+                                Gdx.app.postRunnable(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        consentFormListener.onConsentFormClosed(currentConsentStatus, userPrefersAdFree);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
     @Override
     public boolean isConsentGiven() {
-        return false;
+        return currentConsentStatus != ConsentStatus.UNKNOWN;
     }
 
     @Override
     public ConsentStatus getConsentStatus() {
-        return ConsentStatus.UNKNOWN;
+        return currentConsentStatus;
     }
 
     @Override
